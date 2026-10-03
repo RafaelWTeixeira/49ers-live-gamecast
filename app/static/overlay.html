@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>49ers Live Gamecast — Overlay</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Oswald:wght@500;700&display=swap">
+
+  <link rel="stylesheet" href="/static/css/reset.css">
+  <link rel="stylesheet" href="/static/css/overlay.css">
+  <link rel="stylesheet" href="/static/css/scoreboard.css">
+  <link rel="stylesheet" href="/static/css/field.css">
+
+  <script>
+    // /overlay?preview mostra um fundo xadrez para enxergar as áreas transparentes no navegador.
+    if (new URLSearchParams(location.search).has("preview")) {
+      document.documentElement.classList.add("preview");
+    }
+  </script>
+</head>
+<body>
+  <main class="overlay">
+
+    <!-- Áreas transparentes: as câmeras são posicionadas por baixo, no OBS. -->
+    <section class="cameras" aria-label="Câmeras">
+      <div class="camera-slot" data-camera="1"></div>
+      <div class="camera-slot" data-camera="2"></div>
+      <div class="camera-slot" data-camera="3"></div>
+    </section>
+
+    <section class="gamecast">
+      <header class="gamecast-header">
+        <span class="gamecast-title">49ers Live Gamecast</span>
+        <span class="phase-badge">Ao vivo</span>
+      </header>
+
+      <div class="scoreboard">
+        <div class="team team--opponent">
+          <div class="team-identity">
+            <span class="team-abbr">DEN <span class="possession-marker" aria-hidden="true"></span></span>
+            <span class="team-name">Broncos</span>
+          </div>
+          <span class="team-score">10</span>
+        </div>
+
+        <div class="game-clock">
+          <span class="quarter">Q3</span>
+          <span class="clock">08:42</span>
+        </div>
+
+        <div class="team team--featured has-possession">
+          <div class="team-identity">
+            <span class="team-abbr"><span class="possession-marker" aria-hidden="true"></span> SF</span>
+            <span class="team-name">49ers</span>
+          </div>
+          <span class="team-score">17</span>
+        </div>
+      </div>
+
+      <!-- Field Direction: goal line do Featured Team à esquerda. Posições em % da Yardline. -->
+      <div class="field field--featured-left">
+        <div class="endzone endzone--left endzone--featured">49ers</div>
+
+        <div class="playing-field">
+          <span class="yard-number" style="--y: 10">10</span>
+          <span class="yard-number" style="--y: 20">20</span>
+          <span class="yard-number" style="--y: 30">30</span>
+          <span class="yard-number" style="--y: 40">40</span>
+          <span class="yard-number" style="--y: 50">50</span>
+          <span class="yard-number" style="--y: 60">40</span>
+          <span class="yard-number" style="--y: 70">30</span>
+          <span class="yard-number" style="--y: 80">20</span>
+          <span class="yard-number" style="--y: 90">10</span>
+
+          <span class="marker marker--los" style="--y: 66" title="Line of scrimmage"></span>
+          <span class="marker marker--first-down" style="--y: 72" title="First down"></span>
+          <span class="ball ball--attacking-right" style="--y: 66"></span>
+        </div>
+
+        <div class="endzone endzone--right endzone--opponent">Broncos</div>
+      </div>
+
+      <div class="situation">
+        <span class="situation-possession">SF com a bola</span>
+        <span class="situation-down">2nd &amp; 6</span>
+        <span class="situation-spot">DEN 34</span>
+      </div>
+
+      <div class="last-play">
+        <span class="last-play-label">Última jogada</span>
+        <p class="last-play-text">
+          Purdy pass to Kittle for 8 yards
+          <span class="last-play-yards">+8 jardas</span>
+        </p>
+      </div>
+    </section>
+
+    <footer class="banner">Deixa o like e se inscreva</footer>
+
+  </main>
+</body>
+</html>

@@ -1,0 +1,100 @@
+/* Featured Team sempre à direita, Opponent à esquerda. */
+.scoreboard {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 16px;
+}
+
+.team {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 30px;
+  background: var(--team-color);
+  border-bottom: 6px solid var(--team-accent);
+  border-radius: 12px;
+}
+
+.team--opponent {
+  --team-color: var(--opp-secondary);
+  --team-accent: var(--opp-primary);
+}
+
+.team--featured {
+  --team-color: var(--sf-red);
+  --team-accent: var(--sf-gold);
+  flex-direction: row-reverse;
+}
+
+.team-identity {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.team--featured .team-identity {
+  align-items: flex-end;
+}
+
+.team-abbr {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-display);
+  font-size: 68px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.team-name {
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  opacity: 0.85;
+}
+
+.team-score {
+  font-family: var(--font-display);
+  font-size: 116px;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.possession-marker {
+  display: none;
+  width: 26px;
+  height: 16px;
+  background: var(--white);
+  border-radius: 50%;
+}
+
+.has-possession .possession-marker {
+  display: inline-block;
+}
+
+.game-clock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 220px;
+  padding: 0 20px;
+  font-family: var(--font-display);
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+}
+
+.quarter {
+  font-size: 40px;
+  font-weight: 500;
+  color: var(--sf-gold);
+}
+
+.clock {
+  font-size: 66px;
+  font-weight: 700;
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+}
