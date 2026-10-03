@@ -19,3 +19,7 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
+
+[hidden] {
+  display: none !important;
+}

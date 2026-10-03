@@ -175,3 +175,24 @@ html.preview body {
   border: 2px solid var(--sf-gold);
   border-radius: var(--radius);
 }
+
+/* ---------- Variações por estado ---------- */
+
+.phase-badge:not([data-phase="LIVE"])::before {
+  display: none;
+}
+
+.phase-badge[data-phase="PRE_GAME"],
+.phase-badge[data-phase="HALFTIME"] {
+  background: var(--sf-gold);
+  color: #1A1A1A;
+}
+
+.phase-badge[data-phase="FINAL"] {
+  background: #3A3A3A;
+}
+
+/* Sem posse (pré-jogo, intervalo, final): mantém a altura, esconde a situação. */
+.no-possession .situation {
+  visibility: hidden;
+}

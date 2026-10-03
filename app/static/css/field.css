@@ -121,3 +121,8 @@
   content: "◀";
   right: calc(100% + 8px);
 }
+
+.marker,
+.ball {
+  transition: left 600ms ease-in-out;
+}
