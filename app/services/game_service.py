@@ -29,7 +29,8 @@ class GameService:
     """Guarda o Game State e o Control Mode, grava snapshot a cada mudança e avisa os ouvintes.
 
     Em AUTO só o Provider altera o jogo; em MANUAL, só o operador (docs/adr/0002), e sem
-    estatísticas de QB, que ninguém mantém à mão (docs/adr/0004).
+    estatísticas de QB, que ninguém mantém à mão (docs/adr/0004). A Field Direction é do
+    operador nos dois modos (docs/adr/0006).
     """
 
     def __init__(
@@ -98,7 +99,9 @@ class GameService:
         """Publica o que veio do Provider, se ele estiver no comando. Devolve se aplicou."""
         if self._control_mode != ControlMode.AUTO:
             return False
-        self.update(update.state, update.events)
+        # O Provider não sabe como a TV mostra o campo: o lado fica o que o operador escolheu.
+        direction = self._state.opening_field_direction
+        self.update(update.state.with_changes(opening_field_direction=direction), update.events)
         return True
 
     def apply_manual(self, state: GameState, events: Iterable[GameEvent] = ()) -> None:
@@ -112,6 +115,15 @@ class GameService:
         """Registra um evento pelo painel: aplica o efeito no placar/posse e o anuncia."""
         self._require_manual()
         self.apply_manual(apply_event(self._state, event), [event])
+
+    def flip_field_direction(self) -> None:
+        """Inverte a Field Direction. Vale em qualquer modo; em MANUAL entra no desfazer."""
+        flipped = "right" if self._state.opening_field_direction == "left" else "left"
+        state = self._state.with_changes(opening_field_direction=flipped)
+        if self._control_mode == ControlMode.MANUAL:
+            self.apply_manual(state)
+        else:
+            self.update(state)
 
     def undo(self) -> None:
         self._require_manual()

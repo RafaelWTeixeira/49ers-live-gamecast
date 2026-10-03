@@ -14,6 +14,11 @@ class ProviderUpdate:
 class Provider(ABC):
     """Fonte de dados de jogo. Cada implementação traduz a sua fonte para o Game State."""
 
+    @property
+    def name(self) -> str:
+        """Como o Provider aparece no painel de controle."""
+        return type(self).__name__.removesuffix("Provider")
+
     @abstractmethod
     async def fetch(self) -> ProviderUpdate:
         """Devolve o Game State mais recente e os eventos desde o último fetch.

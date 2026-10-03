@@ -1,0 +1,1181 @@
+{
+ "header": {
+  "competitions": [
+   {
+    "date": "2026-09-27T20:05Z"
+   }
+  ]
+ },
+ "boxscore": {
+  "players": [
+   {
+    "team": {
+     "id": "22",
+     "abbreviation": "ARI"
+    },
+    "statistics": [
+     {
+      "name": "passing",
+      "keys": [
+       "completions/passingAttempts",
+       "passingYards",
+       "yardsPerPassAttempt",
+       "passingTouchdowns",
+       "interceptions",
+       "sacks-sackYardsLost",
+       "adjQBR",
+       "QBRating"
+      ],
+      "text": "Arizona Passing",
+      "labels": [
+       "C/ATT",
+       "YDS",
+       "AVG",
+       "TD",
+       "INT",
+       "SACKS",
+       "QBR",
+       "RTG"
+      ],
+      "descriptions": [
+       "Completions/Attempts",
+       "Yards",
+       "Yards Per Pass Attempt",
+       "Touchdowns",
+       "Interceptions",
+       "Sacks",
+       "Adjusted QBR",
+       "Passer Rating"
+      ],
+      "athletes": [
+       {
+        "athlete": {
+         "id": "2578570",
+         "uid": "s:20~l:28~a:2578570",
+         "guid": "efcb42e5-0bef-62d1-b58b-dbc17fde2479",
+         "firstName": "Jacoby",
+         "lastName": "Brissett",
+         "displayName": "Jacoby Brissett",
+         "links": [
+          {
+           "rel": [
+            "playercard",
+            "desktop",
+            "athlete"
+           ],
+           "href": "https://www.espn.com/nfl/player/_/id/2578570/jacoby-brissett",
+           "text": "Player Card"
+          }
+         ],
+         "headshot": {
+          "href": "https://a.espncdn.com/i/headshots/nfl/players/full/2578570.png",
+          "alt": "Jacoby Brissett"
+         },
+         "jersey": "7"
+        },
+        "stats": [
+         "38/52",
+         "280",
+         "5.4",
+         "2",
+         "0",
+         "2-8",
+         "72.9",
+         "98.2"
+        ]
+       }
+      ],
+      "totals": [
+       "38/52",
+       "272",
+       "5.4",
+       "2",
+       "0",
+       "2-8",
+       "--",
+       "98.2"
+      ]
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "25",
+     "abbreviation": "SF"
+    },
+    "statistics": [
+     {
+      "name": "passing",
+      "keys": [
+       "completions/passingAttempts",
+       "passingYards",
+       "yardsPerPassAttempt",
+       "passingTouchdowns",
+       "interceptions",
+       "sacks-sackYardsLost",
+       "adjQBR",
+       "QBRating"
+      ],
+      "text": "San Francisco Passing",
+      "labels": [
+       "C/ATT",
+       "YDS",
+       "AVG",
+       "TD",
+       "INT",
+       "SACKS",
+       "QBR",
+       "RTG"
+      ],
+      "descriptions": [
+       "Completions/Attempts",
+       "Yards",
+       "Yards Per Pass Attempt",
+       "Touchdowns",
+       "Interceptions",
+       "Sacks",
+       "Adjusted QBR",
+       "Passer Rating"
+      ],
+      "athletes": [
+       {
+        "athlete": {
+         "id": "4361741",
+         "uid": "s:20~l:28~a:4361741",
+         "guid": "d2e39a38-732d-5a24-f242-a4f9de87dabe",
+         "firstName": "Brock",
+         "lastName": "Purdy",
+         "displayName": "Brock Purdy",
+         "links": [
+          {
+           "rel": [
+            "playercard",
+            "desktop",
+            "athlete"
+           ],
+           "href": "https://www.espn.com/nfl/player/_/id/4361741/brock-purdy",
+           "text": "Player Card"
+          }
+         ],
+         "headshot": {
+          "href": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png",
+          "alt": "Brock Purdy"
+         },
+         "jersey": "13"
+        },
+        "stats": [
+         "15/27",
+         "297",
+         "11.0",
+         "4",
+         "0",
+         "0-0",
+         "85.1",
+         "133.8"
+        ]
+       }
+      ],
+      "totals": [
+       "15/27",
+       "297",
+       "11.0",
+       "4",
+       "0",
+       "0-0",
+       "--",
+       "133.8"
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "scoringPlays": [
+  {
+   "id": "401872958503",
+   "type": {
+    "id": "67",
+    "text": "Passing Touchdown",
+    "abbreviation": "TD"
+   },
+   "text": "Brock Purdy complete pass to Mike Evans for 2 yards, lateral to Deebo Samuel for 80 yards (Eddy Pineiro Kick)",
+   "team": {
+    "id": "25",
+    "uid": "s:20~l:28~t:25",
+    "displayName": "San Francisco 49ers",
+    "abbreviation": "SF",
+    "links": [
+     {
+      "href": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers",
+      "text": "Clubhouse"
+     },
+     {
+      "href": "https://www.espn.com/nfl/team/schedule/_/name/sf",
+      "text": "Schedule"
+     }
+    ],
+    "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
+    "logos": [
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "default"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/sf.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/sf.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/scoreboard/sf.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:57Z"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4018729581079",
+   "type": {
+    "id": "67",
+    "text": "Passing Touchdown",
+    "abbreviation": "TD"
+   },
+   "text": "Mike Evans 23 Yd pass from Brock Purdy (Eddy Pineiro Kick)",
+   "team": {
+    "id": "25",
+    "uid": "s:20~l:28~t:25",
+    "displayName": "San Francisco 49ers",
+    "abbreviation": "SF",
+    "links": [
+     {
+      "href": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers",
+      "text": "Clubhouse"
+     },
+     {
+      "href": "https://www.espn.com/nfl/team/schedule/_/name/sf",
+      "text": "Schedule"
+     }
+    ],
+    "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
+    "logos": [
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "default"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/sf.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/sf.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/scoreboard/sf.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:57Z"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4018729581816",
+   "type": {
+    "id": "59",
+    "text": "Field Goal Good",
+    "abbreviation": "FG"
+   },
+   "text": "Chad Ryland 26 Yd Field Goal",
+   "team": {
+    "id": "22",
+    "uid": "s:20~l:28~t:22",
+    "displayName": "Arizona Cardinals",
+    "abbreviation": "ARI",
+    "links": [
+     {
+      "href": "https://www.espn.com/nfl/team/_/name/ari/arizona-cardinals",
+      "text": "Clubhouse"
+     },
+     {
+      "href": "https://www.espn.com/nfl/team/schedule/_/name/ari",
+      "text": "Schedule"
+     }
+    ],
+    "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/ari.png",
+    "logos": [
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/ari.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "default"
+      ],
+      "lastUpdated": "2024-06-25T18:43Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/ari.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:43Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ari.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard"
+      ],
+      "lastUpdated": "2024-06-25T18:44Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/scoreboard/ari.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:43Z"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4018729582252",
+   "type": {
+    "id": "59",
+    "text": "Field Goal Good",
+    "abbreviation": "FG"
+   },
+   "text": "Chad Ryland 41 Yd Field Goal",
+   "team": {
+    "id": "22",
+    "uid": "s:20~l:28~t:22",
+    "displayName": "Arizona Cardinals",
+    "abbreviation": "ARI",
+    "links": [
+     {
+      "href": "https://www.espn.com/nfl/team/_/name/ari/arizona-cardinals",
+      "text": "Clubhouse"
+     },
+     {
+      "href": "https://www.espn.com/nfl/team/schedule/_/name/ari",
+      "text": "Schedule"
+     }
+    ],
+    "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/ari.png",
+    "logos": [
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/ari.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "default"
+      ],
+      "lastUpdated": "2024-06-25T18:43Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/ari.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:43Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ari.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard"
+      ],
+      "lastUpdated": "2024-06-25T18:44Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/scoreboard/ari.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:43Z"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4018729582350",
+   "type": {
+    "id": "59",
+    "text": "Field Goal Good",
+    "abbreviation": "FG"
+   },
+   "text": "Eddy Pineiro 57 Yd Field Goal",
+   "team": {
+    "id": "25",
+    "uid": "s:20~l:28~t:25",
+    "displayName": "San Francisco 49ers",
+    "abbreviation": "SF",
+    "links": [
+     {
+      "href": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers",
+      "text": "Clubhouse"
+     },
+     {
+      "href": "https://www.espn.com/nfl/team/schedule/_/name/sf",
+      "text": "Schedule"
+     }
+    ],
+    "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
+    "logos": [
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "default"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/sf.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/sf.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/scoreboard/sf.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:57Z"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4018729582607",
+   "type": {
+    "id": "68",
+    "text": "Rushing Touchdown",
+    "abbreviation": "TD"
+   },
+   "text": "Christian McCaffrey 1 Yd Rush (Eddy Pineiro PAT Failed)",
+   "team": {
+    "id": "25",
+    "uid": "s:20~l:28~t:25",
+    "displayName": "San Francisco 49ers",
+    "abbreviation": "SF",
+    "links": [
+     {
+      "href": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers",
+      "text": "Clubhouse"
+     },
+     {
+      "href": "https://www.espn.com/nfl/team/schedule/_/name/sf",
+      "text": "Schedule"
+     }
+    ],
+    "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
+    "logos": [
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "default"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/sf.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/sf.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/scoreboard/sf.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:57Z"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4018729583007",
+   "type": {
+    "id": "67",
+    "text": "Passing Touchdown",
+    "abbreviation": "TD"
+   },
+   "text": "Michael Wilson 5 Yd pass from Jacoby Brissett (Chad Ryland Kick)",
+   "team": {
+    "id": "22",
+    "uid": "s:20~l:28~t:22",
+    "displayName": "Arizona Cardinals",
+    "abbreviation": "ARI",
+    "links": [
+     {
+      "href": "https://www.espn.com/nfl/team/_/name/ari/arizona-cardinals",
+      "text": "Clubhouse"
+     },
+     {
+      "href": "https://www.espn.com/nfl/team/schedule/_/name/ari",
+      "text": "Schedule"
+     }
+    ],
+    "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/ari.png",
+    "logos": [
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/ari.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "default"
+      ],
+      "lastUpdated": "2024-06-25T18:43Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/ari.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:43Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ari.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard"
+      ],
+      "lastUpdated": "2024-06-25T18:44Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/scoreboard/ari.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:43Z"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4018729583545",
+   "type": {
+    "id": "67",
+    "text": "Passing Touchdown",
+    "abbreviation": "TD"
+   },
+   "text": "Jeremiyah Love 1 Yd pass from Jacoby Brissett (Chad Ryland Kick)",
+   "team": {
+    "id": "22",
+    "uid": "s:20~l:28~t:22",
+    "displayName": "Arizona Cardinals",
+    "abbreviation": "ARI",
+    "links": [
+     {
+      "href": "https://www.espn.com/nfl/team/_/name/ari/arizona-cardinals",
+      "text": "Clubhouse"
+     },
+     {
+      "href": "https://www.espn.com/nfl/team/schedule/_/name/ari",
+      "text": "Schedule"
+     }
+    ],
+    "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/ari.png",
+    "logos": [
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/ari.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "default"
+      ],
+      "lastUpdated": "2024-06-25T18:43Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/ari.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:43Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ari.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard"
+      ],
+      "lastUpdated": "2024-06-25T18:44Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/scoreboard/ari.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:43Z"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4018729583844",
+   "type": {
+    "id": "67",
+    "text": "Passing Touchdown",
+    "abbreviation": "TD"
+   },
+   "text": "George Kittle 10 Yd pass from Brock Purdy (Eddy Pineiro PAT Failed)",
+   "team": {
+    "id": "25",
+    "uid": "s:20~l:28~t:25",
+    "displayName": "San Francisco 49ers",
+    "abbreviation": "SF",
+    "links": [
+     {
+      "href": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers",
+      "text": "Clubhouse"
+     },
+     {
+      "href": "https://www.espn.com/nfl/team/schedule/_/name/sf",
+      "text": "Schedule"
+     }
+    ],
+    "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
+    "logos": [
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "default"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/sf.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/sf.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/scoreboard/sf.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:57Z"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4018729584232",
+   "type": {
+    "id": "68",
+    "text": "Rushing Touchdown",
+    "abbreviation": "TD"
+   },
+   "text": "Jacoby Brissett 1 Yd Rush (Chad Ryland Kick)",
+   "team": {
+    "id": "22",
+    "uid": "s:20~l:28~t:22",
+    "displayName": "Arizona Cardinals",
+    "abbreviation": "ARI",
+    "links": [
+     {
+      "href": "https://www.espn.com/nfl/team/_/name/ari/arizona-cardinals",
+      "text": "Clubhouse"
+     },
+     {
+      "href": "https://www.espn.com/nfl/team/schedule/_/name/ari",
+      "text": "Schedule"
+     }
+    ],
+    "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/ari.png",
+    "logos": [
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/ari.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "default"
+      ],
+      "lastUpdated": "2024-06-25T18:43Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/ari.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:43Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ari.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard"
+      ],
+      "lastUpdated": "2024-06-25T18:44Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/scoreboard/ari.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:43Z"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4018729584470",
+   "type": {
+    "id": "67",
+    "text": "Passing Touchdown",
+    "abbreviation": "TD"
+   },
+   "text": "George Kittle 20 Yd pass from Brock Purdy (Eddy Pineiro Kick)",
+   "team": {
+    "id": "25",
+    "uid": "s:20~l:28~t:25",
+    "displayName": "San Francisco 49ers",
+    "abbreviation": "SF",
+    "links": [
+     {
+      "href": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers",
+      "text": "Clubhouse"
+     },
+     {
+      "href": "https://www.espn.com/nfl/team/schedule/_/name/sf",
+      "text": "Schedule"
+     }
+    ],
+    "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
+    "logos": [
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "default"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/sf.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/sf.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/scoreboard/sf.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:57Z"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4018729584664",
+   "type": {
+    "id": "59",
+    "text": "Field Goal Good",
+    "abbreviation": "FG"
+   },
+   "text": "Chad Ryland 49 Yd Field Goal",
+   "team": {
+    "id": "22",
+    "uid": "s:20~l:28~t:22",
+    "displayName": "Arizona Cardinals",
+    "abbreviation": "ARI",
+    "links": [
+     {
+      "href": "https://www.espn.com/nfl/team/_/name/ari/arizona-cardinals",
+      "text": "Clubhouse"
+     },
+     {
+      "href": "https://www.espn.com/nfl/team/schedule/_/name/ari",
+      "text": "Schedule"
+     }
+    ],
+    "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/ari.png",
+    "logos": [
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/ari.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "default"
+      ],
+      "lastUpdated": "2024-06-25T18:43Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/ari.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:43Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ari.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard"
+      ],
+      "lastUpdated": "2024-06-25T18:44Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/scoreboard/ari.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:43Z"
+     }
+    ]
+   }
+  }
+ ],
+ "drives": {
+  "previous": [
+   {
+    "plays": [
+     {
+      "id": "4018729584691",
+      "type": {
+       "id": "53",
+       "text": "Kickoff",
+       "abbreviation": "K"
+      },
+      "text": "C.Ryland kicks onside 10 yards from ARZ 35 to ARZ 45. D.Samuel (didn't try to advance) to ARZ 45 for no gain.",
+      "start": {
+       "down": 0,
+       "distance": 0,
+       "yardLine": 65,
+       "yardsToEndzone": 65,
+       "team": {
+        "id": "22"
+       }
+      },
+      "end": {
+       "down": 1,
+       "distance": 10,
+       "yardLine": 55,
+       "yardsToEndzone": 45,
+       "downDistanceText": "1st & 10 at ARI 45",
+       "shortDownDistanceText": "1st & 10",
+       "possessionText": "ARI 45",
+       "team": {
+        "id": "25"
+       }
+      },
+      "statYardage": 10,
+      "isTurnover": false,
+      "isPenalty": false,
+      "scoringPlay": false
+     },
+     {
+      "id": "4018729584716",
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "text": " B.Purdy kneels to ARZ 46 for -1 yards.",
+      "start": {
+       "down": 1,
+       "distance": 10,
+       "yardLine": 55,
+       "yardsToEndzone": 45,
+       "downDistanceText": "1st & 10 at ARI 45",
+       "shortDownDistanceText": "1st & 10",
+       "possessionText": "ARI 45",
+       "team": {
+        "id": "25"
+       }
+      },
+      "end": {
+       "down": 2,
+       "distance": 11,
+       "yardLine": 54,
+       "yardsToEndzone": 46,
+       "downDistanceText": "2nd & 11 at ARI 46",
+       "shortDownDistanceText": "2nd & 11",
+       "possessionText": "ARI 46",
+       "team": {
+        "id": "25"
+       }
+      },
+      "statYardage": -1,
+      "isTurnover": false,
+      "isPenalty": false,
+      "scoringPlay": false
+     },
+     {
+      "id": "4018729584739",
+      "type": {
+       "id": "66",
+       "text": "End of Game",
+       "abbreviation": "EG"
+      },
+      "text": "END GAME",
+      "start": {
+       "down": 0,
+       "distance": 0,
+       "yardLine": 54,
+       "yardsToEndzone": 0,
+       "team": {
+        "id": "25"
+       }
+      },
+      "end": {
+       "down": 0,
+       "distance": 11,
+       "yardLine": 54,
+       "yardsToEndzone": 46,
+       "team": {
+        "id": "25"
+       }
+      },
+      "statYardage": 0,
+      "isTurnover": false,
+      "isPenalty": false,
+      "scoringPlay": false
+     }
+    ]
+   }
+  ]
+ }
+}

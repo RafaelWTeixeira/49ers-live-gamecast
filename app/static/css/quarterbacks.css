@@ -28,7 +28,7 @@
 }
 
 .qb--opponent {
-  --qb-accent: var(--opp-primary);
+  --qb-accent: var(--opp-secondary);
 }
 
 .qb--featured {

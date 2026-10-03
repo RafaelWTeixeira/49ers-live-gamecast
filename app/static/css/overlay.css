@@ -4,9 +4,9 @@
   --white: #FFFFFF;
   --muted: #B9B3A8;
 
-  /* Opponent: valores fixos até o Game State chegar. */
-  --opp-primary: #FB4F14;
-  --opp-secondary: #0A2343;
+  /* Opponent: valores fixos até o Game State chegar. Primária = fundo, secundária = destaque. */
+  --opp-primary: #0A2343;
+  --opp-secondary: #FC4C02;
 
   --page: #0C0C0E;
 

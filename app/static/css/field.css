@@ -41,8 +41,8 @@
 }
 
 .endzone--opponent {
-  background: var(--opp-secondary);
-  color: var(--opp-primary);
+  background: var(--opp-primary);
+  color: var(--opp-secondary);
 }
 
 .playing-field {

@@ -325,6 +325,18 @@ button:disabled {
 
 /* ---------- Preview ---------- */
 
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.card-header h2 {
+  margin-bottom: 0;
+}
+
 /* Overlay real (1920×1080) reduzido a 30%. */
 .preview {
   position: relative;

@@ -26,8 +26,8 @@
 }
 
 .event-callout[data-side="opponent"] {
-  --callout-color: var(--opp-secondary);
-  --callout-accent: var(--opp-primary);
+  --callout-color: var(--opp-primary);
+  --callout-accent: var(--opp-secondary);
 }
 
 .event-title {

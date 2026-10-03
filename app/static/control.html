@@ -150,13 +150,16 @@
 
           <div class="tool-row">
             <button type="button" class="secondary" data-action="undo">↶ Desfazer</button>
-            <button type="button" class="secondary" data-action="flip-field">⇄ Inverter lado do campo</button>
           </div>
         </fieldset>
       </section>
 
       <section class="card">
-        <h2>Preview do overlay</h2>
+        <div class="card-header">
+          <h2>Preview do overlay</h2>
+          <!-- Vale em AUTO e em MANUAL: o lado do campo é escolha do operador (docs/adr/0006). -->
+          <button type="button" class="secondary" data-action="flip-field">⇄ Inverter lado do campo</button>
+        </div>
         <div class="preview">
           <iframe src="/overlay" title="Preview do overlay" tabindex="-1"></iframe>
         </div>

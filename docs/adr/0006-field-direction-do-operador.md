@@ -1,0 +1,3 @@
+# Field Direction é escolha do operador, em qualquer Control Mode
+
+O lado da tela em que cada time defende segue o que o público vê na TV. Nenhum Provider informa isso: a ESPN dá a posição da bola, mas não como a transmissão enquadra o campo. Por isso a Field Direction fica com o operador nos dois Control Modes. Em Auto, as atualizações do Provider preservam o lado escolhido, e o botão "Inverter lado do campo" do painel funciona sem trocar para Manual. É uma exceção deliberada ao `docs/adr/0002`: o Control Mode decide quem altera os dados do jogo, e a Field Direction é apresentação, não dado do jogo.

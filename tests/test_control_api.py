@@ -12,7 +12,7 @@ from app.services.provider_sync import ProviderHealth
 client = TestClient(app)
 
 SF = Team(abbr="SF", name="49ers", primary_color="#AA0000", secondary_color="#B3995D")
-DEN = Team(abbr="DEN", name="Broncos", primary_color="#FB4F14", secondary_color="#0A2343")
+DEN = Team(abbr="DEN", name="Broncos", primary_color="#0A2343", secondary_color="#FC4C02")
 DRIVE = GameState(
     featured=SF,
     opponent=DEN,
@@ -55,6 +55,7 @@ def test_status_reports_mode_and_provider(auto_service):
     assert body["mode"] == "AUTO"
     assert body["can_undo"] is False
     assert body["provider"]["healthy"] is False
+    assert body["provider"]["name"] == "Mock"
 
 
 def test_switching_to_manual(auto_service):
@@ -69,8 +70,14 @@ def test_manual_actions_are_refused_in_auto(auto_service):
 
     assert client.post("/api/control/events", json=touchdown).status_code == 409
     assert client.put("/api/control/game", json=DRIVE.stored_fields()).status_code == 409
-    assert client.post("/api/control/flip-field").status_code == 409
     assert auto_service.state == DRIVE
+
+
+def test_flip_field_is_allowed_in_auto(auto_service):
+    response = client.post("/api/control/flip-field")
+
+    assert response.status_code == 200
+    assert auto_service.state.field_direction == "right"
 
 
 def test_editing_the_game(manual_service):

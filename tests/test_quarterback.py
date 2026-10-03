@@ -58,7 +58,7 @@ class TestStoredFields:
             secondary_color="#B3995D",
             quarterback=qb(completions=1, attempts=1, yards=10),
         )
-        den = Team(abbr="DEN", name="Broncos", primary_color="#FB4F14", secondary_color="#0A2343")
+        den = Team(abbr="DEN", name="Broncos", primary_color="#0A2343", secondary_color="#FC4C02")
         state = GameState(featured=sf, opponent=den)
 
         stored = state.stored_fields()

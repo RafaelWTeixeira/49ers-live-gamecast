@@ -1,7 +1,7 @@
 # Operação no StreamYard
 
 Como colocar o Gamecast na live: o StreamYard compõe a cena e o Gamecast entra como compartilhamento de tela
-(`docs/adr/0003`).
+(`docs/adr/0003`). Os dados vêm da ESPN em modo AUTO; o MANUAL é o plano B.
 
 ## Como o Gamecast se comporta na tela
 
@@ -12,19 +12,25 @@ Como colocar o Gamecast na live: o StreamYard compõe a cena e o Gamecast entra 
 
 ## 1. Antes da live
 
-Suba o servidor:
+Suba o servidor com os dados da ESPN:
 
-```sh
-uv run uvicorn app.main:app
+```powershell
+.\scripts\live.ps1
 ```
 
-Em live, rode sem `--reload`: um arquivo salvo por engano reiniciaria o servidor no meio do jogo. Se ele reiniciar
-mesmo assim, o Gamecast reconecta sozinho e o jogo é retomado do snapshot.
+O script roda sem `--reload` (um arquivo salvo por engano não reinicia o servidor no meio do jogo) e encontra
+sozinho o jogo do 49ers em andamento ou o próximo. Se o servidor reiniciar, o Gamecast reconecta sozinho e o jogo é
+retomado do snapshot.
 
 Abra no navegador:
 
 - `http://localhost:8000/control`: painel do operador, numa aba ou janela qualquer.
 - `http://localhost:8000/overlay`: o Gamecast, numa **janela separada**, usada só para ele.
+
+No painel, confira:
+
+- **AUTO** selecionado e o indicador do Provider verde, com o jogo certo (ex.: `ESPN DEN @ SF: OK`).
+- **Pré-jogo** e times certos no preview.
 
 ## 2. Janela do Gamecast
 
@@ -46,16 +52,38 @@ A resolução do compartilhamento depende do plano do StreamYard.
 
 ## 4. Durante a live
 
-- **AUTO:** o Provider atualiza o jogo sozinho. O painel mostra se ele está respondendo.
-- **MANUAL:** use quando a API cair ou para corrigir algo. Você edita o placar, a situação e os eventos pelo painel,
-  e as estatísticas dos QBs somem até voltar para AUTO.
-- O painel tem uma prévia do Gamecast, então dá para conferir sem olhar o StreamYard.
+**Lado do campo.** No kickoff, compare o campo do Gamecast com a TV. Se o 49ers estiver defendendo o lado oposto,
+clique em **⇄ Inverter lado do campo** (no card do preview; funciona em AUTO). A troca de lado no 2º e no 4º
+quartos é automática. Confira de novo no início do 2º quarto e na prorrogação.
 
-## 5. Checklist
+**AUTO (normal).** A ESPN atualiza placar, relógio, situação, última jogada, QBs e eventos sozinha.
 
-- [ ] Servidor rodando sem `--reload`
-- [ ] `/control` aberto e Control Mode correto (AUTO com o Provider OK, ou MANUAL)
-- [ ] Times, placar e lado do campo conferidos no painel
+- O placar e a situação chegam primeiro. As estatísticas dos QBs podem chegar alguns segundos depois e, às vezes,
+  com até um minuto de atraso.
+- O Gamecast segue a ESPN, que fica alguns segundos atrás da TV. Anote quanto, para avaliarmos depois.
+
+**Quando passar para MANUAL.** Use quando:
+
+- o indicador do Provider ficar vermelho ("falhando") por mais de alguns segundos;
+- o jogo ficar travado ou visivelmente errado.
+
+Em MANUAL você edita o placar, a situação e os eventos pelo painel, e as estatísticas dos QBs somem do Gamecast.
+Quando a ESPN voltar, clique em **AUTO**: o Provider assume de novo e as estatísticas voltam.
+
+**Correções.** Em AUTO não é possível editar o jogo. Para corrigir algo, passe para MANUAL, corrija e volte para
+AUTO quando a ESPN alcançar.
+
+## 5. Depois do jogo
+
+As respostas da ESPN ficam gravadas em `data/recordings/<id do jogo>/`. Guarde essa pasta: ela serve para reproduzir
+o jogo e ajustar o Provider.
+
+## 6. Checklist
+
+- [ ] `.\scripts\live.ps1` rodando
+- [ ] Painel em AUTO, com `ESPN <jogo>: OK`
+- [ ] Times e fase conferidos no preview
 - [ ] Janela do Gamecast dedicada e em tela cheia
 - [ ] Compartilhamento ativo, layout com câmeras ao lado e banner configurado no StreamYard
+- [ ] No kickoff: lado do campo conferido com a TV
 - [ ] Prévia do StreamYard mostrando o Gamecast inteiro e legível

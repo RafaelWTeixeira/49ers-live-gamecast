@@ -51,7 +51,7 @@ Situação em que a Line to Gain coincide com a goal line adversária: não há 
 _Avoid_: red zone (é outra coisa)
 
 **Field Direction**:
-Para qual lado da tela fica a goal line defendida pelo Featured Team no quarto atual; ela se inverte a cada troca de lado do jogo real.
+Para qual lado da tela fica a goal line defendida pelo Featured Team no quarto atual; ela se inverte a cada troca de lado do jogo real. É escolha do operador, para casar com a TV, e nenhum Provider a altera.
 _Avoid_: orientation, lado
 
 **Field Position Label**:

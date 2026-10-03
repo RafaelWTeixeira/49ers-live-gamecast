@@ -16,8 +16,8 @@
 }
 
 .team--opponent {
-  --team-color: var(--opp-secondary);
-  --team-accent: var(--opp-primary);
+  --team-color: var(--opp-primary);
+  --team-accent: var(--opp-secondary);
 }
 
 .team--featured {

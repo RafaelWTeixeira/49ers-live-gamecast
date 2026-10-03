@@ -12,7 +12,7 @@ from app.services.game_service import ControlModeError, GameService, NothingToUn
 from app.services.provider_sync import ProviderHealth, sync_once
 
 SF = Team(abbr="SF", name="49ers", primary_color="#AA0000", secondary_color="#B3995D")
-DEN = Team(abbr="DEN", name="Broncos", primary_color="#FB4F14", secondary_color="#0A2343")
+DEN = Team(abbr="DEN", name="Broncos", primary_color="#0A2343", secondary_color="#FC4C02")
 PRE_GAME = GameState(featured=SF, opponent=DEN)
 TOUCHDOWN = GameState(featured=SF.model_copy(update={"score": 7}), opponent=DEN)
 TOUCHDOWN_EVENT = GameEvent(kind=GameEventKind.TOUCHDOWN, side="featured")
@@ -165,6 +165,25 @@ class TestControlMode:
         GameService.restore(snapshot, fallback).set_control_mode(ControlMode.MANUAL)
 
         assert GameService.restore(snapshot, fallback).control_mode == ControlMode.MANUAL
+
+
+class TestFieldDirection:
+    def test_provider_updates_keep_the_direction_chosen_by_the_operator(self):
+        service = GameService(PRE_GAME)
+        service.flip_field_direction()
+
+        sync(ProviderUpdate(TOUCHDOWN), service)
+
+        assert service.state.featured.score == 7
+        assert service.state.opening_field_direction == "right"
+
+    def test_flip_in_manual_can_be_undone(self):
+        service = manual()
+        service.flip_field_direction()
+
+        service.undo()
+
+        assert service.state.opening_field_direction == "left"
 
 
 class TestQuarterbackStatsInManual:

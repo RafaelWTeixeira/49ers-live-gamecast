@@ -22,7 +22,13 @@ Requer [uv](https://docs.astral.sh/uv/).
 
 ```sh
 uv sync
-uv run uvicorn app.main:app --reload
+uv run uvicorn app.main:app --reload       # desenvolvimento, com o jogo simulado
+```
+
+Numa live, com o jogo real da ESPN (ver [docs/STREAMYARD.md](docs/STREAMYARD.md)):
+
+```powershell
+.\scripts\live.ps1
 ```
 
 - `http://localhost:8000/` — health check
@@ -33,12 +39,24 @@ uv run uvicorn app.main:app --reload
 
 ## Dados
 
-- O jogo vem do `MockProvider`, que reproduz `mock/plays.json` em loop a partir de `mock/game.json`.
-  O intervalo entre jogadas é `GAMECAST_SYNC_INTERVAL` (segundos, padrão 3).
+O Provider é escolhido por `GAMECAST_PROVIDER`:
+
+- `mock` (padrão): o `MockProvider` reproduz `mock/plays.json` em loop a partir de `mock/game.json`.
+- `espn`: o jogo real, pela API pública da ESPN (ver `docs/adr/0005`). Opções:
+  - `GAMECAST_FEATURED_TEAM`: sigla do Featured Team na ESPN (padrão `SF`).
+  - `GAMECAST_ESPN_EVENT`: id do jogo na ESPN. Sem ele, vale o jogo do Featured Team em andamento ou o próximo.
+  - `GAMECAST_ESPN_LEAGUE`: `nfl` (padrão). `college-football` serve para testar com jogos ao vivo de sábado,
+    desde que as siglas tenham até 3 letras.
+  - Cada resposta da ESPN que muda é gravada em `data/recordings/<evento>/` (gzip).
+
+`GAMECAST_SYNC_INTERVAL` é o intervalo entre consultas ao Provider (segundos, padrão 3; `scripts/live.ps1` usa 4).
+
 - Cada mudança grava um snapshot em `data/game_state.json` (Game State + Control Mode), recarregado ao reiniciar o servidor.
 - Em AUTO o Provider controla o jogo; em MANUAL, só o painel (ver `docs/adr/0002`). Sem snapshot, o modo inicial é
   `GAMECAST_CONTROL_MODE` (`AUTO` por padrão). Para uma live só com placar manual, use `GAMECAST_CONTROL_MODE=MANUAL`.
 - As estatísticas dos QBs vêm só do Provider: em MANUAL elas saem do Gamecast (ver `docs/adr/0004`).
+- O lado do campo (Field Direction) é do operador nos dois modos: "Inverter lado do campo" funciona também em AUTO
+  (ver `docs/adr/0006`).
 
 ## Desenvolvimento
 

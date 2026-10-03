@@ -11,7 +11,7 @@ from app.providers.base import ProviderUpdate
 from app.providers.mock_provider import MockProvider, apply_play
 
 SF = Team(abbr="SF", name="49ers", primary_color="#AA0000", secondary_color="#B3995D")
-DEN = Team(abbr="DEN", name="Broncos", primary_color="#FB4F14", secondary_color="#0A2343")
+DEN = Team(abbr="DEN", name="Broncos", primary_color="#0A2343", secondary_color="#FC4C02")
 KICKOFF = GameState(featured=SF, opponent=DEN)
 
 

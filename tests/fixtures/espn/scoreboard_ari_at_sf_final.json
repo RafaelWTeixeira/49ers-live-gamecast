@@ -1,0 +1,54 @@
+{
+ "events": [
+  {
+   "id": "401872958",
+   "shortName": "ARI @ SF",
+   "competitions": [
+    {
+     "id": "401872958",
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 4,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      },
+      "isTBDFlex": false
+     },
+     "competitors": [
+      {
+       "id": "25",
+       "homeAway": "home",
+       "score": "36",
+       "team": {
+        "id": "25",
+        "abbreviation": "SF",
+        "name": "49ers",
+        "color": "aa0000",
+        "alternateColor": "b3995d"
+       }
+      },
+      {
+       "id": "22",
+       "homeAway": "away",
+       "score": "30",
+       "team": {
+        "id": "22",
+        "abbreviation": "ARI",
+        "name": "Cardinals",
+        "color": "a40227",
+        "alternateColor": "ffffff"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

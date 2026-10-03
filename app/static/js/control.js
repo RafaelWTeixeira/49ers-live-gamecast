@@ -173,9 +173,9 @@ function renderControl(status) {
       : "Modo AUTO: o Provider controla o jogo. Mude para MANUAL para editar.";
 
   const pill = document.querySelector('[data-status="provider"]');
-  const { healthy, last_error: lastError, last_success_at: lastSuccess } = status.provider;
+  const { name, healthy, last_error: lastError, last_success_at: lastSuccess } = status.provider;
   pill.dataset.state = healthy ? "ok" : lastError ? "error" : "";
-  pill.textContent = healthy ? "Provider: OK" : lastError ? "Provider: falhando" : "Provider: aguardando";
+  pill.textContent = `${name}: ${healthy ? "OK" : lastError ? "falhando" : "aguardando"}`;
   pill.title = lastError ?? (lastSuccess ? `Última resposta: ${lastSuccess}` : "");
 
   if (mode !== "MANUAL" && dirty && currentState) fillForm(currentState);
@@ -243,7 +243,7 @@ document.querySelector('[data-action="undo"]').addEventListener("click", () => {
 });
 
 document.querySelector('[data-action="flip-field"]').addEventListener("click", () => {
-  if (!requireCleanForm()) return;
+  if (mode === "MANUAL" && !requireCleanForm()) return;
   run(() => api("POST", "/api/control/flip-field"), "Lado do campo invertido.");
 });
 

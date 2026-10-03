@@ -6,7 +6,7 @@ from app.models.game import GamePhase, GameState
 from app.models.team import Team
 
 SF = Team(abbr="SF", name="49ers", primary_color="#AA0000", secondary_color="#B3995D")
-DEN = Team(abbr="DEN", name="Broncos", primary_color="#FB4F14", secondary_color="#0A2343")
+DEN = Team(abbr="DEN", name="Broncos", primary_color="#0A2343", secondary_color="#FC4C02")
 DRIVE = GameState(
     featured=SF,
     opponent=DEN,

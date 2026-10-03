@@ -14,8 +14,8 @@
     "abbr": "DEN",
     "name": "Broncos",
     "score": 0,
-    "primary_color": "#FB4F14",
-    "secondary_color": "#0A2343",
+    "primary_color": "#0A2343",
+    "secondary_color": "#FC4C02",
     "quarterback": { "name": "Bo Nix" }
   },
   "possession": null,
