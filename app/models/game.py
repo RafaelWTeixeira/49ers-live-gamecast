@@ -1,7 +1,7 @@
 from enum import StrEnum
 from typing import Literal, Self
 
-from pydantic import BaseModel, Field, computed_field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, computed_field, model_validator
 
 from app.models.play import Play
 from app.models.team import Team
@@ -25,6 +25,8 @@ class GamePhase(StrEnum):
 class GameState(BaseModel):
     """Fotografia do jogo exibido. Ver GLOSSARY.md e docs/adr/0001."""
 
+    model_config = ConfigDict(extra="forbid")
+
     phase: GamePhase = GamePhase.PRE_GAME
     quarter: int = Field(default=1, ge=1, le=OVERTIME)
     clock: str = Field(default="15:00", pattern=r"^\d{2}:\d{2}$")
@@ -47,6 +49,10 @@ class GameState(BaseModel):
         if self.possession is not None and None in (self.yardline, self.down, self.distance):
             raise ValueError("com posse de bola, yardline, down e distance são obrigatórios")
         return self
+
+    def stored_fields(self) -> dict:
+        """Os campos de entrada, sem os derivados: o que se grava e o que se valida de volta."""
+        return self.model_dump(mode="json", exclude=set(type(self).model_computed_fields))
 
     @computed_field
     @property

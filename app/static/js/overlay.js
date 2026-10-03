@@ -1,8 +1,8 @@
-import { DEMO_STATES } from "./demo.js";
 import { renderField } from "./field.js";
 import { renderScoreboard } from "./scoreboard.js";
 
-const DEMO_INTERVAL_MS = 3000;
+// Até o WebSocket chegar (v0.5), o overlay consulta o backend periodicamente.
+const POLL_INTERVAL_MS = 1000;
 
 const root = document.querySelector(".overlay");
 
@@ -51,20 +51,13 @@ async function loadGame() {
   return response.json();
 }
 
-// ?demo percorre os estados de exemplo; ?demo=N fixa o estado N.
-const demo = new URLSearchParams(location.search).get("demo");
-
-if (demo === null) {
-  loadGame()
-    .then(render)
-    .catch((error) => console.error("Falha ao carregar o Game State:", error));
-} else if (demo !== "") {
-  render(DEMO_STATES[Number(demo)]);
-} else {
-  let index = 0;
-  render(DEMO_STATES[index]);
-  setInterval(() => {
-    index = (index + 1) % DEMO_STATES.length;
-    render(DEMO_STATES[index]);
-  }, DEMO_INTERVAL_MS);
+async function refresh() {
+  try {
+    render(await loadGame());
+  } catch (error) {
+    console.error("Falha ao carregar o Game State:", error);
+  }
 }
+
+refresh();
+setInterval(refresh, POLL_INTERVAL_MS);

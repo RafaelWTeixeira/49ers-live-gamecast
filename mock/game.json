@@ -1,28 +1,25 @@
 {
-  "phase": "LIVE",
-  "quarter": 3,
-  "clock": "08:42",
+  "phase": "PRE_GAME",
+  "quarter": 1,
+  "clock": "15:00",
   "featured": {
     "abbr": "SF",
     "name": "49ers",
-    "score": 17,
+    "score": 0,
     "primary_color": "#AA0000",
     "secondary_color": "#B3995D"
   },
   "opponent": {
     "abbr": "DEN",
     "name": "Broncos",
-    "score": 10,
+    "score": 0,
     "primary_color": "#FB4F14",
     "secondary_color": "#0A2343"
   },
-  "possession": "featured",
-  "yardline": 66,
-  "down": 2,
-  "distance": 6,
+  "possession": null,
+  "yardline": null,
+  "down": null,
+  "distance": null,
   "opening_field_direction": "left",
-  "last_play": {
-    "description": "Purdy pass to Kittle for 8 yards",
-    "yards": 8
-  }
+  "last_play": null
 }

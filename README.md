@@ -19,7 +19,12 @@ uv run uvicorn app.main:app --reload
 - `http://localhost:8000/api/game` — Game State atual (JSON); `/docs` lista a API
 - `http://localhost:8000/overlay` — overlay (usar no OBS como Browser Source 1920×1080)
   - `?preview` — fundo xadrez para enxergar as áreas transparentes
-  - `?demo` — percorre um jogo de exemplo; `?demo=N` fixa o estado N
+
+## Dados
+
+- O jogo vem do `MockProvider`, que reproduz `mock/plays.json` em loop a partir de `mock/game.json`.
+  O intervalo entre jogadas é `GAMECAST_SYNC_INTERVAL` (segundos, padrão 3).
+- Cada mudança grava um snapshot em `data/game_state.json`, recarregado ao reiniciar o servidor.
 
 ## Desenvolvimento
 

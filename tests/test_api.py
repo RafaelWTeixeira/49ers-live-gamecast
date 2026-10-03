@@ -42,10 +42,10 @@ def test_game_returns_current_state_with_derived_fields(game_service):
     assert body["field_direction"] == "left"
 
 
-def test_mock_game_file_is_a_valid_game_state():
+def test_mock_initial_game_is_a_valid_game_state():
     service = GameService.from_file(MOCK_GAME_PATH)
 
-    assert service.state.field_position_label == "DEN 34"
+    assert service.state.phase == "PRE_GAME"
 
 
 def test_overlay_is_served_as_html():
@@ -61,7 +61,7 @@ def test_overlay_stylesheets_are_served():
 
 
 def test_overlay_scripts_are_served():
-    for name in ("overlay", "scoreboard", "field", "demo"):
+    for name in ("overlay", "scoreboard", "field"):
         response = client.get(f"/static/js/{name}.js")
         assert response.status_code == 200
         assert "javascript" in response.headers["content-type"]

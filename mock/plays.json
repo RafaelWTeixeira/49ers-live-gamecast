@@ -1,0 +1,84 @@
+[
+  {
+    "phase": "LIVE", "quarter": 1, "clock": "15:00",
+    "possession": "featured", "yardline": 25, "down": 1, "distance": 10,
+    "last_play": { "description": "Kickoff — touchback", "yards": null }
+  },
+  {
+    "clock": "14:22", "yardline": 31, "down": 2, "distance": 4,
+    "last_play": { "description": "McCaffrey rush up the middle for 6 yards", "yards": 6 }
+  },
+  {
+    "clock": "13:51", "yardline": 49, "down": 1, "distance": 10,
+    "last_play": { "description": "Purdy pass to Kittle for 18 yards", "yards": 18 }
+  },
+  {
+    "clock": "13:12", "yardline": 52, "down": 2, "distance": 7,
+    "last_play": { "description": "McCaffrey rush to the left for 3 yards", "yards": 3 }
+  },
+  {
+    "clock": "12:30", "yardline": 75, "down": 1, "distance": 10,
+    "last_play": { "description": "Purdy pass to Aiyuk for 23 yards", "yards": 23 }
+  },
+  {
+    "clock": "11:48", "yardline": 92, "down": 1, "distance": 8,
+    "last_play": { "description": "Samuel 17-yard catch and run", "yards": 17 }
+  },
+  {
+    "clock": "11:02", "possession": null, "featured": { "score": 6 },
+    "last_play": { "description": "McCaffrey 8-yard touchdown run", "yards": 8 }
+  },
+  {
+    "featured": { "score": 7 },
+    "last_play": { "description": "Moody extra point is good", "yards": null }
+  },
+  {
+    "clock": "10:57", "possession": "opponent", "yardline": 75, "down": 1, "distance": 10,
+    "last_play": { "description": "Kickoff — touchback", "yards": null }
+  },
+  {
+    "clock": "10:21", "yardline": 67, "down": 2, "distance": 2,
+    "last_play": { "description": "Nix pass to Sutton for 8 yards", "yards": 8 }
+  },
+  {
+    "clock": "09:40", "possession": "featured", "yardline": 62, "down": 1, "distance": 10,
+    "last_play": { "description": "Nix pass intercepted by Lenoir", "yards": null }
+  },
+  {
+    "quarter": 2, "clock": "08:15", "yardline": 80, "down": 4, "distance": 3,
+    "last_play": { "description": "Purdy pass incomplete to Jennings", "yards": 0 }
+  },
+  {
+    "clock": "08:10", "possession": null, "featured": { "score": 10 },
+    "last_play": { "description": "Moody 38-yard field goal is good", "yards": null }
+  },
+  {
+    "clock": "01:55", "possession": "opponent", "yardline": 22, "down": 4, "distance": 5,
+    "last_play": { "description": "Nix scramble for 4 yards", "yards": 4 }
+  },
+  {
+    "clock": "01:50", "possession": null, "opponent": { "score": 3 },
+    "last_play": { "description": "Lutz 40-yard field goal is good", "yards": null }
+  },
+  {
+    "phase": "HALFTIME", "clock": "00:00"
+  },
+  {
+    "phase": "LIVE", "quarter": 3, "clock": "15:00",
+    "possession": "opponent", "yardline": 75, "down": 1, "distance": 10,
+    "last_play": { "description": "Kickoff — touchback", "yards": null }
+  },
+  {
+    "quarter": 4, "clock": "02:10", "featured": { "score": 20 }, "opponent": { "score": 13 },
+    "possession": "featured", "yardline": 92, "down": 1, "distance": 8,
+    "last_play": { "description": "Aiyuk 31-yard catch along the sideline", "yards": 31 }
+  },
+  {
+    "clock": "01:24", "possession": null, "featured": { "score": 27 },
+    "last_play": { "description": "Purdy pass to Kittle for 8 yards, TOUCHDOWN (+XP)", "yards": 8 }
+  },
+  {
+    "phase": "FINAL", "clock": "00:00",
+    "last_play": { "description": "Purdy kneels to end the game", "yards": -1 }
+  }
+]
