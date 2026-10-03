@@ -28,7 +28,8 @@ class NothingToUndoError(Exception):
 class GameService:
     """Guarda o Game State e o Control Mode, grava snapshot a cada mudança e avisa os ouvintes.
 
-    Em AUTO só o Provider altera o jogo; em MANUAL, só o operador (docs/adr/0002).
+    Em AUTO só o Provider altera o jogo; em MANUAL, só o operador (docs/adr/0002), e sem
+    estatísticas de QB, que ninguém mantém à mão (docs/adr/0004).
     """
 
     def __init__(
@@ -89,6 +90,9 @@ class GameService:
         self._control_mode = mode
         self._history.clear()
         self._save_snapshot()
+        if mode == ControlMode.MANUAL:
+            # Estatísticas congeladas enganariam: saem até o Provider voltar ao comando.
+            self.update(self._state.without_quarterbacks())
 
     def apply_provider_update(self, update: ProviderUpdate) -> bool:
         """Publica o que veio do Provider, se ele estiver no comando. Devolve se aplicou."""
@@ -99,6 +103,7 @@ class GameService:
 
     def apply_manual(self, state: GameState, events: Iterable[GameEvent] = ()) -> None:
         self._require_manual()
+        state = state.without_quarterbacks()
         if state != self._state:
             self._history = [*self._history, self._state][-UNDO_LIMIT:]
         self.update(state, events)

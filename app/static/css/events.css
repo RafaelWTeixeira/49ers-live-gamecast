@@ -1,7 +1,7 @@
-/* Aviso de Game Event sobre o campo. Sem animação por enquanto. */
+/* Aviso de Game Event sobre o campo (abaixo da faixa dos QBs). Sem animação por enquanto. */
 .event-callout {
   position: absolute;
-  top: 300px;
+  top: 400px;
   left: 50%;
   z-index: 10;
   display: flex;

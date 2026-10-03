@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="/static/css/reset.css">
   <link rel="stylesheet" href="/static/css/overlay.css">
   <link rel="stylesheet" href="/static/css/scoreboard.css">
+  <link rel="stylesheet" href="/static/css/quarterbacks.css">
   <link rel="stylesheet" href="/static/css/field.css">
   <link rel="stylesheet" href="/static/css/events.css">
 
@@ -58,6 +59,32 @@
             <span class="team-name" data-bind="name"></span>
           </div>
           <span class="team-score" data-bind="score"></span>
+        </div>
+      </div>
+
+      <div class="quarterbacks">
+        <div class="qb qb--opponent" data-qb="opponent">
+          <span class="qb-name" data-bind="name"></span>
+          <dl class="qb-stats">
+            <div><dt>C/ATT</dt><dd data-bind="comp-att"></dd></div>
+            <div><dt>Jardas</dt><dd data-bind="yards"></dd></div>
+            <div><dt>TD</dt><dd data-bind="touchdowns"></dd></div>
+            <div><dt>INT</dt><dd data-bind="interceptions"></dd></div>
+            <div class="qb-rating"><dt>Rating</dt><dd data-bind="rating"></dd></div>
+          </dl>
+        </div>
+
+        <span class="quarterbacks-label">QB</span>
+
+        <div class="qb qb--featured" data-qb="featured">
+          <span class="qb-name" data-bind="name"></span>
+          <dl class="qb-stats">
+            <div><dt>C/ATT</dt><dd data-bind="comp-att"></dd></div>
+            <div><dt>Jardas</dt><dd data-bind="yards"></dd></div>
+            <div><dt>TD</dt><dd data-bind="touchdowns"></dd></div>
+            <div><dt>INT</dt><dd data-bind="interceptions"></dd></div>
+            <div class="qb-rating"><dt>Rating</dt><dd data-bind="rating"></dd></div>
+          </dl>
         </div>
       </div>
 

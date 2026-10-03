@@ -108,3 +108,19 @@ def test_flip_field_inverts_direction(manual_service):
     response = client.post("/api/control/flip-field")
 
     assert response.json()["field_direction"] == "right"
+
+
+def test_manual_edits_drop_quarterback_stats(manual_service):
+    edited = DRIVE.stored_fields()
+    edited["featured"]["quarterback"] = {
+        "name": "Brock Purdy",
+        "completions": 17,
+        "attempts": 24,
+        "yards": 237,
+        "touchdowns": 2,
+    }
+
+    response = client.put("/api/control/game", json=edited)
+
+    assert response.status_code == 200
+    assert response.json()["featured"]["quarterback"] is None

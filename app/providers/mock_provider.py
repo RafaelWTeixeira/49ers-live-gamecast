@@ -6,17 +6,23 @@ from app.models.event import GameEvent
 from app.models.game import GameState
 from app.providers.base import Provider, ProviderUpdate
 
-TEAM_KEYS = ("featured", "opponent")
 EVENTS_KEY = "events"
 
 
-def apply_play(state: GameState, changes: dict[str, Any]) -> GameState:
-    """Aplica as mudanças de uma jogada: times são mesclados campo a campo, o resto substituído."""
-    data = state.stored_fields()
+def merge(base: dict[str, Any], changes: dict[str, Any]) -> dict[str, Any]:
+    """Mescla objetos campo a campo (ex.: só o placar de um time, só as jardas do QB)."""
+    merged = dict(base)
     for key, value in changes.items():
-        if key != EVENTS_KEY:
-            data[key] = {**data[key], **value} if key in TEAM_KEYS else value
-    return GameState.model_validate(data)
+        current = merged.get(key)
+        both_objects = isinstance(current, dict) and isinstance(value, dict)
+        merged[key] = merge(current, value) if both_objects else value
+    return merged
+
+
+def apply_play(state: GameState, changes: dict[str, Any]) -> GameState:
+    """Aplica as mudanças de uma jogada: objetos são mesclados, valores simples substituídos."""
+    play = {key: value for key, value in changes.items() if key != EVENTS_KEY}
+    return GameState.model_validate(merge(state.stored_fields(), play))
 
 
 class MockProvider(Provider):

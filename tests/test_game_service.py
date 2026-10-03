@@ -5,6 +5,7 @@ import pytest
 from app.models.control import ControlMode
 from app.models.event import GameEvent, GameEventKind
 from app.models.game import GameState
+from app.models.quarterback import QuarterbackStats
 from app.models.team import Team
 from app.providers.base import Provider, ProviderUpdate
 from app.services.game_service import ControlModeError, GameService, NothingToUndoError
@@ -15,6 +16,8 @@ DEN = Team(abbr="DEN", name="Broncos", primary_color="#FB4F14", secondary_color=
 PRE_GAME = GameState(featured=SF, opponent=DEN)
 TOUCHDOWN = GameState(featured=SF.model_copy(update={"score": 7}), opponent=DEN)
 TOUCHDOWN_EVENT = GameEvent(kind=GameEventKind.TOUCHDOWN, side="featured")
+PURDY = QuarterbackStats(name="Brock Purdy", completions=16, attempts=23, yards=229, touchdowns=1)
+WITH_QB = GameState(featured=SF.model_copy(update={"quarterback": PURDY}), opponent=DEN)
 
 
 def write_state(path, state: GameState):
@@ -162,6 +165,32 @@ class TestControlMode:
         GameService.restore(snapshot, fallback).set_control_mode(ControlMode.MANUAL)
 
         assert GameService.restore(snapshot, fallback).control_mode == ControlMode.MANUAL
+
+
+class TestQuarterbackStatsInManual:
+    def test_are_removed_when_switching_to_manual(self):
+        service, received = GameService(WITH_QB), []
+        service.subscribe(received.append)
+
+        service.set_control_mode(ControlMode.MANUAL)
+
+        assert service.state.featured.quarterback is None
+        assert received == [service.state]
+
+    def test_manual_edits_cannot_bring_them_back(self):
+        service = manual()
+
+        service.apply_manual(WITH_QB)
+
+        assert service.state.featured.quarterback is None
+
+    def test_return_with_the_provider_in_auto(self):
+        service = manual()
+        service.set_control_mode(ControlMode.AUTO)
+
+        sync(ProviderUpdate(WITH_QB), service)
+
+        assert service.state.featured.quarterback == PURDY
 
 
 class TestManualEvents:

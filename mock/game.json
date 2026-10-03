@@ -7,14 +7,16 @@
     "name": "49ers",
     "score": 0,
     "primary_color": "#AA0000",
-    "secondary_color": "#B3995D"
+    "secondary_color": "#B3995D",
+    "quarterback": { "name": "Brock Purdy" }
   },
   "opponent": {
     "abbr": "DEN",
     "name": "Broncos",
     "score": 0,
     "primary_color": "#FB4F14",
-    "secondary_color": "#0A2343"
+    "secondary_color": "#0A2343",
+    "quarterback": { "name": "Bo Nix" }
   },
   "possession": null,
   "yardline": null,

@@ -28,6 +28,10 @@ _Avoid_: status, state
 Um acontecimento pontual e efêmero (Touchdown, Field Goal, Turnover, Flag, Timeout) que é anunciado e não faz parte do Game State.
 _Avoid_: state, phase
 
+**Passer Rating**:
+A nota de eficiência do QB no jogo (0 a 158.3), pela fórmula oficial da NFL. É sempre derivada de completions, attempts, jardas, TDs e INTs; nunca é informada por Provider ou operador.
+_Avoid_: QB rating, RTG (como conceito)
+
 **Game Clock**:
 O tempo restante no quarto atual.
 _Avoid_: timer, cronômetro

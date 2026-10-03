@@ -1,5 +1,6 @@
 import { showEvent } from "./events.js";
 import { renderField } from "./field.js";
+import { renderQuarterbacks } from "./quarterbacks.js";
 import { renderScoreboard } from "./scoreboard.js";
 import { connectGameUpdates } from "./websocket.js";
 
@@ -39,6 +40,7 @@ export function render(state) {
   root.style.setProperty("--opp-secondary", state.opponent.secondary_color);
 
   renderScoreboard(root, state);
+  renderQuarterbacks(root, state);
   renderField(root.querySelector(".field"), state);
   renderSituation(state);
   renderLastPlay(state);

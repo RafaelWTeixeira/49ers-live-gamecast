@@ -1,0 +1,77 @@
+/* Mesmas colunas do placar: cada QB fica sob o seu time, o rótulo sob o relógio. */
+.quarterbacks {
+  display: grid;
+  grid-template-columns: 1fr 220px 1fr;
+  gap: 16px;
+}
+
+.quarterbacks-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--sf-gold);
+}
+
+.qb {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding: 12px 24px 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border-top: 4px solid var(--qb-accent);
+  border-radius: 10px;
+}
+
+.qb--opponent {
+  --qb-accent: var(--opp-primary);
+}
+
+.qb--featured {
+  --qb-accent: var(--sf-gold);
+}
+
+.qb.is-empty {
+  visibility: hidden;
+}
+
+.qb-name {
+  overflow: hidden;
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.qb-stats {
+  display: grid;
+  grid-template-columns: 1.3fr repeat(3, 1fr) 1.2fr;
+  gap: 8px;
+}
+
+.qb-stats dt {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.qb-stats dd {
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.qb-stats .qb-rating dd {
+  color: var(--sf-gold);
+}

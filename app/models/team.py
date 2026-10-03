@@ -1,5 +1,7 @@
 from pydantic import BaseModel, ConfigDict, Field
 
+from app.models.quarterback import QuarterbackStats
+
 HEX_COLOR = r"^#[0-9A-Fa-f]{6}$"
 
 
@@ -11,3 +13,4 @@ class Team(BaseModel):
     score: int = Field(default=0, ge=0)
     primary_color: str = Field(pattern=HEX_COLOR)
     secondary_color: str = Field(pattern=HEX_COLOR)
+    quarterback: QuarterbackStats | None = None

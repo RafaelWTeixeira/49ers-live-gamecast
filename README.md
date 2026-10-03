@@ -29,6 +29,7 @@ uv run uvicorn app.main:app --reload
 - Cada mudança grava um snapshot em `data/game_state.json` (Game State + Control Mode), recarregado ao reiniciar o servidor.
 - Em AUTO o Provider controla o jogo; em MANUAL, só o painel (ver `docs/adr/0002`). Sem snapshot, o modo inicial é
   `GAMECAST_CONTROL_MODE` (`AUTO` por padrão). Para uma live só com placar manual, use `GAMECAST_CONTROL_MODE=MANUAL`.
+- As estatísticas dos QBs vêm só do Provider: em MANUAL elas saem do Gamecast (ver `docs/adr/0004`).
 
 ## Desenvolvimento
 

@@ -36,6 +36,15 @@ class TestApplyPlay:
         assert state.featured.score == 7
         assert state.featured.abbr == "SF"
 
+    def test_merges_nested_objects_field_by_field(self):
+        purdy = {"quarterback": {"name": "Brock Purdy", "completions": 1, "attempts": 1}}
+        state = apply_play(KICKOFF, {"featured": purdy})
+
+        state = apply_play(state, {"featured": {"quarterback": {"completions": 2, "attempts": 2}}})
+
+        assert state.featured.quarterback.name == "Brock Purdy"
+        assert state.featured.quarterback.completions == 2
+
     def test_rejects_unknown_fields(self):
         with pytest.raises(ValidationError):
             apply_play(KICKOFF, {"posession": "featured"})

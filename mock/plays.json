@@ -10,6 +10,7 @@
   },
   {
     "clock": "13:51", "yardline": 49, "down": 1, "distance": 10,
+    "featured": { "quarterback": { "completions": 1, "attempts": 1, "yards": 18, "touchdowns": 0, "interceptions": 0 } },
     "last_play": { "description": "Purdy pass to Kittle for 18 yards", "yards": 18 }
   },
   {
@@ -18,10 +19,12 @@
   },
   {
     "clock": "12:30", "yardline": 75, "down": 1, "distance": 10,
+    "featured": { "quarterback": { "completions": 2, "attempts": 2, "yards": 41, "touchdowns": 0, "interceptions": 0 } },
     "last_play": { "description": "Purdy pass to Aiyuk for 23 yards", "yards": 23 }
   },
   {
     "clock": "11:48", "yardline": 92, "down": 1, "distance": 8,
+    "featured": { "quarterback": { "completions": 3, "attempts": 3, "yards": 58, "touchdowns": 0, "interceptions": 0 } },
     "last_play": { "description": "Samuel 17-yard catch and run", "yards": 17 }
   },
   {
@@ -40,15 +43,18 @@
   },
   {
     "clock": "10:21", "yardline": 67, "down": 2, "distance": 2,
+    "opponent": { "quarterback": { "completions": 1, "attempts": 1, "yards": 8, "touchdowns": 0, "interceptions": 0 } },
     "last_play": { "description": "Nix pass to Sutton for 8 yards", "yards": 8 }
   },
   {
     "clock": "09:40", "possession": "featured", "yardline": 62, "down": 1, "distance": 10,
+    "opponent": { "quarterback": { "completions": 1, "attempts": 2, "yards": 8, "touchdowns": 0, "interceptions": 1 } },
     "last_play": { "description": "Nix pass intercepted by Lenoir", "yards": null },
     "events": [{ "kind": "TURNOVER", "side": "featured" }]
   },
   {
     "quarter": 2, "clock": "08:15", "yardline": 80, "down": 4, "distance": 3,
+    "featured": { "quarterback": { "completions": 3, "attempts": 4, "yards": 58, "touchdowns": 0, "interceptions": 0 } },
     "last_play": { "description": "Purdy pass incomplete to Jennings", "yards": 0 },
     "events": [{ "kind": "FLAG", "side": "opponent" }]
   },
@@ -75,12 +81,15 @@
     "last_play": { "description": "Kickoff — touchback", "yards": null }
   },
   {
-    "quarter": 4, "clock": "02:10", "featured": { "score": 20 }, "opponent": { "score": 13 },
+    "quarter": 4, "clock": "02:10",
+    "featured": { "score": 20, "quarterback": { "completions": 16, "attempts": 23, "yards": 229, "touchdowns": 1, "interceptions": 0 } },
+    "opponent": { "score": 13, "quarterback": { "completions": 15, "attempts": 26, "yards": 174, "touchdowns": 1, "interceptions": 1 } },
     "possession": "featured", "yardline": 92, "down": 1, "distance": 8,
     "last_play": { "description": "Aiyuk 31-yard catch along the sideline", "yards": 31 }
   },
   {
-    "clock": "01:24", "possession": null, "featured": { "score": 27 },
+    "clock": "01:24", "possession": null,
+    "featured": { "score": 27, "quarterback": { "completions": 17, "attempts": 24, "yards": 237, "touchdowns": 2, "interceptions": 0 } },
     "last_play": { "description": "Purdy pass to Kittle for 8 yards, TOUCHDOWN (+XP)", "yards": 8 },
     "events": [{ "kind": "TOUCHDOWN", "side": "featured" }]
   },

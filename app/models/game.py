@@ -52,14 +52,23 @@ class GameState(BaseModel):
 
     def stored_fields(self) -> dict:
         """Os campos de entrada, sem os derivados: o que se grava e o que se valida de volta."""
-        return self.model_dump(mode="json", exclude=set(type(self).model_computed_fields))
+        return self.model_dump(mode="json", exclude_computed_fields=True)
 
     def with_changes(self, **changes) -> "GameState":
         """Cópia com os campos alterados, validada de novo (model_copy não valida)."""
         stored = self.stored_fields()
         for key, value in changes.items():
-            stored[key] = value.model_dump(mode="json") if isinstance(value, BaseModel) else value
+            if isinstance(value, BaseModel):
+                value = value.model_dump(mode="json", exclude_computed_fields=True)
+            stored[key] = value
         return GameState.model_validate(stored)
+
+    def without_quarterbacks(self) -> "GameState":
+        """Cópia sem as estatísticas de QB, que só o Provider mantém (docs/adr/0004)."""
+        return self.with_changes(
+            featured=self.featured.model_copy(update={"quarterback": None}),
+            opponent=self.opponent.model_copy(update={"quarterback": None}),
+        )
 
     @computed_field
     @property

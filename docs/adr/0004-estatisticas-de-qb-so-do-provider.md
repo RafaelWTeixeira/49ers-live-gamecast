@@ -1,0 +1,3 @@
+# Estatísticas de QB só existem com o Provider no comando
+
+As estatísticas de passe dos QBs vêm apenas do Provider. Em modo Manual o Game State não tem estatísticas de QB: elas são removidas ao entrar em Manual, as edições do painel não as trazem de volta, e o overlay esconde a faixa dos QBs. Quando o modo volta para Auto, o Provider as repõe na próxima atualização. Descartamos manter os últimos números congelados porque, com a API fora do ar e o jogo seguindo, o overlay mostraria estatísticas desatualizadas como se fossem atuais. Também descartamos que o operador as atualize à mão, porque não dá para acompanhar cada passe durante a live.
