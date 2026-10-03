@@ -2,6 +2,13 @@
  * Campo de 120 jardas: 10 + 100 + 10. Elementos dentro de .playing-field
  * são posicionados por --y, em % da largura (0 = goal line da esquerda).
  */
+/* Área que cresce com o espaço livre; o aviso de Game Event fica centralizado nela. */
+.field-area {
+  position: relative;
+  flex: 1;
+  display: flex;
+}
+
 .field {
   flex: 1;
   display: grid;
@@ -17,7 +24,7 @@
   align-items: center;
   justify-content: center;
   font-family: var(--font-display);
-  font-size: 30px;
+  font-size: 36px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.2em;
@@ -55,10 +62,10 @@
 }
 
 .yard-number {
-  bottom: 10px;
+  bottom: 12px;
   transform: translateX(-50%);
   font-family: var(--font-display);
-  font-size: 34px;
+  font-size: 42px;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.85);
 }
@@ -80,8 +87,8 @@
 
 .ball {
   top: 42%;
-  width: 40px;
-  height: 24px;
+  width: 52px;
+  height: 32px;
   transform: translate(-50%, -50%);
   background: #7A3F12;
   border: 2px solid #4A240A;
@@ -95,8 +102,8 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 14px;
-  height: 3px;
+  width: 18px;
+  height: 4px;
   transform: translate(-50%, -50%);
   background: var(--white);
   border-radius: 2px;
@@ -107,7 +114,7 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 22px;
+  font-size: 28px;
   color: var(--white);
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 }

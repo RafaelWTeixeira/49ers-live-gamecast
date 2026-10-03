@@ -1,0 +1,3 @@
+# O StreamYard compõe a live; o Gamecast entra por compartilhamento de tela
+
+A cena final (câmeras do apresentador e dos convidados + Gamecast) é montada no StreamYard. O Gamecast é uma página aberta no navegador e entra no estúdio como compartilhamento de tela, sem OBS no caminho. O plano original usava o OBS como compositor, com o Gamecast como Browser Source transparente sobre as câmeras. Descartamos isso porque os convidados entram pelo StreamYard, e as câmeras deles não chegam ao OBS como fontes separadas. Como o compartilhamento de tela não tem transparência, o Gamecast deixa de reservar áreas transparentes para câmeras: ele é um painel opaco que o layout do StreamYard posiciona ao lado das câmeras.

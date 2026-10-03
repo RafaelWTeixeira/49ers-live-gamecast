@@ -1,14 +1,24 @@
 # 49ers Live Gamecast
 
-Overlay gráfico 1920×1080 para lives de jogos do San Francisco 49ers. A página é renderizada no OBS (Browser Source) e enviada ao StreamYard/YouTube.
+Painel gráfico ao vivo para lives de jogos do San Francisco 49ers. A página roda no navegador e entra no StreamYard como compartilhamento de tela, ao lado das câmeras; o StreamYard transmite para o YouTube.
 
 - Plano e roadmap: [docs/PLANO.md](docs/PLANO.md)
 - Linguagem do domínio: [GLOSSARY.md](GLOSSARY.md)
 - Decisões de arquitetura: [docs/adr/](docs/adr/)
+- Operação na live: [docs/STREAMYARD.md](docs/STREAMYARD.md)
 
 ## Rodando
 
 Requer [uv](https://docs.astral.sh/uv/).
+
+> **OneDrive:** com o projeto dentro do OneDrive, os executáveis do `.venv` quebram
+> (`uv trampoline failed to canonicalize script path`). Aqui o `.venv` é uma junction para uma pasta fora do OneDrive:
+>
+> ```powershell
+> New-Item -ItemType Directory -Force "$HOME\.venvs\49ers-live-gamecast"
+> New-Item -ItemType Junction -Path .venv -Target "$HOME\.venvs\49ers-live-gamecast"
+> uv sync
+> ```
 
 ```sh
 uv sync
@@ -19,8 +29,7 @@ uv run uvicorn app.main:app --reload
 - `http://localhost:8000/api/game` — Game State atual (JSON); `/docs` lista a API
 - `http://localhost:8000/control` — painel do operador: Control Mode (AUTO/MANUAL), edição do jogo, eventos, desfazer
 - `ws://localhost:8000/ws/game` — envia o Game State ao conectar e, depois, cada mudança (`GAME_STATE`) e cada Game Event (`GAME_EVENT`)
-- `http://localhost:8000/overlay` — overlay (usar no OBS como Browser Source 1920×1080)
-  - `?preview` — fundo xadrez para enxergar as áreas transparentes
+- `http://localhost:8000/overlay` — o Gamecast (16:9, se ajusta à janela), compartilhado como tela no StreamYard
 
 ## Dados
 

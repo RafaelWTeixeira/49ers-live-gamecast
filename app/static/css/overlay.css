@@ -1,57 +1,41 @@
 :root {
   --sf-red: #AA0000;
-  --sf-red-dark: #6E0000;
   --sf-gold: #B3995D;
   --white: #FFFFFF;
   --muted: #B9B3A8;
 
-  /* Opponent: valores fixos até o Game State chegar (versão 0.3). */
+  /* Opponent: valores fixos até o Game State chegar. */
   --opp-primary: #FB4F14;
   --opp-secondary: #0A2343;
 
-  --panel: rgba(12, 12, 14, 0.92);
-  --panel-line: rgba(179, 153, 93, 0.35);
+  --page: #0C0C0E;
 
   --font-display: "Oswald", "Arial Narrow", sans-serif;
   --font-body: "Inter", "Segoe UI", sans-serif;
 
-  --gutter: 24px;
   --radius: 14px;
 }
 
+/* Fundo opaco: o compartilhamento de tela não tem transparência (docs/adr/0003). */
 body {
   font-family: var(--font-body);
   color: var(--white);
+  background: var(--page);
 }
 
-html.preview body {
-  background: repeating-conic-gradient(#3a3a3a 0 25%, #2c2c2c 0 50%) 0 0 / 48px 48px;
-}
+/* ---------- Canvas ---------- */
 
-/* ---------- Grid principal ---------- */
-
-/* Câmeras 16:9: (1080 - 2×24 padding - 88 banner - 24 gap - 2×16 gaps) / 3 = 296px de altura → 526px de largura. */
+/*
+ * O Gamecast é desenhado num canvas fixo de 1920×1080 e escalado para caber na janela
+ * (--scale, calculado em overlay.js), mantendo 16:9. O que sobrar da janela fica com a cor da página.
+ */
 .overlay {
-  display: grid;
-  grid-template-columns: 526px 1fr;
-  grid-template-rows: 1fr 88px;
-  gap: var(--gutter);
-  padding: var(--gutter);
-  width: 100%;
-  height: 100%;
-}
-
-.cameras {
-  display: grid;
-  grid-template-rows: repeat(3, 1fr);
-  gap: 16px;
-}
-
-.camera-slot {
-  background: transparent;
-  border: 3px solid var(--sf-gold);
-  border-radius: var(--radius);
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(0, 0, 0, 0.6);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1920px;
+  height: 1080px;
+  transform: translate(-50%, -50%) scale(var(--scale, 1));
 }
 
 /* ---------- Painel do jogo ---------- */
@@ -60,11 +44,9 @@ html.preview body {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 22px;
-  padding: 26px 32px 30px;
-  background: var(--panel);
-  border: 1px solid var(--panel-line);
-  border-radius: var(--radius);
+  gap: 24px;
+  height: 100%;
+  padding: 36px 56px 44px;
 }
 
 .gamecast-header {
@@ -77,7 +59,7 @@ html.preview body {
 }
 
 .gamecast-title {
-  font-size: 24px;
+  font-size: 30px;
   font-weight: 500;
   color: var(--sf-gold);
 }
@@ -85,9 +67,9 @@ html.preview body {
 .phase-badge {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 4px 16px;
-  font-size: 20px;
+  gap: 12px;
+  padding: 4px 20px;
+  font-size: 26px;
   font-weight: 500;
   background: var(--sf-red);
   border-radius: 999px;
@@ -95,8 +77,8 @@ html.preview body {
 
 .phase-badge::before {
   content: "";
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   background: var(--white);
   border-radius: 50%;
 }
@@ -107,9 +89,9 @@ html.preview body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 28px;
+  gap: 32px;
   font-family: var(--font-display);
-  font-size: 46px;
+  font-size: 58px;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -117,7 +99,7 @@ html.preview body {
 
 .situation > * + *::before {
   content: "•";
-  margin-right: 28px;
+  margin-right: 32px;
   color: var(--sf-gold);
 }
 
@@ -128,9 +110,9 @@ html.preview body {
 /* ---------- Última jogada ---------- */
 
 .last-play {
-  padding: 16px 24px 18px;
+  padding: 18px 28px 20px;
   background: rgba(255, 255, 255, 0.05);
-  border-left: 6px solid var(--sf-gold);
+  border-left: 8px solid var(--sf-gold);
   border-radius: 0 10px 10px 0;
 }
 
@@ -138,7 +120,7 @@ html.preview body {
   display: block;
   margin-bottom: 4px;
   font-family: var(--font-display);
-  font-size: 18px;
+  font-size: 22px;
   text-transform: uppercase;
   letter-spacing: 0.16em;
   color: var(--sf-gold);
@@ -149,7 +131,7 @@ html.preview body {
   align-items: baseline;
   justify-content: space-between;
   gap: 24px;
-  font-size: 34px;
+  font-size: 42px;
   font-weight: 600;
 }
 
@@ -158,23 +140,6 @@ html.preview body {
   font-family: var(--font-display);
   font-weight: 500;
   color: var(--sf-gold);
-}
-
-/* ---------- Banner ---------- */
-
-.banner {
-  grid-column: 1 / -1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-size: 40px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.22em;
-  background: linear-gradient(90deg, var(--sf-red-dark), var(--sf-red) 50%, var(--sf-red-dark));
-  border: 2px solid var(--sf-gold);
-  border-radius: var(--radius);
 }
 
 /* ---------- Variações por estado ---------- */

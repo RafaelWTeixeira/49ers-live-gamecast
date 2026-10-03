@@ -2,7 +2,8 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
-  <title>49ers Live Gamecast — Overlay</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>49ers Live Gamecast</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,23 +16,10 @@
   <link rel="stylesheet" href="/static/css/field.css">
   <link rel="stylesheet" href="/static/css/events.css">
 
-  <script>
-    // /overlay?preview mostra um fundo xadrez para enxergar as áreas transparentes no navegador.
-    if (new URLSearchParams(location.search).has("preview")) {
-      document.documentElement.classList.add("preview");
-    }
-  </script>
   <script type="module" src="/static/js/overlay.js"></script>
 </head>
 <body>
   <main class="overlay">
-
-    <!-- Áreas transparentes: as câmeras são posicionadas por baixo, no OBS. -->
-    <section class="cameras" aria-label="Câmeras">
-      <div class="camera-slot" data-camera="1"></div>
-      <div class="camera-slot" data-camera="2"></div>
-      <div class="camera-slot" data-camera="3"></div>
-    </section>
 
     <section class="gamecast">
       <header class="gamecast-header">
@@ -88,32 +76,34 @@
         </div>
       </div>
 
-      <div class="field">
-        <div class="endzone endzone--left" data-endzone="left"></div>
+      <div class="field-area">
+        <div class="field">
+          <div class="endzone endzone--left" data-endzone="left"></div>
 
-        <div class="playing-field">
-          <span class="yard-number" style="--y: 10">10</span>
-          <span class="yard-number" style="--y: 20">20</span>
-          <span class="yard-number" style="--y: 30">30</span>
-          <span class="yard-number" style="--y: 40">40</span>
-          <span class="yard-number" style="--y: 50">50</span>
-          <span class="yard-number" style="--y: 60">40</span>
-          <span class="yard-number" style="--y: 70">30</span>
-          <span class="yard-number" style="--y: 80">20</span>
-          <span class="yard-number" style="--y: 90">10</span>
+          <div class="playing-field">
+            <span class="yard-number" style="--y: 10">10</span>
+            <span class="yard-number" style="--y: 20">20</span>
+            <span class="yard-number" style="--y: 30">30</span>
+            <span class="yard-number" style="--y: 40">40</span>
+            <span class="yard-number" style="--y: 50">50</span>
+            <span class="yard-number" style="--y: 60">40</span>
+            <span class="yard-number" style="--y: 70">30</span>
+            <span class="yard-number" style="--y: 80">20</span>
+            <span class="yard-number" style="--y: 90">10</span>
 
-          <span class="marker marker--los" data-marker="los" title="Line of scrimmage"></span>
-          <span class="marker marker--first-down" data-marker="first-down" title="First down"></span>
-          <span class="ball" data-marker="ball"></span>
+            <span class="marker marker--los" data-marker="los" title="Line of scrimmage"></span>
+            <span class="marker marker--first-down" data-marker="first-down" title="First down"></span>
+            <span class="ball" data-marker="ball"></span>
+          </div>
+
+          <div class="endzone endzone--right" data-endzone="right"></div>
         </div>
 
-        <div class="endzone endzone--right" data-endzone="right"></div>
-      </div>
-
-      <div class="event-callout" hidden>
-        <span class="event-title" data-bind="event-title"></span>
-        <span class="event-team" data-bind="event-team"></span>
-        <span class="event-points" data-bind="event-points"></span>
+        <div class="event-callout" hidden>
+          <span class="event-title" data-bind="event-title"></span>
+          <span class="event-team" data-bind="event-team"></span>
+          <span class="event-points" data-bind="event-points"></span>
+        </div>
       </div>
 
       <div class="situation">
@@ -130,8 +120,6 @@
         </p>
       </div>
     </section>
-
-    <footer class="banner">Deixa o like e se inscreva</footer>
 
   </main>
 </body>

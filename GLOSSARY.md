@@ -1,6 +1,6 @@
 # 49ers Live Gamecast
 
-Overlay gráfico de transmissão ao vivo que acompanha jogos do San Francisco 49ers em tempo real, sobreposto às câmeras de uma live no YouTube.
+Painel gráfico que acompanha jogos do San Francisco 49ers em tempo real, exibido ao lado das câmeras numa live no YouTube.
 
 ## Language
 

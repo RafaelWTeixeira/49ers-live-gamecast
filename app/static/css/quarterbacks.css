@@ -1,8 +1,8 @@
 /* Mesmas colunas do placar: cada QB fica sob o seu time, o rótulo sob o relógio. */
 .quarterbacks {
   display: grid;
-  grid-template-columns: 1fr 220px 1fr;
-  gap: 16px;
+  grid-template-columns: 1fr 280px 1fr;
+  gap: 20px;
 }
 
 .quarterbacks-label {
@@ -10,7 +10,7 @@
   align-items: center;
   justify-content: center;
   font-family: var(--font-display);
-  font-size: 26px;
+  font-size: 32px;
   font-weight: 500;
   letter-spacing: 0.2em;
   color: var(--sf-gold);
@@ -21,7 +21,7 @@
   flex-direction: column;
   gap: 6px;
   min-width: 0;
-  padding: 12px 24px 14px;
+  padding: 14px 40px 16px;
   background: rgba(255, 255, 255, 0.05);
   border-top: 4px solid var(--qb-accent);
   border-radius: 10px;
@@ -42,7 +42,7 @@
 .qb-name {
   overflow: hidden;
   font-family: var(--font-display);
-  font-size: 28px;
+  font-size: 34px;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -57,7 +57,7 @@
 }
 
 .qb-stats dt {
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -66,7 +66,7 @@
 
 .qb-stats dd {
   font-family: var(--font-display);
-  font-size: 34px;
+  font-size: 46px;
   font-weight: 700;
   line-height: 1.1;
   font-variant-numeric: tabular-nums;

@@ -7,6 +7,15 @@ import { connectGameUpdates } from "./websocket.js";
 const root = document.querySelector(".overlay");
 let currentState = null;
 
+const CANVAS_WIDTH = 1920;
+const CANVAS_HEIGHT = 1080;
+
+// Encaixa o canvas de 1920×1080 na janela compartilhada, mantendo 16:9.
+function fitToWindow() {
+  const scale = Math.min(innerWidth / CANVAS_WIDTH, innerHeight / CANVAS_HEIGHT);
+  root.style.setProperty("--scale", scale);
+}
+
 function bind(name) {
   return root.querySelector(`[data-bind="${name}"]`);
 }
@@ -45,6 +54,9 @@ export function render(state) {
   renderSituation(state);
   renderLastPlay(state);
 }
+
+fitToWindow();
+addEventListener("resize", fitToWindow);
 
 // Sem conexão, o overlay mantém o último estado na tela: nada de aviso de erro na live.
 connectGameUpdates({
