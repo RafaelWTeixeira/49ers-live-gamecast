@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# Ambiente
+.env
+
+# Snapshot do Game State em runtime
+data/
+
+# Editor / SO
+.vscode/*
+!.vscode/settings.json
+.idea/
+Thumbs.db
+desktop.ini
