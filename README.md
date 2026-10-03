@@ -17,6 +17,7 @@ uv run uvicorn app.main:app --reload
 
 - `http://localhost:8000/` — health check
 - `http://localhost:8000/api/game` — Game State atual (JSON); `/docs` lista a API
+- `http://localhost:8000/control` — painel do operador: Control Mode (AUTO/MANUAL), edição do jogo, eventos, desfazer
 - `ws://localhost:8000/ws/game` — envia o Game State ao conectar e, depois, cada mudança (`GAME_STATE`) e cada Game Event (`GAME_EVENT`)
 - `http://localhost:8000/overlay` — overlay (usar no OBS como Browser Source 1920×1080)
   - `?preview` — fundo xadrez para enxergar as áreas transparentes
@@ -25,7 +26,9 @@ uv run uvicorn app.main:app --reload
 
 - O jogo vem do `MockProvider`, que reproduz `mock/plays.json` em loop a partir de `mock/game.json`.
   O intervalo entre jogadas é `GAMECAST_SYNC_INTERVAL` (segundos, padrão 3).
-- Cada mudança grava um snapshot em `data/game_state.json`, recarregado ao reiniciar o servidor.
+- Cada mudança grava um snapshot em `data/game_state.json` (Game State + Control Mode), recarregado ao reiniciar o servidor.
+- Em AUTO o Provider controla o jogo; em MANUAL, só o painel (ver `docs/adr/0002`). Sem snapshot, o modo inicial é
+  `GAMECAST_CONTROL_MODE` (`AUTO` por padrão). Para uma live só com placar manual, use `GAMECAST_CONTROL_MODE=MANUAL`.
 
 ## Desenvolvimento
 

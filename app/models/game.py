@@ -54,6 +54,13 @@ class GameState(BaseModel):
         """Os campos de entrada, sem os derivados: o que se grava e o que se valida de volta."""
         return self.model_dump(mode="json", exclude=set(type(self).model_computed_fields))
 
+    def with_changes(self, **changes) -> "GameState":
+        """Cópia com os campos alterados, validada de novo (model_copy não valida)."""
+        stored = self.stored_fields()
+        for key, value in changes.items():
+            stored[key] = value.model_dump(mode="json") if isinstance(value, BaseModel) else value
+        return GameState.model_validate(stored)
+
     @computed_field
     @property
     def field_direction(self) -> FieldDirection:

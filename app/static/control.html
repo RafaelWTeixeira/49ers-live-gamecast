@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gamecast Control</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Oswald:wght@500;700&display=swap">
+  <link rel="stylesheet" href="/static/css/control.css">
+  <script type="module" src="/static/js/control.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <h1>Gamecast Control</h1>
+
+    <div class="mode-switch" role="group" aria-label="Control Mode">
+      <button type="button" data-mode="AUTO">Auto</button>
+      <button type="button" data-mode="MANUAL">Manual</button>
+    </div>
+
+    <div class="status-pills">
+      <span class="pill" data-status="provider">Provider: —</span>
+      <span class="pill" data-status="connection">Conectando…</span>
+    </div>
+  </header>
+
+  <p class="mode-hint" data-bind="mode-hint"></p>
+
+  <main class="layout">
+    <form class="card game-form" data-form="game" novalidate>
+      <fieldset data-manual-only>
+        <h2>Game State</h2>
+
+        <div class="score-row">
+          <label><span data-bind="featured-abbr">SF</span>
+            <input type="number" name="featured_score" min="0" required>
+          </label>
+          <label><span data-bind="opponent-abbr">OPP</span>
+            <input type="number" name="opponent_score" min="0" required>
+          </label>
+        </div>
+
+        <div class="grid-3">
+          <label>Fase
+            <select name="phase">
+              <option value="PRE_GAME">Pré-jogo</option>
+              <option value="LIVE">Ao vivo</option>
+              <option value="HALFTIME">Intervalo</option>
+              <option value="FINAL">Final</option>
+            </select>
+          </label>
+          <label>Quarto
+            <select name="quarter">
+              <option value="1">Q1</option>
+              <option value="2">Q2</option>
+              <option value="3">Q3</option>
+              <option value="4">Q4</option>
+              <option value="5">OT</option>
+            </select>
+          </label>
+          <label>Relógio
+            <input type="text" name="clock" placeholder="08:42" pattern="\d{2}:\d{2}" required>
+          </label>
+        </div>
+
+        <div class="grid-3">
+          <label>Posse
+            <select name="possession">
+              <option value="">Ninguém</option>
+              <option value="featured" data-bind="featured-option">SF</option>
+              <option value="opponent" data-bind="opponent-option">OPP</option>
+            </select>
+          </label>
+          <label>Down
+            <select name="down">
+              <option value="">—</option>
+              <option value="1">1st</option>
+              <option value="2">2nd</option>
+              <option value="3">3rd</option>
+              <option value="4">4th</option>
+            </select>
+          </label>
+          <label>Distância
+            <input type="number" name="distance" min="1" max="99">
+          </label>
+        </div>
+
+        <div class="grid-3">
+          <label>Bola no campo de
+            <select name="spot_side">
+              <option value="featured" data-bind="featured-option">SF</option>
+              <option value="opponent" data-bind="opponent-option">OPP</option>
+            </select>
+          </label>
+          <label>Jarda
+            <input type="number" name="spot_yard" min="1" max="50">
+          </label>
+          <label>Lado do campo
+            <output data-bind="field-direction">—</output>
+          </label>
+        </div>
+
+        <div class="grid-last-play">
+          <label>Última jogada
+            <input type="text" name="last_play_description" placeholder="Purdy pass to Kittle for 8 yards">
+          </label>
+          <label>Jardas
+            <input type="number" name="last_play_yards">
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <span class="dirty-note" data-bind="dirty-note" hidden>Alterações não enviadas</span>
+          <button type="button" class="secondary" data-action="discard">Descartar</button>
+          <button type="submit" class="primary">Atualizar jogo</button>
+        </div>
+      </fieldset>
+    </form>
+
+    <div class="side-column">
+      <section class="card">
+        <fieldset data-manual-only>
+          <h2>Eventos</h2>
+          <div class="event-grid">
+            <div class="event-column" data-side="featured">
+              <h3 data-bind="featured-abbr">SF</h3>
+              <button type="button" data-event="TOUCHDOWN">TD +6</button>
+              <button type="button" data-event="FIELD_GOAL">FG +3</button>
+              <button type="button" data-event="EXTRA_POINT">XP +1</button>
+              <button type="button" data-event="TWO_POINT_CONVERSION">2PT +2</button>
+              <button type="button" data-event="SAFETY">Safety +2</button>
+              <button type="button" data-event="TURNOVER">Turnover (fica com a bola)</button>
+              <button type="button" data-event="TIMEOUT">Timeout</button>
+              <button type="button" data-event="FLAG">Flag (falta deste time)</button>
+            </div>
+            <div class="event-column" data-side="opponent">
+              <h3 data-bind="opponent-abbr">OPP</h3>
+              <button type="button" data-event="TOUCHDOWN">TD +6</button>
+              <button type="button" data-event="FIELD_GOAL">FG +3</button>
+              <button type="button" data-event="EXTRA_POINT">XP +1</button>
+              <button type="button" data-event="TWO_POINT_CONVERSION">2PT +2</button>
+              <button type="button" data-event="SAFETY">Safety +2</button>
+              <button type="button" data-event="TURNOVER">Turnover (fica com a bola)</button>
+              <button type="button" data-event="TIMEOUT">Timeout</button>
+              <button type="button" data-event="FLAG">Flag (falta deste time)</button>
+            </div>
+          </div>
+
+          <div class="tool-row">
+            <button type="button" class="secondary" data-action="undo">↶ Desfazer</button>
+            <button type="button" class="secondary" data-action="flip-field">⇄ Inverter lado do campo</button>
+          </div>
+        </fieldset>
+      </section>
+
+      <section class="card">
+        <h2>Preview do overlay</h2>
+        <div class="preview">
+          <iframe src="/overlay?preview" title="Preview do overlay" tabindex="-1"></iframe>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div class="toast" data-bind="toast" role="status" hidden></div>
+</body>
+</html>

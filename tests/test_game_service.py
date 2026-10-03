@@ -1,11 +1,14 @@
 import asyncio
 
+import pytest
+
+from app.models.control import ControlMode
 from app.models.event import GameEvent, GameEventKind
 from app.models.game import GameState
 from app.models.team import Team
 from app.providers.base import Provider, ProviderUpdate
-from app.services.game_service import GameService
-from app.services.provider_sync import sync_once
+from app.services.game_service import ControlModeError, GameService, NothingToUndoError
+from app.services.provider_sync import ProviderHealth, sync_once
 
 SF = Team(abbr="SF", name="49ers", primary_color="#AA0000", secondary_color="#B3995D")
 DEN = Team(abbr="DEN", name="Broncos", primary_color="#FB4F14", secondary_color="#0A2343")
@@ -97,20 +100,116 @@ class StubProvider(Provider):
         return self._result
 
 
+def sync(result, service: GameService, health: ProviderHealth | None = None) -> bool:
+    return asyncio.run(sync_once(StubProvider(result), service, health or ProviderHealth()))
+
+
 class TestSyncOnce:
-    def test_publishes_the_provider_state(self):
+    def test_publishes_the_provider_state_in_auto(self):
         service = GameService(PRE_GAME)
 
-        assert (
-            asyncio.run(
-                sync_once(StubProvider(ProviderUpdate(TOUCHDOWN, (TOUCHDOWN_EVENT,))), service)
-            )
-            is True
-        )
+        assert sync(ProviderUpdate(TOUCHDOWN, (TOUCHDOWN_EVENT,)), service) is True
         assert service.state == TOUCHDOWN
+
+    def test_ignores_the_provider_in_manual(self):
+        service = GameService(PRE_GAME, control_mode=ControlMode.MANUAL)
+
+        assert sync(ProviderUpdate(TOUCHDOWN), service) is False
+        assert service.state == PRE_GAME
 
     def test_keeps_last_state_when_provider_fails(self):
         service = GameService(TOUCHDOWN)
 
-        assert asyncio.run(sync_once(StubProvider(ConnectionError("API fora")), service)) is False
+        assert sync(ConnectionError("API fora"), service) is False
         assert service.state == TOUCHDOWN
+
+    def test_tracks_provider_health_even_in_manual(self):
+        service = GameService(PRE_GAME, control_mode=ControlMode.MANUAL)
+        health = ProviderHealth()
+
+        sync(ConnectionError("API fora"), service, health)
+        assert not health.healthy
+        assert "API fora" in health.last_error
+
+        sync(ProviderUpdate(TOUCHDOWN), service, health)
+        assert health.healthy
+
+
+def manual(state: GameState = PRE_GAME) -> GameService:
+    return GameService(state, control_mode=ControlMode.MANUAL)
+
+
+class TestControlMode:
+    def test_manual_edits_are_refused_in_auto(self):
+        with pytest.raises(ControlModeError):
+            GameService(PRE_GAME).apply_manual(TOUCHDOWN)
+
+    def test_manual_events_are_refused_in_auto(self):
+        with pytest.raises(ControlModeError):
+            GameService(PRE_GAME).announce_manual(TOUCHDOWN_EVENT)
+
+    def test_manual_edit_publishes_the_state(self):
+        service = manual()
+
+        service.apply_manual(TOUCHDOWN)
+
+        assert service.state == TOUCHDOWN
+
+    def test_mode_survives_a_restart(self, tmp_path):
+        snapshot, fallback = tmp_path / "game_state.json", tmp_path / "game.json"
+        write_state(fallback, PRE_GAME)
+
+        GameService.restore(snapshot, fallback).set_control_mode(ControlMode.MANUAL)
+
+        assert GameService.restore(snapshot, fallback).control_mode == ControlMode.MANUAL
+
+
+class TestManualEvents:
+    def test_touchdown_adds_six_points_and_is_announced(self):
+        service, received = manual(), []
+        service.subscribe(received.append)
+
+        service.announce_manual(TOUCHDOWN_EVENT)
+
+        assert service.state.featured.score == 6
+        assert received[-1] == TOUCHDOWN_EVENT
+
+    def test_safety_scores_for_the_side_that_made_it(self):
+        service = manual()
+
+        service.announce_manual(GameEvent(kind=GameEventKind.SAFETY, side="opponent"))
+
+        assert service.state.opponent.score == 2
+
+    def test_flag_changes_nothing_but_is_announced(self):
+        service, received = manual(), []
+        service.subscribe(received.append)
+
+        service.announce_manual(GameEvent(kind=GameEventKind.FLAG))
+
+        assert service.state == PRE_GAME
+        assert received == [GameEvent(kind=GameEventKind.FLAG)]
+
+
+class TestUndo:
+    def test_returns_to_the_state_before_the_last_manual_change(self):
+        service = manual()
+        service.announce_manual(TOUCHDOWN_EVENT)
+        service.announce_manual(GameEvent(kind=GameEventKind.EXTRA_POINT, side="featured"))
+
+        service.undo()
+
+        assert service.state.featured.score == 6
+
+    def test_without_history_is_an_error(self):
+        with pytest.raises(NothingToUndoError):
+            manual().undo()
+
+    def test_history_is_cleared_when_the_mode_changes(self):
+        service = manual()
+        service.announce_manual(TOUCHDOWN_EVENT)
+
+        service.set_control_mode(ControlMode.AUTO)
+        service.set_control_mode(ControlMode.MANUAL)
+
+        assert not service.can_undo
