@@ -3,6 +3,7 @@ from fastapi.testclient import TestClient
 
 from app.dependencies import MOCK_GAME_PATH, get_game_service
 from app.main import app
+from app.models.event import GameEvent, GameEventKind
 from app.models.game import GameState
 from app.models.team import Team
 from app.services.game_service import GameService
@@ -42,6 +43,32 @@ def test_game_returns_current_state_with_derived_fields(game_service):
     assert body["field_direction"] == "left"
 
 
+def test_websocket_sends_current_state_then_changes_and_events(game_service):
+    scored = game_service.state.model_copy(
+        update={"featured": game_service.state.featured.model_copy(update={"score": 9})}
+    )
+
+    with client.websocket_connect("/ws/game") as ws:
+        first = ws.receive_json()
+        game_service.update(scored, [GameEvent(kind=GameEventKind.FIELD_GOAL, side="featured")])
+        second = ws.receive_json()
+        third = ws.receive_json()
+
+    assert first["type"] == "GAME_STATE"
+    assert first["game"]["featured"]["score"] == 3
+    assert second["type"] == "GAME_STATE"
+    assert second["game"]["featured"]["score"] == 9
+    assert second["game"]["field_position_label"] == "SF 8"
+    assert third == {"type": "GAME_EVENT", "event": {"kind": "FIELD_GOAL", "side": "featured"}}
+
+
+def test_websocket_stops_listening_after_disconnect(game_service):
+    with client.websocket_connect("/ws/game") as ws:
+        ws.receive_json()
+
+    assert game_service._listeners == []
+
+
 def test_mock_initial_game_is_a_valid_game_state():
     service = GameService.from_file(MOCK_GAME_PATH)
 
@@ -56,12 +83,12 @@ def test_overlay_is_served_as_html():
 
 
 def test_overlay_stylesheets_are_served():
-    for name in ("reset", "overlay", "scoreboard", "field"):
+    for name in ("reset", "overlay", "scoreboard", "field", "events"):
         assert client.get(f"/static/css/{name}.css").status_code == 200
 
 
 def test_overlay_scripts_are_served():
-    for name in ("overlay", "scoreboard", "field"):
+    for name in ("overlay", "scoreboard", "field", "events", "websocket"):
         response = client.get(f"/static/js/{name}.js")
         assert response.status_code == 200
         assert "javascript" in response.headers["content-type"]

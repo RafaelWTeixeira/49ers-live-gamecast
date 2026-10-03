@@ -4,8 +4,10 @@ import pytest
 from pydantic import ValidationError
 
 from app.dependencies import MOCK_GAME_PATH, MOCK_PLAYS_PATH
+from app.models.event import GameEvent, GameEventKind
 from app.models.game import GamePhase, GameState
 from app.models.team import Team
+from app.providers.base import ProviderUpdate
 from app.providers.mock_provider import MockProvider, apply_play
 
 SF = Team(abbr="SF", name="49ers", primary_color="#AA0000", secondary_color="#B3995D")
@@ -13,8 +15,12 @@ DEN = Team(abbr="DEN", name="Broncos", primary_color="#FB4F14", secondary_color=
 KICKOFF = GameState(featured=SF, opponent=DEN)
 
 
-def fetch(provider: MockProvider) -> GameState:
+def fetch_update(provider: MockProvider) -> ProviderUpdate:
     return asyncio.run(provider.fetch())
+
+
+def fetch(provider: MockProvider) -> GameState:
+    return fetch_update(provider).state
 
 
 class TestApplyPlay:
@@ -48,6 +54,21 @@ class TestMockProvider:
         fetch(provider)
 
         assert fetch(provider).featured.score == 3
+
+    def test_announces_the_events_declared_in_the_play(self):
+        touchdown = {
+            "featured": {"score": 6},
+            "events": [{"kind": "TOUCHDOWN", "side": "featured"}],
+        }
+        provider = MockProvider(KICKOFF, [touchdown])
+
+        update = fetch_update(provider)
+
+        assert update.state.featured.score == 6
+        assert update.events == (GameEvent(kind=GameEventKind.TOUCHDOWN, side="featured"),)
+
+    def test_plays_without_events_announce_nothing(self):
+        assert fetch_update(MockProvider(KICKOFF, [{"clock": "14:00"}])).events == ()
 
     def test_requires_at_least_one_play(self):
         with pytest.raises(ValueError):

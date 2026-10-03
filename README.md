@@ -17,6 +17,7 @@ uv run uvicorn app.main:app --reload
 
 - `http://localhost:8000/` — health check
 - `http://localhost:8000/api/game` — Game State atual (JSON); `/docs` lista a API
+- `ws://localhost:8000/ws/game` — envia o Game State ao conectar e, depois, cada mudança (`GAME_STATE`) e cada Game Event (`GAME_EVENT`)
 - `http://localhost:8000/overlay` — overlay (usar no OBS como Browser Source 1920×1080)
   - `?preview` — fundo xadrez para enxergar as áreas transparentes
 

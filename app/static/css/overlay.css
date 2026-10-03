@@ -57,6 +57,7 @@ html.preview body {
 /* ---------- Painel do jogo ---------- */
 
 .gamecast {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 22px;

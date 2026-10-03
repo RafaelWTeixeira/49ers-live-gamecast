@@ -1,0 +1,55 @@
+/* Aviso de Game Event sobre o campo. Sem animação por enquanto. */
+.event-callout {
+  position: absolute;
+  top: 300px;
+  left: 50%;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 620px;
+  padding: 26px 56px 30px;
+  transform: translateX(-50%);
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  text-align: center;
+  background: var(--callout-color, #1A1A1A);
+  border: 4px solid var(--callout-accent, var(--sf-gold));
+  border-radius: var(--radius);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.7);
+}
+
+.event-callout[data-side="featured"] {
+  --callout-color: var(--sf-red);
+  --callout-accent: var(--sf-gold);
+}
+
+.event-callout[data-side="opponent"] {
+  --callout-color: var(--opp-secondary);
+  --callout-accent: var(--opp-primary);
+}
+
+.event-title {
+  font-size: 88px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+
+.event-team {
+  font-size: 40px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+}
+
+.event-points {
+  font-size: 34px;
+  font-weight: 500;
+  color: var(--callout-accent, var(--sf-gold));
+}
+
+.event-team:empty,
+.event-points:empty {
+  display: none;
+}

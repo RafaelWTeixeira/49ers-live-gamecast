@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="/static/css/overlay.css">
   <link rel="stylesheet" href="/static/css/scoreboard.css">
   <link rel="stylesheet" href="/static/css/field.css">
+  <link rel="stylesheet" href="/static/css/events.css">
 
   <script>
     // /overlay?preview mostra um fundo xadrez para enxergar as áreas transparentes no navegador.
@@ -80,6 +81,12 @@
         </div>
 
         <div class="endzone endzone--right" data-endzone="right"></div>
+      </div>
+
+      <div class="event-callout" hidden>
+        <span class="event-title" data-bind="event-title"></span>
+        <span class="event-team" data-bind="event-team"></span>
+        <span class="event-points" data-bind="event-points"></span>
       </div>
 
       <div class="situation">

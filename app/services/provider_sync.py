@@ -10,11 +10,11 @@ logger = logging.getLogger(__name__)
 async def sync_once(provider: Provider, service: GameService) -> bool:
     """Busca o estado no Provider. Se ele falhar, o último Game State continua no ar."""
     try:
-        state = await provider.fetch()
+        update = await provider.fetch()
     except Exception:
         logger.exception("Provider falhou; mantendo o último Game State")
         return False
-    service.update(state)
+    service.update(update.state, update.events)
     return True
 
 

@@ -6,7 +6,7 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from app.api import routes_game
+from app.api import routes_game, routes_ws
 from app.dependencies import SYNC_INTERVAL_SECONDS, get_game_service, get_provider
 from app.services.provider_sync import sync_forever
 
@@ -27,6 +27,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="49ers Live Gamecast", lifespan=lifespan)
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 app.include_router(routes_game.router)
+app.include_router(routes_ws.router)
 
 
 @app.get("/")

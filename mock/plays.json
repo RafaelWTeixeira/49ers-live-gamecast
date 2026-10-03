@@ -26,11 +26,13 @@
   },
   {
     "clock": "11:02", "possession": null, "featured": { "score": 6 },
-    "last_play": { "description": "McCaffrey 8-yard touchdown run", "yards": 8 }
+    "last_play": { "description": "McCaffrey 8-yard touchdown run", "yards": 8 },
+    "events": [{ "kind": "TOUCHDOWN", "side": "featured" }]
   },
   {
     "featured": { "score": 7 },
-    "last_play": { "description": "Moody extra point is good", "yards": null }
+    "last_play": { "description": "Moody extra point is good", "yards": null },
+    "events": [{ "kind": "EXTRA_POINT", "side": "featured" }]
   },
   {
     "clock": "10:57", "possession": "opponent", "yardline": 75, "down": 1, "distance": 10,
@@ -42,15 +44,18 @@
   },
   {
     "clock": "09:40", "possession": "featured", "yardline": 62, "down": 1, "distance": 10,
-    "last_play": { "description": "Nix pass intercepted by Lenoir", "yards": null }
+    "last_play": { "description": "Nix pass intercepted by Lenoir", "yards": null },
+    "events": [{ "kind": "TURNOVER", "side": "featured" }]
   },
   {
     "quarter": 2, "clock": "08:15", "yardline": 80, "down": 4, "distance": 3,
-    "last_play": { "description": "Purdy pass incomplete to Jennings", "yards": 0 }
+    "last_play": { "description": "Purdy pass incomplete to Jennings", "yards": 0 },
+    "events": [{ "kind": "FLAG", "side": "opponent" }]
   },
   {
     "clock": "08:10", "possession": null, "featured": { "score": 10 },
-    "last_play": { "description": "Moody 38-yard field goal is good", "yards": null }
+    "last_play": { "description": "Moody 38-yard field goal is good", "yards": null },
+    "events": [{ "kind": "FIELD_GOAL", "side": "featured" }]
   },
   {
     "clock": "01:55", "possession": "opponent", "yardline": 22, "down": 4, "distance": 5,
@@ -58,7 +63,8 @@
   },
   {
     "clock": "01:50", "possession": null, "opponent": { "score": 3 },
-    "last_play": { "description": "Lutz 40-yard field goal is good", "yards": null }
+    "last_play": { "description": "Lutz 40-yard field goal is good", "yards": null },
+    "events": [{ "kind": "FIELD_GOAL", "side": "opponent" }]
   },
   {
     "phase": "HALFTIME", "clock": "00:00"
@@ -75,7 +81,8 @@
   },
   {
     "clock": "01:24", "possession": null, "featured": { "score": 27 },
-    "last_play": { "description": "Purdy pass to Kittle for 8 yards, TOUCHDOWN (+XP)", "yards": 8 }
+    "last_play": { "description": "Purdy pass to Kittle for 8 yards, TOUCHDOWN (+XP)", "yards": 8 },
+    "events": [{ "kind": "TOUCHDOWN", "side": "featured" }]
   },
   {
     "phase": "FINAL", "clock": "00:00",

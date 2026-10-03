@@ -2,17 +2,20 @@ import json
 from pathlib import Path
 from typing import Any
 
+from app.models.event import GameEvent
 from app.models.game import GameState
-from app.providers.base import Provider
+from app.providers.base import Provider, ProviderUpdate
 
 TEAM_KEYS = ("featured", "opponent")
+EVENTS_KEY = "events"
 
 
 def apply_play(state: GameState, changes: dict[str, Any]) -> GameState:
     """Aplica as mudanças de uma jogada: times são mesclados campo a campo, o resto substituído."""
     data = state.stored_fields()
     for key, value in changes.items():
-        data[key] = {**data[key], **value} if key in TEAM_KEYS else value
+        if key != EVENTS_KEY:
+            data[key] = {**data[key], **value} if key in TEAM_KEYS else value
     return GameState.model_validate(data)
 
 
@@ -33,9 +36,11 @@ class MockProvider(Provider):
         plays = json.loads(plays_path.read_text(encoding="utf-8"))
         return cls(initial, plays)
 
-    async def fetch(self) -> GameState:
+    async def fetch(self) -> ProviderUpdate:
         if self._next_play == len(self._plays):
             self._state, self._next_play = self._initial, 0
-        self._state = apply_play(self._state, self._plays[self._next_play])
+        play = self._plays[self._next_play]
+        self._state = apply_play(self._state, play)
         self._next_play += 1
-        return self._state
+        events = tuple(GameEvent.model_validate(e) for e in play.get(EVENTS_KEY, []))
+        return ProviderUpdate(self._state, events)

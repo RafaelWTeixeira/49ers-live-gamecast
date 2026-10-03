@@ -1,10 +1,10 @@
+import { showEvent } from "./events.js";
 import { renderField } from "./field.js";
 import { renderScoreboard } from "./scoreboard.js";
-
-// Até o WebSocket chegar (v0.5), o overlay consulta o backend periodicamente.
-const POLL_INTERVAL_MS = 1000;
+import { connectGameUpdates } from "./websocket.js";
 
 const root = document.querySelector(".overlay");
+let currentState = null;
 
 function bind(name) {
   return root.querySelector(`[data-bind="${name}"]`);
@@ -34,6 +34,7 @@ function renderLastPlay(state) {
 }
 
 export function render(state) {
+  currentState = state;
   root.style.setProperty("--opp-primary", state.opponent.primary_color);
   root.style.setProperty("--opp-secondary", state.opponent.secondary_color);
 
@@ -43,21 +44,11 @@ export function render(state) {
   renderLastPlay(state);
 }
 
-async function loadGame() {
-  const response = await fetch("/api/game");
-  if (!response.ok) {
-    throw new Error(`GET /api/game respondeu ${response.status}`);
-  }
-  return response.json();
-}
-
-async function refresh() {
-  try {
-    render(await loadGame());
-  } catch (error) {
-    console.error("Falha ao carregar o Game State:", error);
-  }
-}
-
-refresh();
-setInterval(refresh, POLL_INTERVAL_MS);
+// Sem conexão, o overlay mantém o último estado na tela: nada de aviso de erro na live.
+connectGameUpdates({
+  onState: render,
+  onEvent: (event) => showEvent(root.querySelector(".event-callout"), event, currentState),
+  onStatus: (status) => {
+    if (status === "disconnected") console.warn("Gamecast desconectado; tentando reconectar…");
+  },
+});
