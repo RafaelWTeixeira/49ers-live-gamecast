@@ -1,4 +1,4 @@
-import { DEMO_STATES, SAMPLE_STATE } from "./demo.js";
+import { DEMO_STATES } from "./demo.js";
 import { renderField } from "./field.js";
 import { renderScoreboard } from "./scoreboard.js";
 
@@ -20,8 +20,7 @@ function renderSituation(state) {
   if (!team) return;
 
   bind("possession").textContent = `${team.abbr} com a bola`;
-  const goalToGo = state.line_to_gain >= 100 || state.line_to_gain <= 0;
-  bind("down").textContent = `${ordinal(state.down)} & ${goalToGo ? "Goal" : state.distance}`;
+  bind("down").textContent = `${ordinal(state.down)} & ${state.goal_to_go ? "Goal" : state.distance}`;
   bind("spot").textContent = state.field_position_label;
 }
 
@@ -44,11 +43,21 @@ export function render(state) {
   renderLastPlay(state);
 }
 
+async function loadGame() {
+  const response = await fetch("/api/game");
+  if (!response.ok) {
+    throw new Error(`GET /api/game respondeu ${response.status}`);
+  }
+  return response.json();
+}
+
 // ?demo percorre os estados de exemplo; ?demo=N fixa o estado N.
 const demo = new URLSearchParams(location.search).get("demo");
 
 if (demo === null) {
-  render(SAMPLE_STATE);
+  loadGame()
+    .then(render)
+    .catch((error) => console.error("Falha ao carregar o Game State:", error));
 } else if (demo !== "") {
   render(DEMO_STATES[Number(demo)]);
 } else {

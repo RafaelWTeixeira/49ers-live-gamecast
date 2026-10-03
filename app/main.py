@@ -4,10 +4,13 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
+from app.api import routes_game
+
 STATIC_DIR = Path(__file__).parent / "static"
 
 app = FastAPI(title="49ers Live Gamecast")
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+app.include_router(routes_game.router)
 
 
 @app.get("/")

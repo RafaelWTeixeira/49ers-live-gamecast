@@ -38,6 +38,14 @@ _Avoid_: timer, cronômetro
 A posição da bola expressa como um número de 0 a 100, medido a partir da goal line defendida pelo Featured Team (0 = goal line do Featured Team, 50 = meio-campo, 100 = goal line do Opponent).
 _Avoid_: yard_line + side, field position (como dado)
 
+**Line to Gain**:
+A Yardline que o time com a posse precisa alcançar para conquistar um novo first down.
+_Avoid_: first down line, marker
+
+**Goal to Go**:
+Situação em que a Line to Gain coincide com a goal line adversária: não há first down possível, só touchdown.
+_Avoid_: red zone (é outra coisa)
+
 **Field Direction**:
 Para qual lado da tela fica a goal line defendida pelo Featured Team no quarto atual; ela se inverte a cada troca de lado do jogo real.
 _Avoid_: orientation, lado

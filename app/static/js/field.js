@@ -37,7 +37,7 @@ export function renderField(fieldEl, state) {
   placeAt(fieldEl.querySelector('[data-marker="los"]'), hasPossession ? state.yardline : null, direction);
   placeAt(
     fieldEl.querySelector('[data-marker="first-down"]'),
-    hasPossession ? state.line_to_gain : null,
+    hasPossession && !state.goal_to_go ? state.line_to_gain : null,
     direction,
   );
 

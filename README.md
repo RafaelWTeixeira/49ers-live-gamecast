@@ -16,6 +16,7 @@ uv run uvicorn app.main:app --reload
 ```
 
 - `http://localhost:8000/` — health check
+- `http://localhost:8000/api/game` — Game State atual (JSON); `/docs` lista a API
 - `http://localhost:8000/overlay` — overlay (usar no OBS como Browser Source 1920×1080)
   - `?preview` — fundo xadrez para enxergar as áreas transparentes
   - `?demo` — percorre um jogo de exemplo; `?demo=N` fixa o estado N

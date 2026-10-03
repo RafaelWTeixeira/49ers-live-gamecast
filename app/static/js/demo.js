@@ -1,4 +1,4 @@
-// Estados de exemplo no formato do Game State. Saem daqui quando o backend assumir (v0.3/v0.4).
+// Estados de exemplo já serializados (com os campos derivados). Saem quando o MockProvider chegar (v0.4).
 
 const SF = { abbr: "SF", name: "49ers" };
 const DEN = { abbr: "DEN", name: "Broncos", primary_color: "#FB4F14", secondary_color: "#0A2343" };
@@ -15,6 +15,7 @@ function state({ sf = 0, den = 0, ...rest }) {
     yardline: null,
     line_to_gain: null,
     field_position_label: null,
+    goal_to_go: false,
     down: null,
     distance: null,
     last_play: null,
@@ -24,7 +25,11 @@ function state({ sf = 0, den = 0, ...rest }) {
 
 function drive(possession, down, distance, yardline, label) {
   const lineToGain = possession === "featured" ? yardline + distance : yardline - distance;
-  return { possession, down, distance, yardline, line_to_gain: lineToGain, field_position_label: label };
+  const goalToGo = lineToGain === 0 || lineToGain === 100;
+  return {
+    possession, down, distance, yardline,
+    line_to_gain: lineToGain, goal_to_go: goalToGo, field_position_label: label,
+  };
 }
 
 export const DEMO_STATES = [
@@ -67,4 +72,3 @@ export const DEMO_STATES = [
   state({ phase: "FINAL", quarter: 4, clock: "00:00", sf: 27, den: 13, field_direction: "right" }),
 ];
 
-export const SAMPLE_STATE = DEMO_STATES[7];
