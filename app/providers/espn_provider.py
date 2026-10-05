@@ -234,18 +234,43 @@ def to_game_state(competition: Json, summary: Json, featured_abbr: str) -> GameS
 # ---------- Game Events ----------
 
 
-def _turnover_side(play: Json, matchup: Matchup) -> Side | None:
+def _end_team(play: Json) -> Any:
+    return ((play.get("end") or {}).get("team") or {}).get("id")
+
+
+def _is_turnover(play: Json) -> bool:
+    # Nem sempre a ESPN marca isTurnover (ex.: fumble no retorno de punt veio sem a marca).
     kind = _kind(play)
-    if not (play.get("isTurnover") or "(Opponent)" in kind or "Interception" in kind):
+    return bool(
+        play.get("isTurnover")
+        or "(Opponent)" in kind
+        or "Interception" in kind
+        or kind.startswith("Blocked")
+    )
+
+
+def _turnover_side(play: Json, matchup: Matchup) -> Side | None:
+    """Quem ficou com a bola: end.team. Sem ele, deduz pelo tipo da jogada."""
+    if not _is_turnover(play):
         return None
-    team_id = _start_team(play)
-    if team_id is None:
+    if _end_team(play) is not None:
+        return matchup.side_of(_end_team(play))
+    if _start_team(play) is None:
         return None
-    starting = matchup.side_of(team_id)
+    starting = matchup.side_of(_start_team(play))
     # Em punt/kickoff quem começa com a bola é quem chuta: recuperar é ficar com ela.
-    if "Punt" in kind or "Kickoff" in kind:
+    if "Punt" in _kind(play) or "Kickoff" in _kind(play):
         return starting
     return "opponent" if starting == "featured" else "featured"
+
+
+def _side_named_in_text(play: Json, pattern: str, featured_abbr: str) -> Side | None:
+    """Time citado no texto. A ESPN usa abreviações próprias (ARZ, LA…) e só a do Featured
+    Team é confiável, então qualquer outra sigla é o Opponent."""
+    match = re.search(pattern, _text(play), re.IGNORECASE)
+    if not match:
+        return None
+    return "featured" if match.group(1).upper() == featured_abbr.upper() else "opponent"
 
 
 def play_events(play: Json, matchup: Matchup, featured_abbr: str) -> list[GameEvent]:
@@ -254,16 +279,13 @@ def play_events(play: Json, matchup: Matchup, featured_abbr: str) -> list[GameEv
     if side:
         events.append(GameEvent(kind=GameEventKind.TURNOVER, side=side))
     if play.get("isPenalty") or "PENALTY" in _text(play).upper():
-        # O texto usa abreviações próprias (ARZ, LA…); só a do Featured Team é confiável.
-        match = re.search(r"PENALTY on (\w+)", _text(play))
-        penalized = None
-        if match:
-            is_featured = match.group(1).upper() == featured_abbr.upper()
-            penalized = "featured" if is_featured else "opponent"
+        penalized = _side_named_in_text(play, r"PENALTY on (\w+)", featured_abbr)
         events.append(GameEvent(kind=GameEventKind.FLAG, side=penalized))
-    team_id = _start_team(play)
-    if _kind(play) == "Timeout" and team_id is not None:
-        events.append(GameEvent(kind=GameEventKind.TIMEOUT, side=matchup.side_of(team_id)))
+    if _kind(play) == "Timeout":
+        # No scoreboard ao vivo, start.team é quem está com a bola, não quem pediu o tempo.
+        caller = _side_named_in_text(play, r"Timeout #\d+ by (\w+)", featured_abbr)
+        if caller:
+            events.append(GameEvent(kind=GameEventKind.TIMEOUT, side=caller))
     return events
 
 

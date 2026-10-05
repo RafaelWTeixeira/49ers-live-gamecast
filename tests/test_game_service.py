@@ -177,6 +177,31 @@ class TestFieldDirection:
         assert service.state.featured.score == 7
         assert service.state.opening_field_direction == "right"
 
+    def test_a_new_game_starts_from_the_default_direction(self):
+        last_game = PRE_GAME.with_changes(phase="FINAL", opening_field_direction="right")
+        service = GameService(last_game)
+
+        sync(ProviderUpdate(PRE_GAME), service)
+
+        assert service.state.opening_field_direction == "left"
+
+    def test_another_opponent_is_a_new_game(self):
+        service = GameService(PRE_GAME.with_changes(opening_field_direction="right"))
+        seattle = DEN.model_copy(update={"abbr": "SEA", "name": "Seahawks"})
+
+        sync(ProviderUpdate(GameState(featured=SF, opponent=seattle)), service)
+
+        assert service.state.opening_field_direction == "left"
+
+    def test_provider_updates_keep_the_second_half_direction_too(self):
+        service = GameService(PRE_GAME.with_changes(quarter=3))
+        service.flip_field_direction()
+
+        sync(ProviderUpdate(TOUCHDOWN.with_changes(quarter=3)), service)
+
+        assert service.state.second_half_field_direction == "left"
+        assert service.state.field_direction == "left"
+
     def test_flip_in_manual_can_be_undone(self):
         service = manual()
         service.flip_field_direction()

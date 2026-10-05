@@ -56,14 +56,54 @@ class TestGoalToGo:
 class TestFieldDirection:
     @pytest.mark.parametrize(
         ("quarter", "direction"),
-        [(1, "left"), (2, "right"), (3, "left"), (4, "right"), (5, "left")],
+        [(1, "left"), (2, "right"), (3, "right"), (4, "left"), (5, "left")],
     )
-    def test_teams_switch_ends_on_second_and_fourth_quarters(self, quarter, direction):
+    def test_ends_switch_within_each_half_and_carry_over_by_default(self, quarter, direction):
+        # Q1→Q2 e Q3→Q4 trocam; sem escolha do operador, Q3 mantém o Q2 e a OT, o Q4.
         assert game(quarter=quarter).field_direction == direction
 
     def test_follows_the_opening_direction(self):
         assert game(quarter=1, opening_field_direction="right").field_direction == "right"
         assert game(quarter=2, opening_field_direction="right").field_direction == "left"
+
+    def test_second_half_has_its_own_direction(self):
+        state = game(quarter=3, second_half_field_direction="left")
+
+        assert state.field_direction == "left"
+        assert state.with_changes(quarter=4).field_direction == "right"
+        assert state.with_changes(quarter=1).field_direction == "left"
+
+    @pytest.mark.parametrize(
+        ("quarter", "changed_field"),
+        [
+            (1, "opening_field_direction"),
+            (2, "opening_field_direction"),
+            (3, "second_half_field_direction"),
+            (4, "second_half_field_direction"),
+            (5, "overtime_field_direction"),
+        ],
+    )
+    def test_flipping_changes_only_the_current_period(self, quarter, changed_field):
+        before = game(quarter=quarter)
+
+        after = before.with_flipped_field_direction()
+
+        assert after.field_direction != before.field_direction
+        changed = {
+            name
+            for name, value in after.field_directions().items()
+            if value != before.field_directions()[name]
+        }
+        assert changed == {changed_field}
+
+    def test_flipping_at_halftime_of_the_den_at_sf_game(self):
+        """04/10: no 3º quarto a TV manteve o lado do 2º; um clique no Q3 não mexe no 1º tempo."""
+        q3 = game(quarter=3, second_half_field_direction="left")
+
+        fixed = q3.with_flipped_field_direction()
+
+        assert fixed.field_direction == "right"
+        assert fixed.with_changes(quarter=1).field_direction == "left"
 
 
 class TestValidation:

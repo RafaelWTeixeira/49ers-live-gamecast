@@ -7,7 +7,7 @@ from pydantic import ValidationError
 
 from app.models.control import ControlMode
 from app.models.event import GameEvent, apply_event
-from app.models.game import GameState
+from app.models.game import GamePhase, GameState
 from app.providers.base import ProviderUpdate
 
 logger = logging.getLogger(__name__)
@@ -99,10 +99,19 @@ class GameService:
         """Publica o que veio do Provider, se ele estiver no comando. Devolve se aplicou."""
         if self._control_mode != ControlMode.AUTO:
             return False
-        # O Provider não sabe como a TV mostra o campo: o lado fica o que o operador escolheu.
-        direction = self._state.opening_field_direction
-        self.update(update.state.with_changes(opening_field_direction=direction), update.events)
+        state = update.state
+        # O Provider não sabe como a TV mostra o campo: o lado fica o que o operador escolheu,
+        # a não ser num jogo novo, que começa do lado padrão.
+        if not self._is_new_game(state):
+            state = state.with_changes(**self._state.field_directions())
+        self.update(state, update.events)
         return True
+
+    def _is_new_game(self, incoming: GameState) -> bool:
+        current = self._state
+        other_opponent = incoming.opponent.abbr != current.opponent.abbr
+        restarted = current.phase == GamePhase.FINAL and incoming.phase != GamePhase.FINAL
+        return other_opponent or restarted
 
     def apply_manual(self, state: GameState, events: Iterable[GameEvent] = ()) -> None:
         self._require_manual()
@@ -117,9 +126,9 @@ class GameService:
         self.apply_manual(apply_event(self._state, event), [event])
 
     def flip_field_direction(self) -> None:
-        """Inverte a Field Direction. Vale em qualquer modo; em MANUAL entra no desfazer."""
-        flipped = "right" if self._state.opening_field_direction == "left" else "left"
-        state = self._state.with_changes(opening_field_direction=flipped)
+        """Inverte a Field Direction do período atual. Vale em qualquer modo; em MANUAL entra no
+        desfazer."""
+        state = self._state.with_flipped_field_direction()
         if self._control_mode == ControlMode.MANUAL:
             self.apply_manual(state)
         else:

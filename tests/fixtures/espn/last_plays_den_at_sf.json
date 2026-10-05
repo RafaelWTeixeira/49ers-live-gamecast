@@ -1,0 +1,132 @@
+{
+ "timeout_sf_with_den_ball": {
+  "id": "40187297593",
+  "type": {
+   "id": "21",
+   "text": "Timeout",
+   "abbreviation": "TO"
+  },
+  "text": "Timeout #1 by SF at 14:21.",
+  "start": {
+   "yardLine": 63,
+   "team": {
+    "id": "7"
+   }
+  },
+  "end": {
+   "yardLine": 63,
+   "team": {
+    "id": "7"
+   }
+  },
+  "statYardage": 0
+ },
+ "timeout_den": {
+  "id": "4018729751684",
+  "type": {
+   "id": "21",
+   "text": "Timeout",
+   "abbreviation": "TO"
+  },
+  "text": "Timeout #1 by DEN at 01:47.",
+  "start": {
+   "yardLine": 89,
+   "team": {
+    "id": "25"
+   }
+  },
+  "end": {
+   "yardLine": 89,
+   "team": {
+    "id": "25"
+   }
+  },
+  "statYardage": 0
+ },
+ "defensive_penalty_sf": {
+  "id": "4018729751883",
+  "type": {
+   "id": "24",
+   "text": "Pass Reception",
+   "abbreviation": "REC"
+  },
+  "text": " (Shotgun) B.Nix pass short left to C.Sutton to DEN 33 for 4 yards (D.Lenoir).\nPENALTY on SF-D.Lenoir, Defensive Delay of Game, 5 yards, enforced at DEN 33.",
+  "start": {
+   "yardLine": 71,
+   "team": {
+    "id": "7"
+   }
+  },
+  "end": {
+   "yardLine": 62,
+   "team": {
+    "id": "7"
+   }
+  },
+  "statYardage": 4
+ },
+ "blocked_field_goal": {
+  "id": "4018729752223",
+  "type": {
+   "id": "18",
+   "text": "Blocked Field Goal",
+   "abbreviation": "BFG"
+  },
+  "text": "E.Pineiro 54 yard field goal is BLOCKED (D.Key), Center-J.Weeks, Holder-C.Waitman, RECOVERED by DEN-T.Hufanga at DEN 37. T.Hufanga to DEN 43 for 6 yards (L.Farrell). FUMBLES (L.Farrell), recovered by DEN-D.Key at DEN 43. D.Key to DEN 46 for 3 yards.",
+  "start": {
+   "yardLine": 64,
+   "team": {
+    "id": "25"
+   }
+  },
+  "end": {
+   "yardLine": 64,
+   "team": {
+    "id": "7"
+   }
+  },
+  "statYardage": 0
+ },
+ "declined_penalty_lowercase": {
+  "id": "4018729752355",
+  "type": {
+   "id": "3",
+   "text": "Pass Incompletion"
+  },
+  "text": "(14:14) (Shotgun) B.Purdy pass incomplete deep left to G.Kittle.\nPenalty on SF-B.Cooks, Illegal Shift, declined.",
+  "start": {
+   "yardLine": 32,
+   "team": {
+    "id": "25"
+   }
+  },
+  "end": {
+   "yardLine": 32,
+   "team": {
+    "id": "25"
+   }
+  },
+  "statYardage": 0
+ },
+ "punt_fumble_recovered_by_kicking_team": {
+  "id": "4018729752717",
+  "type": {
+   "id": "29",
+   "text": "Fumble Recovery (Opponent)"
+  },
+  "text": "C.Waitman punts 61 yards to DEN 28, Center-J.Weeks. M.Mims to DEN 28 for no gain (S.Neal). FUMBLES (S.Neal), RECOVERED by SF-S.Neal at DEN 28. S.Neal to DEN 28 for no gain (M.Mims).",
+  "start": {
+   "yardLine": 11,
+   "team": {
+    "id": "25"
+   }
+  },
+  "end": {
+   "yardLine": 72,
+   "team": {
+    "id": "25"
+   }
+  },
+  "statYardage": 0
+ }
+}

@@ -492,3 +492,30 @@ class TestEspnProvider:
 
         with pytest.raises(httpx2.HTTPStatusError):
             asyncio.run(provider.fetch())
+
+
+class TestEventsFromTheDenAtSfGame:
+    """Jogadas reais do DEN @ SF (04/10/2026) que saíram erradas na primeira live."""
+
+    PLAYS = load("last_plays_den_at_sf.json")
+
+    @pytest.mark.parametrize(
+        ("name", "expected"),
+        [
+            # No scoreboard ao vivo, start.team do timeout é quem está com a bola.
+            ("timeout_sf_with_den_ball", GameEvent(kind=GameEventKind.TIMEOUT, side="featured")),
+            ("timeout_den", GameEvent(kind=GameEventKind.TIMEOUT, side="opponent")),
+            # FG bloqueado é turnover, mas sem "(Opponent)" no tipo nem a marca no scoreboard.
+            ("blocked_field_goal", GameEvent(kind=GameEventKind.TURNOVER, side="opponent")),
+            # Fumble no retorno do punt recuperado por quem chutou: fica com o SF.
+            (
+                "punt_fumble_recovered_by_kicking_team",
+                GameEvent(kind=GameEventKind.TURNOVER, side="featured"),
+            ),
+            # "Penalty on" em minúsculas.
+            ("declined_penalty_lowercase", GameEvent(kind=GameEventKind.FLAG, side="featured")),
+            ("defensive_penalty_sf", GameEvent(kind=GameEventKind.FLAG, side="featured")),
+        ],
+    )
+    def test_announces_the_right_event_and_team(self, name, expected):
+        assert events_after(self.PLAYS[name]) == [expected]

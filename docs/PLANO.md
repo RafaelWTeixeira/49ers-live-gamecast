@@ -61,7 +61,7 @@ Painel gráfico ao vivo dos jogos do San Francisco 49ers para lives no YouTube: 
 | 0.6 | Painel de controle e Control Mode | ✅ |
 | 0.7 | Estatísticas dos QBs (só em AUTO, `docs/adr/0004`) | ✅ |
 | **0.8** | **Gamecast no StreamYard: layout para compartilhamento de tela e guia de operação. MVP utilizável.** | ✅ |
-| **0.9** | **Provider da ESPN (`docs/adr/0005`)** | 🧪 teste no DEN @ SF, 04/10 |
+| **0.9** | **Provider da ESPN (`docs/adr/0005`)** | ✅ live real no DEN @ SF, 04/10 |
 | 1.0 | Live real com a API | |
 | 1.1 | Animações dos Game Events | |
 | 1.2 | Estatísticas avançadas | |
@@ -81,8 +81,11 @@ O MVP é a 0.8: com ela já é possível fazer uma live real com o placar em MAN
 - `EspnProvider`: placar, fase, relógio, situação ao vivo, última jogada, QBs e Game Events, a partir do scoreboard
   e do summary da ESPN, com proteção contra respostas atrasadas e gravação de tudo que chega.
 - Validado com jogos encerrados da NFL e com jogos ao vivo de college football (mesmo formato).
-- Pendente: o primeiro jogo da NFL ao vivo (DEN @ SF, 04/10). Depois dele, revisar com as gravações: atraso em
-  relação à TV, eventos perdidos ou errados e situações que a ESPN mande diferente do esperado.
+- Primeira live real no DEN @ SF (04/10, 24 x 14), toda em AUTO. Com as 863 gravações do jogo:
+  - placar e fase sem erro, sem voltar para trás; 21 respostas atrasadas da ESPN foram ignoradas;
+  - corrigidos: time errado em timeouts, turnovers perdidos ou com o time errado (FG bloqueado, fumble no punt),
+    flag sem time ("Penalty on" em minúsculas) e o lado do campo no 2º tempo (`docs/adr/0006`);
+  - a ESPN mostra cada jogada, em mediana, 36s depois de ela acontecer (p90 56s).
 
 ## Fora do escopo, por enquanto
 

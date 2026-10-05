@@ -53,14 +53,16 @@ A resolução do compartilhamento depende do plano do StreamYard.
 ## 4. Durante a live
 
 **Lado do campo.** No kickoff, compare o campo do Gamecast com a TV. Se o 49ers estiver defendendo o lado oposto,
-clique em **⇄ Inverter lado do campo** (no card do preview; funciona em AUTO). A troca de lado no 2º e no 4º
-quartos é automática. Confira de novo no início do 2º quarto e na prorrogação.
+clique em **⇄ Inverter lado do campo** (no card do preview; funciona em AUTO). As trocas do 1º para o 2º quarto e do
+3º para o 4º são automáticas. No intervalo e na prorrogação os lados são escolhidos de novo: o painel mostra um
+aviso amarelo para conferir com a TV. Inverta se precisar ou clique em **Está certo**.
 
 **AUTO (normal).** A ESPN atualiza placar, relógio, situação, última jogada, QBs e eventos sozinha.
 
 - O placar e a situação chegam primeiro. As estatísticas dos QBs podem chegar alguns segundos depois e, às vezes,
   com até um minuto de atraso.
-- O Gamecast segue a ESPN, que fica alguns segundos atrás da TV. Anote quanto, para avaliarmos depois.
+- O Gamecast segue a ESPN, que mostra cada jogada cerca de 30 a 60 segundos depois de ela acontecer (medido no
+  DEN @ SF). É normal o Gamecast ficar atrás da TV.
 
 **Quando passar para MANUAL.** Use quando:
 

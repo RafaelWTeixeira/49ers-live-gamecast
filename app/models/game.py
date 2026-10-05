@@ -14,6 +14,17 @@ OPPONENT_GOAL_LINE = 100
 Side = Literal["featured", "opponent"]
 FieldDirection = Literal["left", "right"]
 
+# Campos com a Field Direction de cada período: são do operador (docs/adr/0006).
+FIELD_DIRECTION_FIELDS = (
+    "opening_field_direction",
+    "second_half_field_direction",
+    "overtime_field_direction",
+)
+
+
+def opposite(direction: FieldDirection) -> FieldDirection:
+    return "right" if direction == "left" else "left"
+
 
 class GamePhase(StrEnum):
     PRE_GAME = "PRE_GAME"
@@ -39,8 +50,12 @@ class GameState(BaseModel):
     down: int | None = Field(default=None, ge=1, le=4)
     distance: int | None = Field(default=None, ge=1, le=99)
 
-    # Field Direction nos quartos ímpares e na prorrogação; Q2 e Q4 são invertidos.
+    # Field Direction no início de cada período (docs/adr/0006). Os times trocam de lado do Q1
+    # para o Q2 e do Q3 para o Q4; no intervalo e na prorrogação os lados são escolhidos de
+    # novo. Sem escolha do operador, o Q3 mantém o lado do Q2 e a prorrogação, o do Q4.
     opening_field_direction: FieldDirection = "left"
+    second_half_field_direction: FieldDirection | None = None
+    overtime_field_direction: FieldDirection | None = None
 
     last_play: Play | None = None
 
@@ -70,12 +85,38 @@ class GameState(BaseModel):
             opponent=self.opponent.model_copy(update={"quarterback": None}),
         )
 
+    def _period_start_directions(self) -> dict[str, FieldDirection]:
+        """Field Direction no início de cada período: Q1, Q3 e prorrogação."""
+        first_half = self.opening_field_direction
+        second_half = self.second_half_field_direction or opposite(first_half)
+        overtime = self.overtime_field_direction or opposite(second_half)
+        return {
+            "opening_field_direction": first_half,
+            "second_half_field_direction": second_half,
+            "overtime_field_direction": overtime,
+        }
+
+    def _current_period_field(self) -> str:
+        if self.quarter <= 2:
+            return "opening_field_direction"
+        if self.quarter <= 4:
+            return "second_half_field_direction"
+        return "overtime_field_direction"
+
+    def field_directions(self) -> dict[str, FieldDirection | None]:
+        """Os campos de Field Direction como estão, para copiar de um estado para outro."""
+        return {name: getattr(self, name) for name in FIELD_DIRECTION_FIELDS}
+
+    def with_flipped_field_direction(self) -> "GameState":
+        """Inverte o lado do período atual (1º tempo, 2º tempo ou prorrogação), só dele."""
+        field = self._current_period_field()
+        return self.with_changes(**{field: opposite(self._period_start_directions()[field])})
+
     @computed_field
     @property
     def field_direction(self) -> FieldDirection:
-        if self.quarter in (2, 4):
-            return "right" if self.opening_field_direction == "left" else "left"
-        return self.opening_field_direction
+        start = self._period_start_directions()[self._current_period_field()]
+        return opposite(start) if self.quarter in (2, 4) else start
 
     @computed_field
     @property

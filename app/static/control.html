@@ -28,6 +28,13 @@
 
   <p class="mode-hint" data-bind="mode-hint"></p>
 
+  <!-- No intervalo e na prorrogação os lados são escolhidos de novo (docs/adr/0006). -->
+  <div class="field-check" data-bind="field-check" role="alert" hidden>
+    <span data-bind="field-check-text"></span>
+    <button type="button" class="secondary" data-action="flip-field">⇄ Inverter lado do campo</button>
+    <button type="button" class="primary" data-action="field-check-ok">Está certo</button>
+  </div>
+
   <main class="layout">
     <form class="card game-form" data-form="game" novalidate>
       <fieldset data-manual-only>

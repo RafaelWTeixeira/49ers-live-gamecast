@@ -141,13 +141,28 @@ function readForm() {
     down: numberOrNull(fields.down.value),
     distance: numberOrNull(fields.distance.value),
     opening_field_direction: currentState.opening_field_direction,
+    second_half_field_direction: currentState.second_half_field_direction,
+    overtime_field_direction: currentState.overtime_field_direction,
     last_play: description
       ? { description, yards: numberOrNull(fields.last_play_yards.value) }
       : null,
   };
 }
 
+// Períodos que começam com os lados escolhidos de novo: o 2º tempo e a prorrogação.
+const FIELD_CHECK_PERIODS = { 3: "Começou o 2º tempo", 5: "Começou a prorrogação" };
+
+function checkFieldDirection(previous, state) {
+  const label = FIELD_CHECK_PERIODS[state.quarter];
+  if (!previous || !label || previous.quarter >= state.quarter) return;
+  bindOne("field-check-text").textContent =
+    `${label}: confira com a TV o lado do campo. ${state.featured.abbr} defende ` +
+    `${state.field_direction === "left" ? "à esquerda" : "à direita"}.`;
+  bindOne("field-check").hidden = false;
+}
+
 function onState(state) {
+  checkFieldDirection(currentState, state);
   currentState = state;
   renderTeams(state);
   // Não atropela o que o operador está digitando.
@@ -242,9 +257,16 @@ document.querySelector('[data-action="undo"]').addEventListener("click", () => {
   run(() => api("POST", "/api/control/undo"), "Última alteração desfeita.");
 });
 
-document.querySelector('[data-action="flip-field"]').addEventListener("click", () => {
-  if (mode === "MANUAL" && !requireCleanForm()) return;
-  run(() => api("POST", "/api/control/flip-field"), "Lado do campo invertido.");
+document.querySelectorAll('[data-action="flip-field"]').forEach((button) => {
+  button.addEventListener("click", () => {
+    if (mode === "MANUAL" && !requireCleanForm()) return;
+    bindOne("field-check").hidden = true;
+    run(() => api("POST", "/api/control/flip-field"), "Lado do campo invertido.");
+  });
+});
+
+document.querySelector('[data-action="field-check-ok"]').addEventListener("click", () => {
+  bindOne("field-check").hidden = true;
 });
 
 // ---------- Início ----------
