@@ -36,6 +36,7 @@ Numa live, com o jogo real da ESPN (ver [docs/STREAMYARD.md](docs/STREAMYARD.md)
 - `http://localhost:8000/control` — painel do operador: Control Mode (AUTO/MANUAL), edição do jogo, eventos, desfazer
 - `ws://localhost:8000/ws/game` — envia o Game State ao conectar e, depois, cada mudança (`GAME_STATE`) e cada Game Event (`GAME_EVENT`)
 - `http://localhost:8000/overlay` — o Gamecast (16:9, se ajusta à janela), compartilhado como tela no StreamYard
+  - `?demo` — repete as animações de todos os Game Events (`?demo=touchdown`, só uma); só para conferir
 
 ## Dados
 

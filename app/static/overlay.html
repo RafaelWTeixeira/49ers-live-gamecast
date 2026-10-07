@@ -99,7 +99,9 @@
           <div class="endzone endzone--right" data-endzone="right"></div>
         </div>
 
+        <!-- Game Events, exceto touchdown: aparecem sobre o campo (events.js). -->
         <div class="event-callout" hidden>
+          <span class="event-icon" aria-hidden="true"></span>
           <span class="event-title" data-bind="event-title"></span>
           <span class="event-team" data-bind="event-team"></span>
           <span class="event-points" data-bind="event-points"></span>
@@ -118,6 +120,17 @@
           <span data-bind="last-play"></span>
           <span class="last-play-yards" data-bind="last-play-yards"></span>
         </p>
+      </div>
+
+      <!-- Touchdown: toma o painel inteiro (events.js). -->
+      <div class="event-takeover" hidden>
+        <div class="takeover-band takeover-band--accent"></div>
+        <div class="takeover-band takeover-band--main"></div>
+        <div class="takeover-content">
+          <span class="takeover-title" data-bind="takeover-title"></span>
+          <span class="takeover-team" data-bind="takeover-team"></span>
+          <span class="takeover-points" data-bind="takeover-points"></span>
+        </div>
       </div>
     </section>
 

@@ -1,4 +1,28 @@
-/* Aviso de Game Event centralizado sobre o campo. Sem animação por enquanto. */
+/*
+ * Game Events animados (events.js). Cores do time protagonista:
+ * --ev-main (fundo) e --ev-accent (destaque), definidas por data-side.
+ */
+
+.event-callout,
+.event-takeover {
+  --ev-main: #1A1A1A;
+  --ev-accent: var(--sf-gold);
+}
+
+.event-callout[data-side="featured"],
+.event-takeover[data-side="featured"] {
+  --ev-main: var(--sf-red);
+  --ev-accent: var(--sf-gold);
+}
+
+.event-callout[data-side="opponent"],
+.event-takeover[data-side="opponent"] {
+  --ev-main: var(--opp-primary);
+  --ev-accent: var(--opp-secondary);
+}
+
+/* ========== Aviso sobre o campo ========== */
+
 .event-callout {
   position: absolute;
   top: 50%;
@@ -8,48 +32,461 @@
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  min-width: 620px;
-  padding: 26px 56px 30px;
-  transform: translate(-50%, -50%);
+  min-width: 680px;
+  padding: 28px 64px 32px;
+  overflow: hidden;
   font-family: var(--font-display);
   text-transform: uppercase;
   text-align: center;
-  background: var(--callout-color, #1A1A1A);
-  border: 4px solid var(--callout-accent, var(--sf-gold));
+  background: var(--ev-main);
+  border: 6px solid var(--ev-accent);
   border-radius: var(--radius);
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.75);
+  transform: translate(-50%, -50%);
+  animation:
+    callout-slam 560ms cubic-bezier(0.2, 1.6, 0.4, 1) both,
+    callout-glow 900ms ease-in-out 560ms infinite alternate;
 }
 
-.event-callout[data-side="featured"] {
-  --callout-color: var(--sf-red);
-  --callout-accent: var(--sf-gold);
+/* Brilho que atravessa o aviso. */
+.event-callout::after {
+  content: "";
+  position: absolute;
+  inset: -20% auto -20% -40%;
+  width: 30%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: skewX(-20deg);
+  animation: callout-shine 1300ms ease-in-out 450ms 2 both;
+  pointer-events: none;
 }
 
-.event-callout[data-side="opponent"] {
-  --callout-color: var(--opp-primary);
-  --callout-accent: var(--opp-secondary);
-}
-
-.event-title {
-  font-size: 88px;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0.04em;
-}
-
-.event-team {
-  font-size: 40px;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-}
-
-.event-points {
-  font-size: 34px;
-  font-weight: 500;
-  color: var(--callout-accent, var(--sf-gold));
+.event-callout.is-leaving {
+  animation: callout-exit 450ms cubic-bezier(0.6, 0, 0.8, 0.4) forwards;
 }
 
 .event-team:empty,
 .event-points:empty {
   display: none;
+}
+
+/* Só a flag tem ícone (desenhado em ::before). */
+.event-icon {
+  display: none;
+}
+
+.event-callout[data-style="flag"] .event-icon {
+  display: block;
+}
+
+.event-title {
+  font-size: 104px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  text-shadow: 0 6px 0 rgba(0, 0, 0, 0.35);
+}
+
+.event-team {
+  font-size: 44px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+}
+
+.event-points {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--ev-accent);
+  animation: points-pop 600ms cubic-bezier(0.2, 1.8, 0.4, 1) 380ms both;
+}
+
+/* Turnover: entra num chicote lateral e treme. */
+.event-callout[data-style="turnover"] {
+  animation:
+    callout-whip 520ms cubic-bezier(0.2, 1.3, 0.4, 1) both,
+    callout-shake 420ms ease-in-out 520ms both,
+    callout-glow 900ms ease-in-out 940ms infinite alternate;
+}
+
+.event-callout[data-style="turnover"] .event-title {
+  color: var(--ev-accent);
+}
+
+/* Flag: amarela, cai do alto balançando. */
+.event-callout[data-style="flag"] {
+  --ev-main: #FFD400;
+  --ev-accent: #1A1A1A;
+  color: #1A1A1A;
+  animation:
+    flag-drop 900ms cubic-bezier(0.3, 1.4, 0.5, 1) both,
+    flag-sway 1600ms ease-in-out 900ms infinite;
+}
+
+.event-callout[data-style="flag"] .event-title {
+  text-shadow: none;
+}
+
+.event-callout[data-style="flag"] .event-icon::before {
+  content: "⚑";
+  display: inline-block;
+  font-size: 84px;
+  line-height: 1;
+  transform-origin: 20% 90%;
+  animation: flag-wave 500ms ease-in-out infinite alternate;
+}
+
+/* Timeout: faixa menor e rápida. */
+.event-callout[data-style="timeout"] {
+  min-width: 0;
+  padding: 18px 48px 20px;
+  animation: timeout-stretch 420ms cubic-bezier(0.2, 1.4, 0.4, 1) both;
+}
+
+.event-callout[data-style="timeout"] .event-title {
+  font-size: 72px;
+}
+
+.event-callout[data-style="timeout"] .event-team {
+  font-size: 34px;
+}
+
+.event-callout[data-style="timeout"]::after {
+  animation-iteration-count: 1;
+}
+
+@keyframes callout-slam {
+  0% {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translate(-50%, -50%) scale(2.4) rotate(-8deg);
+  }
+  60% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate(-50%, -50%) scale(0.94) rotate(1.5deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1) rotate(0);
+  }
+}
+
+@keyframes callout-glow {
+  from {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.75), 0 0 0 0 var(--ev-accent);
+  }
+  to {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.75), 0 0 46px 8px var(--ev-accent);
+  }
+}
+
+@keyframes callout-shine {
+  from {
+    left: -40%;
+  }
+  to {
+    left: 120%;
+  }
+}
+
+@keyframes callout-exit {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    filter: blur(6px);
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+}
+
+@keyframes points-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes callout-whip {
+  0% {
+    opacity: 0;
+    transform: translate(-260%, -50%) skewX(-28deg);
+  }
+  70% {
+    opacity: 1;
+    transform: translate(-46%, -50%) skewX(8deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) skewX(0);
+  }
+}
+
+@keyframes callout-shake {
+  0%,
+  100% {
+    transform: translate(-50%, -50%);
+  }
+  20%,
+  60% {
+    transform: translate(-52%, -50%) rotate(-1.5deg);
+  }
+  40%,
+  80% {
+    transform: translate(-48%, -50%) rotate(1.5deg);
+  }
+}
+
+@keyframes flag-drop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -260%) rotate(-14deg);
+  }
+  60% {
+    opacity: 1;
+    transform: translate(-50%, -44%) rotate(6deg);
+  }
+  80% {
+    transform: translate(-50%, -52%) rotate(-3deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(0);
+  }
+}
+
+@keyframes flag-sway {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) rotate(0);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(1.5deg);
+  }
+}
+
+@keyframes flag-wave {
+  from {
+    transform: rotate(-10deg) skewY(-6deg);
+  }
+  to {
+    transform: rotate(8deg) skewY(6deg);
+  }
+}
+
+@keyframes timeout-stretch {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scaleX(0.05);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scaleX(1);
+  }
+}
+
+/* ========== Touchdown: toma o painel inteiro ========== */
+
+.event-takeover {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+}
+
+.takeover-band {
+  position: absolute;
+  inset: 0;
+  animation: band-in 460ms cubic-bezier(0.7, 0, 0.3, 1) both;
+}
+
+.takeover-band--accent {
+  background: var(--ev-accent);
+}
+
+/*
+ * Listras diagonais correndo no fundo, na cor do time. A 45°, um período de 141.42px ao longo
+ * do gradiente ocupa exatamente 200×200px: o ladrilho repete sem emenda.
+ */
+.takeover-band--main {
+  background: repeating-linear-gradient(
+      135deg,
+      var(--ev-main) 0 70.71px,
+      color-mix(in srgb, var(--ev-main) 78%, #000) 70.71px 141.42px
+    )
+    0 0 / 200px 200px;
+  animation:
+    band-in 460ms cubic-bezier(0.7, 0, 0.3, 1) 140ms both,
+    stripes-run 6s linear infinite;
+}
+
+.takeover-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--white);
+  /* Pulsa depois que as letras caem; na camada inteira, para o brilho do texto não ser cortado. */
+  animation: heartbeat 900ms ease-in-out 1500ms infinite;
+}
+
+/* Clarão atrás do texto. */
+.takeover-content::before {
+  content: "";
+  position: absolute;
+  inset: -60% -30%;
+  z-index: -1;
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.45), transparent);
+  animation: flash 1200ms ease-out 350ms infinite;
+}
+
+/* Onda de choque quando as letras terminam de cair. */
+.takeover-content::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 300px;
+  border: 14px solid var(--ev-accent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  animation: shockwave 900ms ease-out 820ms both;
+  pointer-events: none;
+}
+
+.takeover-title {
+  display: flex;
+  font-size: 230px;
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+}
+
+.takeover-title span {
+  display: inline-block;
+  text-shadow:
+    0 10px 0 rgba(0, 0, 0, 0.35),
+    0 0 40px var(--ev-accent);
+  animation: letter-drop 560ms cubic-bezier(0.2, 1.8, 0.4, 1) both;
+  animation-delay: calc(320ms + var(--i) * 50ms);
+}
+
+.takeover-team {
+  font-size: 72px;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  animation: rise 520ms cubic-bezier(0.2, 1.4, 0.4, 1) 1000ms both;
+}
+
+.takeover-points {
+  font-size: 150px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ev-accent);
+  -webkit-text-stroke: 4px rgba(0, 0, 0, 0.35);
+  animation: points-pop 700ms cubic-bezier(0.2, 1.8, 0.4, 1) 1250ms both;
+}
+
+.event-takeover.is-leaving .takeover-band {
+  animation: band-out 450ms cubic-bezier(0.7, 0, 0.3, 1) forwards;
+}
+
+.event-takeover.is-leaving .takeover-content {
+  animation: zoom-out 400ms ease-in forwards;
+}
+
+@keyframes band-in {
+  from {
+    clip-path: polygon(0 0, 0 0, -30% 100%, -30% 100%);
+  }
+  to {
+    clip-path: polygon(0 0, 130% 0, 100% 100%, -30% 100%);
+  }
+}
+
+@keyframes band-out {
+  from {
+    clip-path: polygon(0 0, 130% 0, 100% 100%, -30% 100%);
+  }
+  to {
+    clip-path: polygon(130% 0, 130% 0, 100% 100%, 100% 100%);
+  }
+}
+
+@keyframes stripes-run {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 2000px 0;
+  }
+}
+
+@keyframes letter-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-140%) scale(2.2) rotate(-14deg);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes heartbeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes flash {
+  0% {
+    opacity: 0.9;
+    transform: scale(0.6);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.4);
+  }
+}
+
+@keyframes shockwave {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(7);
+  }
+}
+
+@keyframes zoom-out {
+  to {
+    opacity: 0;
+    filter: blur(10px);
+    transform: scale(1.4);
+  }
 }

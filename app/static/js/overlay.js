@@ -1,10 +1,11 @@
-import { showEvent } from "./events.js";
+import { createEventPresenter, EVENT_KINDS, eventPoints } from "./events.js";
 import { renderField } from "./field.js";
 import { renderQuarterbacks } from "./quarterbacks.js";
 import { renderScoreboard } from "./scoreboard.js";
 import { connectGameUpdates } from "./websocket.js";
 
 const root = document.querySelector(".overlay");
+const events = createEventPresenter(root);
 let currentState = null;
 
 const CANVAS_WIDTH = 1920;
@@ -55,13 +56,41 @@ export function render(state) {
   renderLastPlay(state);
 }
 
+// /overlay?demo repete as animações de todos os Game Events (ou ?demo=TOUCHDOWN, só uma),
+// alternando os times, para conferir no StreamYard antes da live. Pontos sobem só na tela.
+const DEMO_GAP_MS = 1200;
+
+function startDemo(only) {
+  const kinds = only ? [only] : EVENT_KINDS;
+  let step = 0;
+
+  function next() {
+    if (!currentState) return setTimeout(next, 500);
+    const kind = kinds[step % kinds.length];
+    const side = step % 2 === 0 ? "featured" : "opponent";
+    step += 1;
+    const points = eventPoints(kind);
+    if (points) {
+      const team = currentState[side];
+      render({ ...currentState, [side]: { ...team, score: team.score + points } });
+    }
+    events.show({ kind, side }, currentState);
+    setTimeout(next, DEMO_GAP_MS + (kind === "TOUCHDOWN" ? 5600 : 4000));
+  }
+
+  next();
+}
+
 fitToWindow();
 addEventListener("resize", fitToWindow);
+
+const demo = new URLSearchParams(location.search).get("demo");
+if (demo !== null) startDemo(demo.toUpperCase() || null);
 
 // Sem conexão, o overlay mantém o último estado na tela: nada de aviso de erro na live.
 connectGameUpdates({
   onState: render,
-  onEvent: (event) => showEvent(root.querySelector(".event-callout"), event, currentState),
+  onEvent: (event) => events.show(event, currentState),
   onStatus: (status) => {
     if (status === "disconnected") console.warn("Gamecast desconectado; tentando reconectar…");
   },

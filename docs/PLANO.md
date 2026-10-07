@@ -62,8 +62,8 @@ Painel gráfico ao vivo dos jogos do San Francisco 49ers para lives no YouTube: 
 | 0.7 | Estatísticas dos QBs (só em AUTO, `docs/adr/0004`) | ✅ |
 | **0.8** | **Gamecast no StreamYard: layout para compartilhamento de tela e guia de operação. MVP utilizável.** | ✅ |
 | **0.9** | **Provider da ESPN (`docs/adr/0005`)** | ✅ live real no DEN @ SF, 04/10 |
-| 1.0 | Live real com a API | |
-| 1.1 | Animações dos Game Events | |
+| 1.0 | Live real com a API | ✅ DEN @ SF, 04/10, toda em AUTO |
+| **1.1** | **Animações dos Game Events** | ✅ |
 | 1.2 | Estatísticas avançadas | |
 
 O MVP é a 0.8: com ela já é possível fazer uma live real com o placar em MANUAL.
@@ -86,6 +86,16 @@ O MVP é a 0.8: com ela já é possível fazer uma live real com o placar em MAN
   - corrigidos: time errado em timeouts, turnovers perdidos ou com o time errado (FG bloqueado, fumble no punt),
     flag sem time ("Penalty on" em minúsculas) e o lado do campo no 2º tempo (`docs/adr/0006`);
   - a ESPN mostra cada jogada, em mediana, 36s depois de ela acontecer (p90 56s).
+
+### 1.1 em detalhe
+
+- Estilo vibrante, nas cores do time protagonista:
+  - touchdown toma o painel inteiro: faixas varrendo a tela, letras caindo uma a uma, onda de choque e "+6";
+  - field goal, safety, extra point e 2 pontos entram com impacto sobre o campo, com brilho e borda pulsando;
+  - turnover entra num chicote lateral e treme; flag é amarela e cai balançando; timeout é uma faixa rápida;
+  - quando um time pontua, o placar dele salta e a caixa do time pisca.
+- Os eventos entram numa fila e aparecem um de cada vez. Se a fila encher, saem primeiro os sem pontos.
+- `/overlay?demo` repete todas as animações (ou `?demo=touchdown`, só uma), para conferir antes da live.
 
 ## Fora do escopo, por enquanto
 

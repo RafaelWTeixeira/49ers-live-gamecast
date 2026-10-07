@@ -27,6 +27,9 @@ Abra no navegador:
 - `http://localhost:8000/control`: painel do operador, numa aba ou janela qualquer.
 - `http://localhost:8000/overlay`: o Gamecast, numa **janela separada**, usada só para ele.
 
+Para conferir as animações dos Game Events no StreamYard antes do jogo, abra `http://localhost:8000/overlay?demo`
+numa janela à parte: ela repete todas as animações. Na live, use sempre `/overlay`, sem `?demo`.
+
 No painel, confira:
 
 - **AUTO** selecionado e o indicador do Provider verde, com o jogo certo (ex.: `ESPN DEN @ SF: OK`).
