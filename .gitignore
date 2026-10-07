@@ -17,3 +17,8 @@ data/
 .idea/
 Thumbs.db
 desktop.ini
+
+# Build do executável (scripts/build.ps1)
+build/
+dist/
+*.spec

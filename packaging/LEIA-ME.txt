@@ -1,0 +1,66 @@
+49ERS LIVE GAMECAST - COMO USAR NA LIVE
+=======================================
+
+O Gamecast mostra placar, campo, situação, última jogada, QBs e animações dos lances
+do jogo do 49ers. Ele roda neste computador e entra no StreamYard como compartilhamento
+de tela, ao lado das câmeras. Os dados vêm sozinhos da ESPN.
+
+
+1. ABRIR
+--------
+1. Descompacte o .zip numa pasta (por exemplo, Documentos\Gamecast).
+2. Dê dois cliques em Gamecast.exe.
+   Na primeira vez o Windows pode avisar "O Windows protegeu o computador":
+   clique em "Mais informações" e depois em "Executar assim mesmo".
+3. Abre uma janela preta (deixe aberta durante toda a live) e o navegador
+   abre sozinho no PAINEL DE CONTROLE.
+
+Precisa de internet. Para encerrar, feche a janela preta.
+
+
+2. CONFERIR O PAINEL
+--------------------
+- "AUTO" deve estar selecionado (azul).
+- No canto de cima, o indicador deve estar verde com o jogo do 49ers,
+  por exemplo "ESPN SF @ SEA: OK".
+- Antes do jogo aparece "Pré-jogo" e o placar 0 x 0. Isso é normal.
+
+
+3. COLOCAR NO STREAMYARD
+------------------------
+1. No painel, clique em "Abrir Gamecast". Ele abre numa janela nova.
+   Deixe essa janela em tela cheia (tecla F11) e não use ela para mais nada.
+2. No estúdio do StreamYard: "Compartilhar tela" e escolha a janela do Gamecast
+   (sem compartilhar áudio).
+3. Use o layout com a tela compartilhada grande e as câmeras numa faixa ao lado.
+4. O banner "Deixa o like e se inscreva" é colocado pelos banners do StreamYard.
+
+Dica: "Demo das animações" (no painel) mostra todas as animações em sequência.
+Serve para testar antes do jogo. Na live, use sempre "Abrir Gamecast".
+
+
+4. DURANTE O JOGO
+-----------------
+- LADO DO CAMPO: no kickoff, compare o campo do Gamecast com a TV. Se o 49ers
+  estiver do lado errado, clique em "Inverter lado do campo" (no card do preview).
+  No 2º tempo aparece uma faixa amarela pedindo para conferir de novo:
+  inverta se precisar ou clique em "Está certo".
+- O Gamecast fica uns 30 a 60 segundos atrás da TV. É normal (vem da ESPN).
+
+
+5. SE ALGO DER ERRADO
+---------------------
+Se o indicador ficar vermelho ("falhando") por mais de alguns segundos, ou o jogo
+travar ou ficar errado:
+1. Clique em "MANUAL". Agora você controla o jogo pelo painel.
+2. Atualize placar, quarto, relógio, posse e posição da bola no formulário e clique
+   em "Atualizar jogo". Os botões de eventos (TD +6, FG +3...) somam os pontos e
+   mostram a animação. "Desfazer" volta a última alteração.
+3. Quando a ESPN voltar (indicador verde), clique em "AUTO".
+
+Se a janela preta mostrar um erro e fechar, abra o Gamecast.exe de novo:
+ele volta de onde parou.
+
+
+A pasta "dados" (criada ao lado do .exe) guarda o jogo e as gravações da ESPN.
+Depois da live, ela pode ser enviada para análise.

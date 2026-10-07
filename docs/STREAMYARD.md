@@ -12,6 +12,9 @@ Como colocar o Gamecast na live: o StreamYard compõe a cena e o Gamecast entra 
 
 ## 1. Antes da live
 
+> Quem opera a live pelo `Gamecast.exe` (sem o código) segue o `LEIA-ME.txt` que vem no `.zip`: o executável faz
+> sozinho o que este passo descreve e abre o painel no navegador.
+
 Suba o servidor com os dados da ESPN:
 
 ```powershell

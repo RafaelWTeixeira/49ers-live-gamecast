@@ -95,6 +95,27 @@ h3 {
   background: var(--sf-red);
 }
 
+/* Abrem em outra janela: o Gamecast é compartilhado no StreamYard a partir dela. */
+.quick-links {
+  display: flex;
+  gap: 8px;
+}
+
+.quick-links a {
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--sf-gold);
+  text-decoration: none;
+  border: 1px solid var(--sf-gold);
+  border-radius: 999px;
+}
+
+.quick-links a:hover {
+  color: #1A1A1A;
+  background: var(--sf-gold);
+}
+
 .status-pills {
   display: flex;
   gap: 8px;

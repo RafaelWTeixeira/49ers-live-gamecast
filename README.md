@@ -59,6 +59,22 @@ O Provider é escolhido por `GAMECAST_PROVIDER`:
 - O lado do campo (Field Direction) é do operador nos dois modos: "Inverter lado do campo" funciona também em AUTO
   (ver `docs/adr/0006`).
 
+## Executável para Windows
+
+Para quem vai operar a live sem o código: um `Gamecast.exe` que sobe o servidor com ESPN em AUTO e abre o painel
+no navegador. O snapshot e as gravações ficam numa pasta `dados` ao lado do `.exe`.
+
+```powershell
+.\scripts\build.ps1
+```
+
+Gera `dist\Gamecast-<versão>.zip` (executável + `LEIA-ME.txt`, o guia do operador). O build acontece fora do
+OneDrive (`%LOCALAPPDATA%\gamecast-build`), que trava os arquivos gerados. Para rodar o mesmo lançador pelo código:
+`uv run python -m app.launcher`. Com `GAMECAST_OPEN_BROWSER=0` o painel não abre sozinho.
+
+No primeiro uso, o Windows SmartScreen avisa que o executável não é assinado: "Mais informações" → "Executar assim
+mesmo".
+
 ## Desenvolvimento
 
 ```sh

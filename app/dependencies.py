@@ -12,8 +12,10 @@ from app.services.provider_sync import ProviderHealth
 ROOT_DIR = Path(__file__).parent.parent
 MOCK_GAME_PATH = ROOT_DIR / "mock" / "game.json"
 MOCK_PLAYS_PATH = ROOT_DIR / "mock" / "plays.json"
-SNAPSHOT_PATH = ROOT_DIR / "data" / "game_state.json"
-RECORDINGS_DIR = ROOT_DIR / "data" / "recordings"
+# Snapshot e gravações. O executável aponta para uma pasta ao lado do .exe (app/launcher.py).
+DATA_DIR = Path(os.getenv("GAMECAST_DATA_DIR") or ROOT_DIR / "data")
+SNAPSHOT_PATH = DATA_DIR / "game_state.json"
+RECORDINGS_DIR = DATA_DIR / "recordings"
 
 SYNC_INTERVAL_SECONDS = float(os.getenv("GAMECAST_SYNC_INTERVAL", "3"))
 # Modo inicial quando não há snapshot; com snapshot, vale o modo gravado.
