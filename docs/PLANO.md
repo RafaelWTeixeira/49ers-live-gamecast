@@ -64,7 +64,7 @@ Painel gráfico ao vivo dos jogos do San Francisco 49ers para lives no YouTube: 
 | **0.9** | **Provider da ESPN (`docs/adr/0005`)** | ✅ live real no DEN @ SF, 04/10 |
 | 1.0 | Live real com a API | ✅ DEN @ SF, 04/10, toda em AUTO |
 | **1.1** | **Animações dos Game Events** | ✅ |
-| 1.2 | Estatísticas avançadas | |
+| ~~1.2~~ | ~~Estatísticas avançadas~~ | descartada: as estatísticas atuais bastam para a live |
 
 O MVP é a 0.8: com ela já é possível fazer uma live real com o placar em MANUAL.
 
@@ -100,4 +100,4 @@ O MVP é a 0.8: com ela já é possível fazer uma live real com o placar em MAN
 ## Fora do escopo, por enquanto
 
 Banco de dados, Docker, deploy em servidor, autenticação, múltiplos jogos simultâneos, histórico da temporada,
-fantasy e aplicativo mobile.
+fantasy, aplicativo mobile e estatísticas avançadas (além do placar, situação, última jogada e QBs).
