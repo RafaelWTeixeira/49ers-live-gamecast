@@ -348,10 +348,12 @@ class EventTracker:
         if play_mark and play_mark not in self._seen:
             self._seen.add(play_mark)
             events.extend(play_events(last_play, matchup, featured_abbr))
+            # O summary às vezes chega antes do scoreboard: aí a pontuação já foi anunciada.
             early = early_scoring_event(last_play, matchup)
-            if early:
+            score_mark = f"score:{last_play['id']}"
+            if early and score_mark not in self._seen:
                 events.append(early)
-                self._seen.add(f"score:{last_play['id']}")
+                self._seen.add(score_mark)
         for mark, scoring_play in score_marks.items():
             if mark not in self._seen:
                 self._seen.add(mark)
@@ -364,12 +366,17 @@ class EventTracker:
 # ---------- Respostas atrasadas ----------
 
 
+EVENT_ID_DIGITS = 9
+
+
 def _play_number(play_id: Any) -> int | None:
-    # Ids de jogada são o id do evento seguido do número da jogada: crescem ao longo do jogo.
-    try:
-        return int(play_id)
-    except (TypeError, ValueError):
+    """Ids de jogada são o id do evento (9 dígitos) seguido do número da jogada: crescem ao longo
+    do jogo. Fora desse formato não servem de marca. No extra point, por exemplo, a ESPN manda um
+    id negativo (-446877), que pareceria "mais antigo" e travaria o jogo até a jogada seguinte."""
+    text = str(play_id) if play_id is not None else ""
+    if not text.isdigit() or len(text) <= EVENT_ID_DIGITS:
         return None
+    return int(text)
 
 
 def competition_progress(competition: Json) -> int | None:

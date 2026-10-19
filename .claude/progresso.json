@@ -1,0 +1,43 @@
+{
+  "projeto": "49ers Live Gamecast",
+  "fases": [
+    { "id": "0", "nome": "Projeto FastAPI com health check", "status": "feito" },
+    { "id": "0.1", "nome": "Layout estático", "status": "feito" },
+    { "id": "0.2", "nome": "Campo dinâmico", "status": "feito" },
+    { "id": "0.3", "nome": "FastAPI + Game State", "status": "feito" },
+    { "id": "0.4", "nome": "MockProvider + snapshot", "status": "feito" },
+    { "id": "0.5", "nome": "WebSocket", "status": "feito" },
+    { "id": "0.6", "nome": "Painel de controle e Control Mode", "status": "feito" },
+    { "id": "0.7", "nome": "Estatísticas dos QBs", "status": "feito" },
+    { "id": "0.8", "nome": "Gamecast no StreamYard (MVP)", "status": "feito" },
+    { "id": "0.9", "nome": "Provider da ESPN", "status": "feito" },
+    { "id": "1.0", "nome": "Live real com a API", "status": "feito" },
+    { "id": "1.1", "nome": "Animações dos Game Events", "status": "feito" },
+    { "id": "1.2", "nome": "Executável para Windows", "status": "feito" }
+  ],
+  "fluxo": {
+    "nos": [
+      { "id": "mock", "nome": "MockProvider", "status": "feito" },
+      { "id": "espn", "nome": "EspnProvider", "status": "andamento" },
+      { "id": "sync", "nome": "ProviderSync", "status": "feito" },
+      { "id": "service", "nome": "GameService (Control Mode, snapshot, undo)", "status": "feito" },
+      { "id": "control", "nome": "Painel /control", "status": "feito" },
+      { "id": "ws", "nome": "WebSocket /ws/game", "status": "feito" },
+      { "id": "overlay", "nome": "Gamecast /overlay", "status": "feito" },
+      { "id": "streamyard", "nome": "StreamYard", "status": "feito" },
+      { "id": "youtube", "nome": "YouTube", "status": "feito" },
+      { "id": "exe", "nome": "Gamecast.exe (launcher)", "status": "feito" }
+    ],
+    "arestas": [
+      ["mock", "sync"],
+      ["espn", "sync"],
+      ["sync", "service"],
+      ["control", "service"],
+      ["service", "ws"],
+      ["ws", "overlay"],
+      ["overlay", "streamyard"],
+      ["streamyard", "youtube"],
+      ["exe", "service"]
+    ]
+  }
+}

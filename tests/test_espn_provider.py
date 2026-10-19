@@ -388,8 +388,10 @@ class TestEvents:
 class TestFreshest:
     def test_ignores_a_response_older_than_the_one_already_seen(self):
         freshest = Freshest(competition_progress)
-        newer = competition(sf_score="14", situation={"lastPlay": play(401000321, "Rush", SF_ID)})
-        older = competition(sf_score="7", situation={"lastPlay": play(401000315, "Rush", SF_ID)})
+        newer = competition(
+            sf_score="14", situation={"lastPlay": play(401872992321, "Rush", SF_ID)}
+        )
+        older = competition(sf_score="7", situation={"lastPlay": play(401872992315, "Rush", SF_ID)})
 
         freshest.offer(newer)
 
@@ -397,8 +399,8 @@ class TestFreshest:
 
     def test_accepts_newer_and_unmarked_responses(self):
         freshest = Freshest(competition_progress)
-        freshest.offer(competition(situation={"lastPlay": play(401000315, "Rush", SF_ID)}))
-        newer = competition(situation={"lastPlay": play(401000321, "Rush", SF_ID)})
+        freshest.offer(competition(situation={"lastPlay": play(401872992315, "Rush", SF_ID)}))
+        newer = competition(situation={"lastPlay": play(401872992321, "Rush", SF_ID)})
         halftime = competition(name="STATUS_HALFTIME")
 
         assert freshest.offer(newer) is newer
@@ -467,8 +469,10 @@ class TestEspnProvider:
         assert update.state.featured.score == 7
 
     def test_a_stale_scoreboard_does_not_take_points_back(self):
-        newer = competition(sf_score="14", situation={"lastPlay": play(401000321, "Rush", SF_ID)})
-        older = competition(sf_score="7", situation={"lastPlay": play(401000315, "Rush", SF_ID)})
+        newer = competition(
+            sf_score="14", situation={"lastPlay": play(401872992321, "Rush", SF_ID)}
+        )
+        older = competition(sf_score="7", situation={"lastPlay": play(401872992315, "Rush", SF_ID)})
         transport = espn_api(scoreboards=[scoreboard_with(newer), scoreboard_with(older)])
         provider = EspnProvider(event_id="401872975", transport=transport)
 
@@ -519,3 +523,60 @@ class TestEventsFromTheDenAtSfGame:
     )
     def test_announces_the_right_event_and_team(self, name, expected):
         assert events_after(self.PLAYS[name]) == [expected]
+
+
+class TestFreshestWithTheSeaGame:
+    """SF @ SEA (11/10/2026): o extra point veio com id negativo e travava o jogo."""
+
+    def test_extra_point_with_a_negative_id_is_not_stale(self):
+        freshest = Freshest(competition_progress)
+        touchdown = competition(
+            sf_score="6", situation={"lastPlay": play(401872992318, "Passing Touchdown", SF_ID)}
+        )
+        extra_point = competition(
+            sf_score="7", situation={"lastPlay": play(-446877, "Extra Point Good", SF_ID)}
+        )
+        kickoff = competition(
+            sf_score="7", situation={"lastPlay": play(401872992359, "Kickoff", SF_ID)}
+        )
+
+        freshest.offer(touchdown)
+
+        assert freshest.offer(extra_point) is extra_point
+        assert freshest.offer(kickoff) is kickoff
+
+    def test_older_real_play_is_still_stale_after_the_extra_point(self):
+        freshest = Freshest(competition_progress)
+        newer = competition(situation={"lastPlay": play(401872992318, "Passing Touchdown", SF_ID)})
+        freshest.offer(newer)
+        freshest.offer(
+            competition(situation={"lastPlay": play(-446877, "Extra Point Good", SF_ID)})
+        )
+        older = competition(situation={"lastPlay": play(401872992283, "Pass Reception", SF_ID)})
+
+        assert freshest.offer(older) is not older
+
+
+class TestEventsWhenTheSummaryArrivesFirst:
+    """SF @ SEA (11/10/2026): o summary trouxe o FG antes do scoreboard e ele saiu duas vezes."""
+
+    def test_score_announced_by_the_summary_is_not_repeated_by_the_scoreboard(self):
+        field_goal = play(
+            4018729923081, "Field Goal Good", DEN_ID, "J.Myers 48 yard field goal is GOOD"
+        )
+        scoring = {
+            "id": "4018729923081",
+            "type": {"text": "Field Goal Good"},
+            "team": {"id": DEN_ID},
+        }
+        tracker = EventTracker()
+        matchup = find_matchup(competition(), "SF")
+        tracker.new_events(live(), summary(), matchup, "SF")
+
+        from_summary = tracker.new_events(live(), summary(scoring=[scoring]), matchup, "SF")
+        from_scoreboard = tracker.new_events(
+            live(field_goal), summary(scoring=[scoring]), matchup, "SF"
+        )
+
+        assert from_summary == [GameEvent(kind=GameEventKind.FIELD_GOAL, side="opponent")]
+        assert from_scoreboard == []
