@@ -51,6 +51,8 @@ O Provider é escolhido por `GAMECAST_PROVIDER`:
   - Cada resposta da ESPN que muda é gravada em `data/recordings/<evento>/` (gzip).
 
 `GAMECAST_SYNC_INTERVAL` é o intervalo entre consultas ao Provider (segundos, padrão 3; `scripts/live.ps1` usa 4).
+`GAMECAST_DELAY_SECONDS` é o atraso inicial entre o Provider e o Gamecast (segundos, padrão 0, até 120). O operador
+muda o atraso no painel durante a live; o valor do painel não é gravado e volta ao inicial quando o servidor reinicia.
 
 - Cada mudança grava um snapshot em `data/game_state.json` (Game State + Control Mode), recarregado ao reiniciar o servidor.
 - Em AUTO o Provider controla o jogo; em MANUAL, só o painel (ver `docs/adr/0002`). Sem snapshot, o modo inicial é

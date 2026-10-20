@@ -95,6 +95,39 @@ h3 {
   background: var(--sf-red);
 }
 
+.delay-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.delay-control label {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.delay-input {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.delay-input input {
+  width: 72px;
+  padding: 6px 8px;
+  text-align: center;
+}
+
+.delay-control .secondary {
+  padding: 7px 12px;
+}
+
+.delay-pending {
+  font-size: 13px;
+  color: var(--warn);
+}
+
 /* Abrem em outra janela: o Gamecast é compartilhado no StreamYard a partir dela. */
 .quick-links {
   display: flex;
@@ -134,6 +167,11 @@ h3 {
 .pill[data-state="ok"] {
   color: var(--ok);
   border-color: color-mix(in srgb, var(--ok) 40%, transparent);
+}
+
+.pill[data-state="warn"] {
+  color: var(--warn);
+  border-color: color-mix(in srgb, var(--warn) 40%, transparent);
 }
 
 .pill[data-state="error"] {

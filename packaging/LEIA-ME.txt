@@ -24,6 +24,9 @@ Precisa de internet. Para encerrar, feche a janela preta.
 - No canto de cima, o indicador deve estar verde com o jogo do 49ers,
   por exemplo "ESPN SF @ SEA: OK".
 - Antes do jogo aparece "Pré-jogo" e o placar 0 x 0. Isso é normal.
+- Ao lado do campo "Atraso" aparece "Sem atraso". Se o placar estiver
+  adiantando a transmissão, digite os segundos, clique em "Aplicar" e
+  confira "Atraso ativo". Se fechar e abrir o Gamecast, o atraso volta a 0.
 
 
 3. COLOCAR NO STREAMYARD

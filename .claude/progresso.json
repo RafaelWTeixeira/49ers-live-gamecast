@@ -13,13 +13,15 @@
     { "id": "0.9", "nome": "Provider da ESPN", "status": "feito" },
     { "id": "1.0", "nome": "Live real com a API", "status": "feito" },
     { "id": "1.1", "nome": "Animações dos Game Events", "status": "feito" },
-    { "id": "1.2", "nome": "Executável para Windows", "status": "feito" }
+    { "id": "1.2", "nome": "Executável para Windows", "status": "feito" },
+    { "id": "1.3", "nome": "Atraso do Provider no painel", "status": "feito" }
   ],
   "fluxo": {
     "nos": [
       { "id": "mock", "nome": "MockProvider", "status": "feito" },
-      { "id": "espn", "nome": "EspnProvider", "status": "andamento" },
+      { "id": "espn", "nome": "EspnProvider", "status": "feito" },
       { "id": "sync", "nome": "ProviderSync", "status": "feito" },
+      { "id": "delay", "nome": "Atraso do Provider (/control)", "status": "feito" },
       { "id": "service", "nome": "GameService (Control Mode, snapshot, undo)", "status": "feito" },
       { "id": "control", "nome": "Painel /control", "status": "feito" },
       { "id": "ws", "nome": "WebSocket /ws/game", "status": "feito" },
@@ -31,13 +33,15 @@
     "arestas": [
       ["mock", "sync"],
       ["espn", "sync"],
-      ["sync", "service"],
+      ["sync", "delay"],
+      ["delay", "service"],
       ["control", "service"],
       ["service", "ws"],
       ["ws", "overlay"],
       ["overlay", "streamyard"],
       ["streamyard", "youtube"],
-      ["exe", "service"]
+      ["exe", "service"],
+      ["control", "delay"]
     ]
   }
 }

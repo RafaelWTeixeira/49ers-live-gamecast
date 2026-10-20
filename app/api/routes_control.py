@@ -1,15 +1,20 @@
 from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
-from app.dependencies import get_game_service, get_provider, get_provider_health
+from app.dependencies import (
+    get_game_service,
+    get_provider,
+    get_provider_delay,
+    get_provider_health,
+)
 from app.models.control import ControlMode
 from app.models.event import GameEvent
 from app.models.game import GameState
 from app.providers.base import Provider
 from app.services.game_service import ControlModeError, GameService, NothingToUndoError
-from app.services.provider_sync import ProviderHealth
+from app.services.provider_sync import MAX_DELAY_SECONDS, ProviderDelay, ProviderHealth
 
 # Rotas async: rodam no mesmo event loop da sincronização, sem concorrência entre threads.
 router = APIRouter(prefix="/api/control")
@@ -17,18 +22,24 @@ router = APIRouter(prefix="/api/control")
 Service = Annotated[GameService, Depends(get_game_service)]
 Health = Annotated[ProviderHealth, Depends(get_provider_health)]
 ProviderDep = Annotated[Provider, Depends(get_provider)]
+Delay = Annotated[ProviderDelay, Depends(get_provider_delay)]
 
 
 class ModeChange(BaseModel):
     mode: ControlMode
 
 
+class DelayChange(BaseModel):
+    seconds: float = Field(ge=0, le=MAX_DELAY_SECONDS)
+
+
 def control_status(
-    service: GameService, health: ProviderHealth, provider: Provider
+    service: GameService, health: ProviderHealth, provider: Provider, delay: ProviderDelay
 ) -> dict[str, Any]:
     return {
         "mode": service.control_mode,
         "can_undo": service.can_undo,
+        "delay": {"seconds": delay.seconds, "pending": delay.pending},
         "provider": {
             "name": provider.name,
             "healthy": health.healthy,
@@ -49,16 +60,27 @@ def run_manual(action) -> None:
 
 
 @router.get("")
-async def get_control(service: Service, health: Health, provider: ProviderDep) -> dict[str, Any]:
-    return control_status(service, health, provider)
+async def get_control(
+    service: Service, health: Health, provider: ProviderDep, delay: Delay
+) -> dict[str, Any]:
+    return control_status(service, health, provider, delay)
 
 
 @router.put("/mode")
 async def change_mode(
-    change: ModeChange, service: Service, health: Health, provider: ProviderDep
+    change: ModeChange, service: Service, health: Health, provider: ProviderDep, delay: Delay
 ) -> dict[str, Any]:
     service.set_control_mode(change.mode)
-    return control_status(service, health, provider)
+    return control_status(service, health, provider, delay)
+
+
+@router.put("/delay")
+async def change_delay(
+    change: DelayChange, service: Service, health: Health, provider: ProviderDep, delay: Delay
+) -> dict[str, Any]:
+    """Atraso entre o Provider e o Gamecast, para casar com a transmissão. Só pesa em AUTO."""
+    delay.seconds = change.seconds
+    return control_status(service, health, provider, delay)
 
 
 @router.put("/game")

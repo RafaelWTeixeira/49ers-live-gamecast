@@ -69,6 +69,10 @@ aviso amarelo para conferir com a TV. Inverta se precisar ou clique em **Está c
   com até um minuto de atraso.
 - O Gamecast segue a ESPN, que mostra cada jogada cerca de 30 a 60 segundos depois de ela acontecer (medido no
   DEN @ SF). É normal o Gamecast ficar atrás da TV.
+- **Atraso.** Se o Gamecast estiver adiantando o que a transmissão mostra, coloque os segundos no campo **Atraso**
+  (topo do painel) e clique em **Aplicar**. Vale na hora e só segura a ESPN; as ações do painel continuam
+  instantâneas. Ao lado aparece **Atraso ativo: Ns** (e quantas jogadas estão na fila) ou **Sem atraso**. Se o
+  servidor reiniciar, o atraso volta a 0: aplique de novo.
 
 **Quando passar para MANUAL.** Use quando:
 

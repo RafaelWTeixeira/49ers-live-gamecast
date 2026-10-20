@@ -11,24 +11,30 @@ from app.dependencies import (
     SYNC_INTERVAL_SECONDS,
     get_game_service,
     get_provider,
+    get_provider_delay,
     get_provider_health,
 )
-from app.services.provider_sync import sync_forever
+from app.services.provider_sync import release_forever, sync_forever
 
 STATIC_DIR = Path(__file__).parent / "static"
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    sync = asyncio.create_task(
-        sync_forever(
-            get_provider(), get_game_service(), get_provider_health(), SYNC_INTERVAL_SECONDS
-        )
-    )
+    service, delay = get_game_service(), get_provider_delay()
+    tasks = [
+        asyncio.create_task(
+            sync_forever(
+                get_provider(), service, get_provider_health(), SYNC_INTERVAL_SECONDS, delay
+            )
+        ),
+        asyncio.create_task(release_forever(delay, service)),
+    ]
     yield
-    sync.cancel()
-    with suppress(asyncio.CancelledError):
-        await sync
+    for task in tasks:
+        task.cancel()
+        with suppress(asyncio.CancelledError):
+            await task
 
 
 app = FastAPI(title="49ers Live Gamecast", lifespan=lifespan)

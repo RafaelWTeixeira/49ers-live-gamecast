@@ -9,7 +9,7 @@ from app.models.quarterback import QuarterbackStats
 from app.models.team import Team
 from app.providers.base import Provider, ProviderUpdate
 from app.services.game_service import ControlModeError, GameService, NothingToUndoError
-from app.services.provider_sync import ProviderHealth, sync_once
+from app.services.provider_sync import ProviderDelay, ProviderHealth, publish_due, sync_once
 
 SF = Team(abbr="SF", name="49ers", primary_color="#AA0000", secondary_color="#B3995D")
 DEN = Team(abbr="DEN", name="Broncos", primary_color="#0A2343", secondary_color="#FC4C02")
@@ -286,3 +286,85 @@ class TestUndo:
         service.set_control_mode(ControlMode.MANUAL)
 
         assert not service.can_undo
+
+
+class FakeClock:
+    def __init__(self) -> None:
+        self.now = 0.0
+
+    def __call__(self) -> float:
+        return self.now
+
+
+class TestProviderDelay:
+    def delayed(self, seconds: float):
+        clock = FakeClock()
+        return ProviderDelay(seconds, clock), clock
+
+    def test_holds_the_update_until_the_delay_passes(self):
+        service, received = GameService(PRE_GAME), []
+        service.subscribe(received.append)
+        delay, clock = self.delayed(20)
+
+        fetch = StubProvider(ProviderUpdate(TOUCHDOWN, (TOUCHDOWN_EVENT,)))
+        assert asyncio.run(sync_once(fetch, service, ProviderHealth(), delay)) is False
+        assert service.state == PRE_GAME
+
+        clock.now = 19.9
+        assert publish_due(delay, service) is False
+        clock.now = 20
+        assert publish_due(delay, service) is True
+        assert service.state == TOUCHDOWN
+        assert received == [TOUCHDOWN, TOUCHDOWN_EVENT]
+
+    def test_releases_updates_in_order(self):
+        service = GameService(PRE_GAME)
+        delay, clock = self.delayed(10)
+        field_goal = TOUCHDOWN.with_changes(featured=SF.model_copy(update={"score": 10}))
+        delay.hold(ProviderUpdate(TOUCHDOWN))
+        clock.now = 3
+        delay.hold(ProviderUpdate(field_goal))
+
+        clock.now = 10
+        publish_due(delay, service)
+        assert service.state == TOUCHDOWN
+        assert delay.pending == 1
+
+        clock.now = 13
+        publish_due(delay, service)
+        assert service.state == field_goal
+
+    def test_less_delay_releases_what_already_waited(self):
+        service = GameService(PRE_GAME)
+        delay, clock = self.delayed(30)
+        delay.hold(ProviderUpdate(TOUCHDOWN))
+        clock.now = 12
+
+        delay.seconds = 10
+        publish_due(delay, service)
+
+        assert service.state == TOUCHDOWN
+
+    def test_without_delay_publishes_right_away(self):
+        service = GameService(PRE_GAME)
+        delay, _ = self.delayed(0)
+
+        assert asyncio.run(
+            sync_once(StubProvider(ProviderUpdate(TOUCHDOWN)), service, ProviderHealth(), delay)
+        )
+        assert service.state == TOUCHDOWN
+
+    def test_held_updates_do_not_override_manual(self):
+        service = GameService(PRE_GAME)
+        delay, clock = self.delayed(10)
+        delay.hold(ProviderUpdate(TOUCHDOWN))
+        service.set_control_mode(ControlMode.MANUAL)
+
+        clock.now = 10
+        assert publish_due(delay, service) is False
+        assert service.state == PRE_GAME
+
+    @pytest.mark.parametrize("seconds", [-1, 121])
+    def test_refuses_delay_out_of_range(self, seconds):
+        with pytest.raises(ValueError):
+            ProviderDelay(seconds)

@@ -9,7 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Oswald:wght@500;700&display=swap">
   <link rel="stylesheet" href="/static/css/control.css">
-  <script type="module" src="/static/js/control.js"></script>
+  <!-- ?v= muda a cada versão do painel, para o navegador não usar um control.js antigo. -->
+  <script type="module" src="/static/js/control.js?v=delay2"></script>
 </head>
 <body>
   <header class="topbar">
@@ -19,6 +20,19 @@
       <button type="button" data-mode="AUTO">Auto</button>
       <button type="button" data-mode="MANUAL">Manual</button>
     </div>
+
+    <!-- Segura o Provider para o Gamecast não adiantar a transmissão. Só pesa em AUTO. -->
+    <form class="delay-control" data-form="delay" novalidate>
+      <label>Atraso
+        <span class="delay-input">
+          <input type="number" name="seconds" min="0" max="120" step="1" required>
+          <span>s</span>
+        </span>
+      </label>
+      <button type="submit" class="secondary">Aplicar</button>
+      <span class="pill" data-status="delay">Atraso: —</span>
+      <span class="delay-pending" data-bind="delay-pending"></span>
+    </form>
 
     <nav class="quick-links" aria-label="Atalhos">
       <a href="/overlay" target="_blank" rel="noopener">Abrir Gamecast ↗</a>

@@ -7,7 +7,7 @@ from app.providers.base import Provider
 from app.providers.espn_provider import EspnProvider
 from app.providers.mock_provider import MockProvider
 from app.services.game_service import GameService
-from app.services.provider_sync import ProviderHealth
+from app.services.provider_sync import ProviderDelay, ProviderHealth
 
 ROOT_DIR = Path(__file__).parent.parent
 MOCK_GAME_PATH = ROOT_DIR / "mock" / "game.json"
@@ -18,6 +18,8 @@ SNAPSHOT_PATH = DATA_DIR / "game_state.json"
 RECORDINGS_DIR = DATA_DIR / "recordings"
 
 SYNC_INTERVAL_SECONDS = float(os.getenv("GAMECAST_SYNC_INTERVAL", "3"))
+# Atraso inicial do Provider, em segundos; o operador ajusta no painel (/control).
+DELAY_SECONDS = float(os.getenv("GAMECAST_DELAY_SECONDS", "0"))
 # Modo inicial quando não há snapshot; com snapshot, vale o modo gravado.
 DEFAULT_CONTROL_MODE = ControlMode(os.getenv("GAMECAST_CONTROL_MODE", "AUTO").upper())
 
@@ -46,3 +48,8 @@ def get_provider() -> Provider:
 @lru_cache
 def get_provider_health() -> ProviderHealth:
     return ProviderHealth()
+
+
+@lru_cache
+def get_provider_delay() -> ProviderDelay:
+    return ProviderDelay(DELAY_SECONDS)

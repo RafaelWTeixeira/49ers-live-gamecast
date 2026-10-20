@@ -16,10 +16,12 @@ const EVENT_NAMES = {
 
 const form = document.querySelector('[data-form="game"]');
 const fields = form.elements;
+const delayForm = document.querySelector('[data-form="delay"]');
 
 let currentState = null;
 let mode = null;
 let dirty = false;
+let delayDirty = false;
 
 function bindAll(name) {
   return document.querySelectorAll(`[data-bind="${name}"]`);
@@ -193,7 +195,21 @@ function renderControl(status) {
   pill.textContent = `${name}: ${healthy ? "OK" : lastError ? "falhando" : "aguardando"}`;
   pill.title = lastError ?? (lastSuccess ? `Última resposta: ${lastSuccess}` : "");
 
+  // Um servidor de versão anterior não tem atraso: o controle some.
+  delayForm.hidden = !status.delay;
+  if (status.delay) renderDelay(status.delay);
+
   if (mode !== "MANUAL" && dirty && currentState) fillForm(currentState);
+}
+
+function renderDelay({ seconds, pending }) {
+  // Não atropela o valor digitado e ainda não aplicado.
+  if (!delayDirty) delayForm.elements.seconds.value = seconds;
+  const pill = document.querySelector('[data-status="delay"]');
+  pill.dataset.state = seconds > 0 ? "warn" : "";
+  pill.textContent = seconds > 0 ? `Atraso ativo: ${seconds}s` : "Sem atraso";
+  if (seconds > 0 && mode === "AUTO" && pending > 0) pill.textContent += ` · ${pending} na fila`;
+  bindOne("delay-pending").textContent = delayDirty ? "valor digitado ainda não aplicado" : "";
 }
 
 async function refreshControl() {
@@ -264,6 +280,18 @@ document.querySelectorAll('[data-action="flip-field"]').forEach((button) => {
     run(() => api("POST", "/api/control/flip-field"), "Lado do campo invertido.");
   });
 });
+
+delayForm.addEventListener("submit", (submit) => {
+  submit.preventDefault();
+  if (!delayForm.reportValidity()) return;
+  const seconds = Number(delayForm.elements.seconds.value);
+  run(async () => {
+    await api("PUT", "/api/control/delay", { seconds });
+    delayDirty = false;
+  }, seconds ? `Atraso de ${seconds}s.` : "Sem atraso.");
+});
+
+delayForm.addEventListener("input", () => (delayDirty = true));
 
 document.querySelector('[data-action="field-check-ok"]').addEventListener("click", () => {
   bindOne("field-check").hidden = true;

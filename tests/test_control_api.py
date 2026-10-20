@@ -1,13 +1,13 @@
 import pytest
 from fastapi.testclient import TestClient
 
-from app.dependencies import get_game_service, get_provider_health
+from app.dependencies import get_game_service, get_provider_delay, get_provider_health
 from app.main import app
 from app.models.control import ControlMode
 from app.models.game import GamePhase, GameState
 from app.models.team import Team
 from app.services.game_service import GameService
-from app.services.provider_sync import ProviderHealth
+from app.services.provider_sync import ProviderDelay, ProviderHealth
 
 client = TestClient(app)
 
@@ -27,6 +27,8 @@ DRIVE = GameState(
 def install(service: GameService) -> GameService:
     app.dependency_overrides[get_game_service] = lambda: service
     app.dependency_overrides[get_provider_health] = ProviderHealth
+    delay = ProviderDelay()
+    app.dependency_overrides[get_provider_delay] = lambda: delay
     return service
 
 
@@ -56,6 +58,23 @@ def test_status_reports_mode_and_provider(auto_service):
     assert body["can_undo"] is False
     assert body["provider"]["healthy"] is False
     assert body["provider"]["name"] == "Mock"
+
+
+def test_status_reports_the_delay(auto_service):
+    assert client.get("/api/control").json()["delay"] == {"seconds": 0, "pending": 0}
+
+
+def test_changing_the_delay(auto_service):
+    response = client.put("/api/control/delay", json={"seconds": 20})
+
+    assert response.status_code == 200
+    assert response.json()["delay"]["seconds"] == 20
+    assert client.get("/api/control").json()["delay"]["seconds"] == 20
+
+
+def test_delay_out_of_range_is_refused(auto_service):
+    assert client.put("/api/control/delay", json={"seconds": 500}).status_code == 422
+    assert client.put("/api/control/delay", json={"seconds": -1}).status_code == 422
 
 
 def test_switching_to_manual(auto_service):

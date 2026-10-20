@@ -65,6 +65,7 @@ Painel gráfico ao vivo dos jogos do San Francisco 49ers para lives no YouTube: 
 | 1.0 | Live real com a API | ✅ DEN @ SF, 04/10, toda em AUTO |
 | **1.1** | **Animações dos Game Events** | ✅ |
 | **1.2** | **Executável para Windows, para outra pessoa operar a live** | ✅ |
+| **1.3** | **Atraso do Provider ajustável no painel** | ✅ WSH @ SF, 19/10 |
 
 O MVP é a 0.8: com ela já é possível fazer uma live real com o placar em MANUAL.
 
@@ -104,6 +105,17 @@ O MVP é a 0.8: com ela já é possível fazer uma live real com o placar em MAN
 - O painel ganhou atalhos para abrir o Gamecast e a demo das animações.
 - `scripts/build.ps1` gera `dist\Gamecast-<versão>.zip` com o `LEIA-ME.txt`, o guia de quem opera a live.
 - As estatísticas avançadas, planejadas antes para a 1.2, foram descartadas: as atuais bastam.
+
+### 1.3 em detalhe
+
+- O operador ajusta no `/control` quantos segundos (0 a 120) cada atualização da ESPN espera antes de ir para o
+  Gamecast, para não adiantar a transmissão. Vale na hora, mantém a ordem e não descarta nada: com menos atraso, o
+  que já esperou sai na hora.
+- Só segura o Provider: as ações do operador (MANUAL, inverter o campo, desfazer) continuam instantâneas, e o que
+  está na fila não sobrescreve o MANUAL. A saúde do Provider no painel continua sem atraso.
+- O painel mostra "Atraso ativo: Ns" e as jogadas na fila, ou "Sem atraso". O valor inicial vem de
+  `GAMECAST_DELAY_SECONDS` e o do painel não sobrevive a um reinício.
+- Usado na live do WSH @ SF (19/10, 23 x 17), com 8 a 10s.
 
 ## Fora do escopo, por enquanto
 
